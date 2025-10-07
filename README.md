@@ -1,9 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/automagik-roadmap-dark-png.png">
-    <source media="(prefers-color-scheme: light)" srcset=".github/assets/automagik-roadmap-light-png.png">
-    <img alt="Automagik Roadmap Logo" src=".github/assets/automagik-roadmap-light-png.png" width="400">
-  </picture>
+  <img alt="Automagik Roadmap Logo" src=".github/assets/automagik-roadmap-light-png.png" width="400">
 </p>
 <h2 align="center">Public Roadmap for the Automagik Ecosystem</h2>
 
