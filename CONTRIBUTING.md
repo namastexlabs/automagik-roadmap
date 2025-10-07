@@ -54,4 +54,4 @@ For detailed technical proposals, create a wish folder at `projects/<project>/wi
 
 ## Questions?
 
-Join our [Discord](https://discord.gg/automagik) for discussions!
+Join our [Discord](https://discord.gg/xcW8c7fF3R) for discussions!

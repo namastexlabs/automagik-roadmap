@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://github.com/namastexlabs/automagik-roadmap/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/namastexlabs/automagik-roadmap?style=flat-square&color=00D9FF" /></a>
-  <a href="https://discord.gg/automagik"><img alt="Discord" src="https://img.shields.io/discord/1095114867012292758?style=flat-square&color=00D9FF&label=discord" /></a>
+  <a href="https://discord.gg/xcW8c7fF3R"><img alt="Discord" src="https://img.shields.io/discord/1095114867012292758?style=flat-square&color=00D9FF&label=discord" /></a>
   <a href="https://github.com/namastexlabs/automagik-roadmap/issues"><img alt="Initiatives" src="https://img.shields.io/github/issues/namastexlabs/automagik-roadmap/initiative?style=flat-square&color=00D9FF&label=initiatives" /></a>
 </p>
 
@@ -172,7 +172,7 @@ We welcome community input on our roadmap!
 - 💬 **Comment on issues** to share feedback and ideas
 - 🎯 **Propose new initiatives** via issue templates
 - 📝 **Create detailed wishes** in project folders
-- 💡 **Join discussions** on our [Discord](https://discord.gg/automagik)
+- 💡 **Join discussions** on our [Discord](https://discord.gg/xcW8c7fF3R)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -192,7 +192,7 @@ This roadmap represents our **current plans and priorities**. Items may change b
 
 ## 🔗 Links
 
-- **Discord**: [Join the community](https://discord.gg/automagik)
+- **Discord**: [Join the community](https://discord.gg/xcW8c7fF3R)
 - **GitHub Org**: [@namastexlabs](https://github.com/namastexlabs)
 - **Documentation**: [docs.automagik.ai](https://docs.automagik.ai)
 
@@ -206,5 +206,5 @@ MIT License - See [LICENSE](LICENSE)
 
 <p align="center">
   <strong>Built with transparency by <a href="https://github.com/namastexlabs">Namastex Labs</a></strong><br>
-  Questions? Check our <a href="docs/faq.md">FAQ</a> or reach out on <a href="https://discord.gg/automagik">Discord</a>
+  Questions? Check our <a href="docs/faq.md">FAQ</a> or reach out on <a href="https://discord.gg/xcW8c7fF3R">Discord</a>
 </p>
