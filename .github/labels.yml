@@ -38,37 +38,37 @@
 # STAGE DIMENSION (8 labels)
 # ============================================
 
-- name: stage:ideation
+- name: Ideation
   color: 'E1BEE7'
-  description: 'Ideação - Initial ideation and brainstorming'
+  description: 'Initial ideation and brainstorming phase'
 
-- name: stage:exploring
+- name: Exploring
   color: 'FBCA04'
-  description: 'Investigação - Early investigation and validation'
+  description: 'Early investigation and validation'
 
-- name: stage:rfc
+- name: RFC
   color: 'FFA500'
-  description: 'Proposta - Request for comments, gathering feedback'
+  description: 'Request for comments, gathering feedback'
 
-- name: stage:priorization
+- name: Priorization
   color: 'D876E3'
-  description: 'Priorização - Prioritization and planning'
+  description: 'Prioritization and planning'
 
-- name: stage:executing
+- name: Executing
   color: '1D76DB'
-  description: 'Execução - Active execution and implementation'
+  description: 'Active execution and implementation'
 
-- name: stage:preview
+- name: Preview
   color: '9C27B0'
-  description: 'Preview - Beta or preview release for testing'
+  description: 'Beta or preview release for testing'
 
-- name: stage:shipped
+- name: Shipped
   color: '0E8A16'
-  description: 'Finalizado - Generally available in production'
+  description: 'Generally available in production'
 
-- name: stage:archived
+- name: Archived
   color: '6C757D'
-  description: 'Arquivado - No longer active or deprioritized'
+  description: 'No longer active or deprioritized'
 
 # ============================================
 # TYPE DIMENSION (6 labels)

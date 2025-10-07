@@ -64,16 +64,16 @@ def extract_wish_folder(body: str) -> str:
 def map_stage_to_etapa(stage: str) -> str:
     """Map GitHub stage labels to Smart Fit ETAPA equivalents."""
     stage_mapping = {
-        'ideation': 'Ideação',
-        'exploring': 'Investigação',
-        'rfc': 'Proposta',
-        'priorization': 'Priorização',
-        'executing': 'Execução',
-        'preview': 'Preview',
-        'shipped': 'Finalizado',
-        'archived': 'Arquivado'
+        'Ideation': 'Ideação',
+        'Exploring': 'Investigação',
+        'RFC': 'Proposta',
+        'Priorization': 'Priorização',
+        'Executing': 'Execução',
+        'Preview': 'Preview',
+        'Shipped': 'Finalizado',
+        'Archived': 'Arquivado'
     }
-    return stage_mapping.get(stage, stage.replace('-', ' ').title())
+    return stage_mapping.get(stage, stage)
 
 
 def format_quarter_as_eta(quarter: str) -> str:
@@ -110,7 +110,8 @@ def export_roadmap():
     for issue in issues:
         # Extract labels
         project = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('project:')), '')
-        stage = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('stage:')), '')
+        # Stage labels are now pretty names without prefix
+        stage = next((l.name for l in issue.labels if l.name in ['Ideation', 'Exploring', 'RFC', 'Priorization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
         quarter = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('quarter:')), '')
 
         # Extract fields from issue body
