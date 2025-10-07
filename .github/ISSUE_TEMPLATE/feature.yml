@@ -1,0 +1,40 @@
+name: ✨ Feature Request
+description: Suggest a new feature
+title: "[Feature] "
+labels: ["type:feature"]
+body:
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project
+      description: Which project is this for?
+      options:
+        - omni
+        - hive
+        - spark
+        - forge
+        - genie
+        - tools
+        - cross-project
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What feature do you want to see?
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: How would this feature be used?
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Are there workarounds or alternatives?

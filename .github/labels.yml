@@ -1,0 +1,145 @@
+# Automagik Roadmap - Label Definitions
+# Multi-dimensional label system inspired by GitHub's public roadmap
+
+# Project Dimension (7 labels)
+- name: project:omni
+  color: '0052CC'
+  description: Omni - Omnichannel messaging with MCP
+- name: project:hive
+  color: '0052CC'
+  description: Hive - Multi-agent orchestration
+- name: project:spark
+  color: '0052CC'
+  description: Spark - AI infrastructure
+- name: project:forge
+  color: '0052CC'
+  description: Forge - Task planning and execution
+- name: project:genie
+  color: '0052CC'
+  description: Genie - Autonomous agents
+- name: project:tools
+  color: '0052CC'
+  description: Tools - CLI utilities
+- name: project:cross-project
+  color: '0052CC'
+  description: Spans multiple projects
+
+# Stage Dimension (7 labels)
+- name: stage:exploring
+  color: 'FBCA04'
+  description: Early investigation
+- name: stage:rfc
+  color: 'FFA500'
+  description: Request for comments
+- name: stage:in-design
+  color: 'F9D0C4'
+  description: Design phase
+- name: stage:in-dev
+  color: '0E8A16'
+  description: Active development
+- name: stage:preview
+  color: 'C5DEF5'
+  description: Beta/preview release
+- name: stage:shipped
+  color: '5319E7'
+  description: Generally available
+- name: stage:archived
+  color: 'D4C5F9'
+  description: No longer active
+
+# Type Dimension (6 labels)
+- name: type:feature
+  color: '7057FF'
+  description: New capability
+- name: type:enhancement
+  color: 'A2EEEF'
+  description: Improvement to existing
+- name: type:research
+  color: 'D4C5F9'
+  description: Investigation/RFC
+- name: type:infrastructure
+  color: 'D93F0B'
+  description: DevOps, tooling, build
+- name: type:documentation
+  color: '0075CA'
+  description: Docs-only initiative
+- name: type:bug-initiative
+  color: 'D93F0B'
+  description: Major bug fix initiative
+
+# Priority Dimension (4 labels)
+- name: priority:critical
+  color: 'D93F0B'
+  description: Blocker, urgent
+- name: priority:high
+  color: 'FFA500'
+  description: Important, soon
+- name: priority:medium
+  color: 'FBCA04'
+  description: Normal priority
+- name: priority:low
+  color: 'D4C5F9'
+  description: Nice to have
+
+# Quarter Dimension (6 labels)
+- name: quarter:2025-q4
+  color: '5319E7'
+  description: Oct-Dec 2025 (current)
+- name: quarter:2026-q1
+  color: '5319E7'
+  description: Jan-Mar 2026
+- name: quarter:2026-q2
+  color: '5319E7'
+  description: Apr-Jun 2026
+- name: quarter:2026-q3
+  color: '5319E7'
+  description: Jul-Sep 2026
+- name: quarter:2026-q4
+  color: '5319E7'
+  description: Oct-Dec 2026
+- name: quarter:backlog
+  color: 'D4C5F9'
+  description: Not yet scheduled
+
+# Area Dimension (12 labels)
+- name: area:api
+  color: '006B75'
+  description: REST/GraphQL API
+- name: area:ui
+  color: '006B75'
+  description: User interface
+- name: area:cli
+  color: '006B75'
+  description: Command-line tools
+- name: area:mcp
+  color: '006B75'
+  description: MCP integration
+- name: area:knowledge
+  color: '006B75'
+  description: Knowledge/RAG systems
+- name: area:auth
+  color: '006B75'
+  description: Authentication
+- name: area:agents
+  color: '006B75'
+  description: Agent implementation
+- name: area:teams
+  color: '006B75'
+  description: Team coordination
+- name: area:workflows
+  color: '006B75'
+  description: Workflow orchestration
+- name: area:storage
+  color: '006B75'
+  description: Database/persistence
+- name: area:testing
+  color: '006B75'
+  description: Test infrastructure
+- name: area:docs
+  color: '006B75'
+  description: Documentation
+
+# Meta labels
+- name: initiative
+  color: 'B60205'
+  description: Strategic roadmap initiative

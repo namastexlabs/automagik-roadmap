@@ -1,0 +1,16 @@
+name: Check Stale Initiatives
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: 'This initiative has been inactive for 90 days. Please update status or close.'
+          days-before-stale: 90
+          days-before-close: 30
+          exempt-issue-labels: 'stage:shipped,stage:in-dev'

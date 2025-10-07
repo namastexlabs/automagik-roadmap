@@ -1,0 +1,125 @@
+name: 🎯 Roadmap Initiative
+description: Propose a new strategic initiative
+title: "[Initiative] "
+labels: ["initiative"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🗺️ Strategic Initiative
+        Use this template to propose a new roadmap item with RASCI ownership and expected results.
+
+  - type: dropdown
+    id: project
+    attributes:
+      label: Project
+      description: Which Automagik project does this initiative belong to?
+      options:
+        - omni
+        - hive
+        - spark
+        - forge
+        - genie
+        - tools
+        - cross-project
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What are we building and why? (Include problem context)
+      placeholder: |
+        **Problem:** Describe the problem or opportunity
+        **Solution:** High-level approach
+        **Impact:** Who benefits and how
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_results
+    attributes:
+      label: Expected Results (RESULTADO_ESPERADO)
+      description: Measurable outcomes and success metrics
+      placeholder: |
+        - Increase X by Y%
+        - Enable Z capability
+        - Reduce P by Q
+    validations:
+      required: true
+
+  - type: textarea
+    id: success_criteria
+    attributes:
+      label: Success Criteria
+      description: How will we know this is complete?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 🚩 RASCI Ownership
+
+  - type: input
+    id: responsible
+    attributes:
+      label: Responsible
+      description: "Who will lead execution? (1 person, use @username)"
+      placeholder: "@username"
+    validations:
+      required: true
+
+  - type: input
+    id: accountable
+    attributes:
+      label: Accountable
+      description: "Who has final approval? (1 person, use @username)"
+      placeholder: "@username"
+    validations:
+      required: true
+
+  - type: input
+    id: support
+    attributes:
+      label: Support
+      description: "Who will provide technical/operational support? (comma-separated @usernames)"
+      placeholder: "@user1, @user2"
+
+  - type: input
+    id: consulted
+    attributes:
+      label: Consulted
+      description: "Who should be consulted? (comma-separated @usernames or teams)"
+      placeholder: "@user3, @team"
+
+  - type: input
+    id: informed
+    attributes:
+      label: Informed
+      description: "Who should be kept informed? (comma-separated @usernames or teams)"
+      placeholder: "@user4, @community"
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔗 References
+
+  - type: input
+    id: wish_folder
+    attributes:
+      label: Wish Folder (Optional)
+      description: "Link to wish folder if already created"
+      placeholder: "projects/omni/wishes/my-feature/"
+
+  - type: textarea
+    id: related_repos
+    attributes:
+      label: Related Repositories
+      description: "Link to relevant repos/issues"
+      placeholder: |
+        - Implementation: namastexlabs/automagik-omni#123
+        - Documentation: namastexlabs/automagik-docs#45
