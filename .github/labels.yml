@@ -1,145 +1,251 @@
-# Automagik Roadmap - Label Definitions
-# Multi-dimensional label system inspired by GitHub's public roadmap
+# Automagik Roadmap Label Definitions
+# Multi-dimensional label system for initiative tracking
+# Synced automatically via .github/workflows/label-sync.yml
 
-# Project Dimension (7 labels)
+# ============================================
+# PROJECT DIMENSION (7 labels)
+# ============================================
+
 - name: project:omni
   color: '0052CC'
-  description: Omni - Omnichannel messaging with MCP
+  description: 'Omni - Omnichannel messaging with MCP'
+
 - name: project:hive
   color: '0052CC'
-  description: Hive - Multi-agent orchestration
+  description: 'Hive - Multi-agent orchestration'
+
 - name: project:spark
   color: '0052CC'
-  description: Spark - Cron system that sparks repos
+  description: 'Spark - Cron system that sparks repos'
+
 - name: project:forge
   color: '0052CC'
-  description: Forge - AI-powered development orchestrator
+  description: 'Forge - AI-powered development orchestrator'
+
 - name: project:genie
   color: '0052CC'
-  description: Genie - Autonomous agent framework
+  description: 'Genie - Autonomous agent framework'
+
 - name: project:tools
   color: '0052CC'
-  description: Tools - MCP tools builder & marketplace
+  description: 'Tools - MCP tools builder & marketplace'
+
 - name: project:cross-project
   color: '0052CC'
-  description: Spans multiple projects
+  description: 'Cross-project - Spans multiple Automagik projects'
 
-# Stage Dimension (7 labels)
+# ============================================
+# STAGE DIMENSION (7 labels)
+# ============================================
+
 - name: stage:exploring
   color: 'FBCA04'
-  description: Early investigation
+  description: 'Exploring - Early investigation and validation'
+
 - name: stage:rfc
   color: 'FFA500'
-  description: Request for comments
-- name: stage:in-design
-  color: 'F9D0C4'
-  description: Design phase
-- name: stage:in-dev
-  color: '0E8A16'
-  description: Active development
-- name: stage:preview
-  color: 'C5DEF5'
-  description: Beta/preview release
-- name: stage:shipped
-  color: '5319E7'
-  description: Generally available
-- name: stage:archived
-  color: 'D4C5F9'
-  description: No longer active
+  description: 'RFC - Request for comments, gathering feedback'
 
-# Type Dimension (6 labels)
+- name: stage:in-design
+  color: 'D876E3'
+  description: 'In Design - Designing architecture and approach'
+
+- name: stage:in-dev
+  color: '1D76DB'
+  description: 'In Development - Active implementation'
+
+- name: stage:preview
+  color: '0E8A16'
+  description: 'Preview - Beta or preview release'
+
+- name: stage:shipped
+  color: '0E8A16'
+  description: 'Shipped - Generally available in production'
+
+- name: stage:archived
+  color: '6C757D'
+  description: 'Archived - No longer active or deprioritized'
+
+# ============================================
+# TYPE DIMENSION (6 labels)
+# ============================================
+
 - name: type:feature
   color: '7057FF'
-  description: New capability
+  description: 'Feature - New capability or functionality'
+
 - name: type:enhancement
   color: 'A2EEEF'
-  description: Improvement to existing
+  description: 'Enhancement - Improvement to existing functionality'
+
 - name: type:research
-  color: 'D4C5F9'
-  description: Investigation/RFC
+  color: 'FFEB3B'
+  description: 'Research - Investigation, RFC, or exploration'
+
 - name: type:infrastructure
-  color: 'D93F0B'
-  description: DevOps, tooling, build
+  color: '795548'
+  description: 'Infrastructure - DevOps, tooling, build systems'
+
 - name: type:documentation
   color: '0075CA'
-  description: Docs-only initiative
-- name: type:bug-initiative
-  color: 'D93F0B'
-  description: Major bug fix initiative
+  description: 'Documentation - Docs-only initiative'
 
-# Priority Dimension (4 labels)
+- name: type:bug-initiative
+  color: 'D73A4A'
+  description: 'Bug Initiative - Major bug fix effort'
+
+# ============================================
+# PRIORITY DIMENSION (4 labels)
+# ============================================
+
 - name: priority:critical
   color: 'D93F0B'
-  description: Blocker, urgent
-- name: priority:high
-  color: 'FFA500'
-  description: Important, soon
-- name: priority:medium
-  color: 'FBCA04'
-  description: Normal priority
-- name: priority:low
-  color: 'D4C5F9'
-  description: Nice to have
+  description: 'Critical - Blocker, urgent, immediate attention needed'
 
-# Quarter Dimension (6 labels)
+- name: priority:high
+  color: 'FF9800'
+  description: 'High - Important, should be addressed soon'
+
+- name: priority:medium
+  color: 'FFC107'
+  description: 'Medium - Normal priority, standard roadmap item'
+
+- name: priority:low
+  color: 'CDDC39'
+  description: 'Low - Nice to have, future enhancement'
+
+# ============================================
+# QUARTER DIMENSION (10 labels)
+# ============================================
+
 - name: quarter:2025-q4
   color: '5319E7'
-  description: Oct-Dec 2025 (current)
+  description: 'Q4 2025 - Oct-Dec 2025'
+
 - name: quarter:2026-q1
   color: '5319E7'
-  description: Jan-Mar 2026
+  description: 'Q1 2026 - Jan-Mar 2026'
+
 - name: quarter:2026-q2
   color: '5319E7'
-  description: Apr-Jun 2026
+  description: 'Q2 2026 - Apr-Jun 2026'
+
 - name: quarter:2026-q3
   color: '5319E7'
-  description: Jul-Sep 2026
+  description: 'Q3 2026 - Jul-Sep 2026'
+
 - name: quarter:2026-q4
   color: '5319E7'
-  description: Oct-Dec 2026
-- name: quarter:backlog
-  color: 'D4C5F9'
-  description: Not yet scheduled
+  description: 'Q4 2026 - Oct-Dec 2026'
 
-# Area Dimension (12 labels)
+- name: quarter:2027-q1
+  color: '5319E7'
+  description: 'Q1 2027 - Jan-Mar 2027'
+
+- name: quarter:2027-q2
+  color: '5319E7'
+  description: 'Q2 2027 - Apr-Jun 2027'
+
+- name: quarter:2027-q3
+  color: '5319E7'
+  description: 'Q3 2027 - Jul-Sep 2027'
+
+- name: quarter:2027-q4
+  color: '5319E7'
+  description: 'Q4 2027 - Oct-Dec 2027'
+
+- name: quarter:backlog
+  color: '6C757D'
+  description: 'Backlog - Not yet scheduled for a specific quarter'
+
+# ============================================
+# AREA DIMENSION (15 labels)
+# ============================================
+
 - name: area:api
   color: '006B75'
-  description: REST/GraphQL API
+  description: 'API - REST/GraphQL API, webhooks'
+
 - name: area:ui
   color: '006B75'
-  description: User interface
+  description: 'UI - User interface, web dashboards'
+
 - name: area:cli
   color: '006B75'
-  description: Command-line tools
+  description: 'CLI - Command-line tools and scripts'
+
 - name: area:mcp
   color: '006B75'
-  description: MCP integration
+  description: 'MCP - Model Context Protocol integration'
+
 - name: area:knowledge
   color: '006B75'
-  description: Knowledge/RAG systems
+  description: 'Knowledge - RAG systems, vector DB, embeddings'
+
 - name: area:auth
   color: '006B75'
-  description: Authentication
+  description: 'Auth - Authentication, authorization, tokens'
+
 - name: area:agents
   color: '006B75'
-  description: Agent implementation
+  description: 'Agents - Agent implementation and logic'
+
 - name: area:teams
   color: '006B75'
-  description: Team coordination
+  description: 'Teams - Team coordination and collaboration'
+
 - name: area:workflows
   color: '006B75'
-  description: Workflow orchestration
+  description: 'Workflows - Workflow orchestration and automation'
+
 - name: area:storage
   color: '006B75'
-  description: Database/persistence
+  description: 'Storage - Database, persistence, file storage'
+
 - name: area:testing
   color: '006B75'
-  description: Test infrastructure
+  description: 'Testing - Test infrastructure, CI/CD'
+
 - name: area:docs
   color: '006B75'
-  description: Documentation
+  description: 'Docs - Documentation, guides, tutorials'
 
-# Meta labels
+- name: area:messaging
+  color: '006B75'
+  description: 'Messaging - Messaging channels, integrations'
+
+- name: area:performance
+  color: '006B75'
+  description: 'Performance - Optimization, scaling, benchmarks'
+
+- name: area:security
+  color: '006B75'
+  description: 'Security - Security features, compliance, auditing'
+
+# ============================================
+# META LABELS (6 labels)
+# ============================================
+
 - name: initiative
   color: 'B60205'
-  description: Strategic roadmap initiative
+  description: 'Initiative - Strategic roadmap initiative (auto-applied by template)'
+
+- name: help-wanted
+  color: '008672'
+  description: 'Help Wanted - Community contributions welcome'
+
+- name: good-first-issue
+  color: '7057FF'
+  description: 'Good First Issue - Good for newcomers'
+
+- name: breaking-change
+  color: 'D93F0B'
+  description: 'Breaking Change - Introduces breaking changes'
+
+- name: security
+  color: 'D93F0B'
+  description: 'Security - Security-related issue or initiative'
+
+- name: duplicate
+  color: 'CFD3D7'
+  description: 'Duplicate - Duplicate of another issue'
