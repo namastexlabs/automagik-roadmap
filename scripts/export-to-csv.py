@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 """
 Export Automagik Roadmap to CSV for stakeholder reporting.
-Follows SmartFit roadmap CSV structure adapted for Automagik.
 
-Column Mapping (Smart Fit → Automagik):
-- FRENTE → PROJECT
-- INICIATIVA → INITIATIVE
-- DESCRICAO → DESCRIPTION
-- ETAPA → STAGE
-- ETA → ETA
-- RESULTADO_ESPERADO → EXPECTED_RESULT
-- FOLLOW_UP → STATUS_DETAIL
-- DATA INICIO → START_DATE
-- DATA FIM → END_DATE
-+ ISSUE_URL (new)
-+ WISH_FOLDER (new)
-+ OWNER (new)
+CSV Columns:
+- PROJECT: Project name (omni, hive, spark, etc.)
+- INITIATIVE: Initiative title
+- DESCRIPTION: Brief description
+- STAGE: Current stage (Ideation, Exploring, RFC, etc.)
+- ETA: Target quarter (Q4 2025, etc.)
+- EXPECTED_RESULT: Measurable outcomes
+- STATUS_DETAIL: Current status
+- START_DATE: Creation date
+- END_DATE: Completion date (if shipped)
+- ISSUE_URL: Link to GitHub issue
+- WISH_FOLDER: Link to wish folder (if applicable)
+- OWNER: Assigned owner
 """
 
 import os
@@ -61,8 +60,8 @@ def extract_wish_folder(body: str) -> str:
     return ''
 
 
-def map_stage_to_etapa(stage: str) -> str:
-    """Map GitHub stage labels to Smart Fit ETAPA equivalents."""
+def map_stage_to_portuguese(stage: str) -> str:
+    """Map GitHub stage labels to Portuguese translations for CSV export."""
     stage_mapping = {
         'Ideation': 'Ideação',
         'Exploring': 'Investigação',
@@ -94,7 +93,7 @@ def format_quarter_as_eta(quarter: str) -> str:
 
 
 def export_roadmap():
-    """Export roadmap issues to CSV following Smart Fit structure."""
+    """Export roadmap issues to CSV for stakeholder reporting."""
     token = os.environ.get('GITHUB_TOKEN')
     if not token:
         print("Error: GITHUB_TOKEN environment variable not set")
@@ -125,13 +124,13 @@ def export_roadmap():
         # Clean initiative title
         initiative_title = issue.title.replace('[Initiative] ', '').replace('[initiative] ', '')
 
-        # Map stage to ETAPA
-        etapa = map_stage_to_etapa(stage)
+        # Map stage to Portuguese
+        stage_pt = map_stage_to_portuguese(stage)
 
         # Format ETA
         eta = format_quarter_as_eta(quarter)
 
-        # Dates (Smart Fit format: DD/MM/YYYY)
+        # Dates (Brazilian format: DD/MM/YYYY)
         start_date = issue.created_at.strftime('%d/%m/%Y')
         end_date = issue.closed_at.strftime('%d/%m/%Y') if issue.closed_at else ''
 
@@ -142,7 +141,7 @@ def export_roadmap():
             'PROJECT': project.upper() if project else 'UNKNOWN',
             'INITIATIVE': initiative_title,
             'DESCRIPTION': description or (issue.body[:200] if issue.body else ''),
-            'STAGE': etapa,
+            'STAGE': stage_pt,
             'ETA': eta,
             'EXPECTED_RESULT': expected_result,
             'STATUS_DETAIL': status_detail,
@@ -159,11 +158,11 @@ def export_roadmap():
     # Ensure exports directory exists
     os.makedirs('exports', exist_ok=True)
 
-    # Write CSV with Smart Fit compatible column order
+    # Write CSV with stakeholder-friendly column order
     filename = f"exports/roadmap-{datetime.now().strftime('%Y-%m-%d')}.csv"
 
     if rows:
-        # Column order matching Smart Fit template
+        # Column order for CSV export
         fieldnames = [
             'PROJECT',
             'INITIATIVE',
