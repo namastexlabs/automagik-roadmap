@@ -10,9 +10,9 @@ Every initiative progresses through a series of stages from initial exploration 
 
 **Stage Flow:**
 ```
-Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
-                                                                      ↓
-                                                                  Archived
+Ideation → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+                                                                         ↓
+                                                                     Archived
 ```
 
 ---
@@ -82,11 +82,11 @@ Ideation → Exploring → RFC → Priorization → Executing → Preview → Sh
 
 **Labels:** `RFC`
 
-**Note:** RFC can happen in parallel with "Exploring" or "Priorization" for community-driven projects.
+**Note:** RFC can happen in parallel with "Exploring" or "Prioritization" for community-driven projects.
 
 ---
 
-## 📋 Priorization
+## 📋 Prioritization
 
 **Definition:** Prioritization and planning phase. Determining implementation approach and timeline.
 
@@ -110,7 +110,7 @@ Ideation → Exploring → RFC → Priorization → Executing → Preview → Sh
 
 **Typical Duration:** 2-8 weeks
 
-**Labels:** `Priorization`
+**Labels:** `Prioritization`
 
 ---
 
@@ -251,7 +251,7 @@ Ideation → Exploring → RFC → Priorization → Executing → Preview → Sh
 
 An initiative can be:
 - High priority but still in "Exploring" (urgent problem, needs design)
-- Low priority but in "In Development" (nice-to-have, already in progress)
+- Low priority but in "Executing" (nice-to-have, already in progress)
 
 Both dimensions are tracked independently.
 
@@ -277,13 +277,13 @@ A: Yes. If design needs rework or more community feedback is needed, move back t
 
 ### Example 1: Small Feature
 ```
-Exploring (1 week) → In Design (1 week) → In Dev (2 weeks) → Shipped
+Exploring (1 week) → Prioritization (1 week) → Executing (2 weeks) → Shipped
 ```
 
 ### Example 2: Major Initiative
 ```
-Exploring (4 weeks) → RFC (6 weeks) → In Design (8 weeks) →
-In Dev (12 weeks) → Preview (4 weeks) → Shipped
+Exploring (4 weeks) → RFC (6 weeks) → Prioritization (8 weeks) →
+Executing (12 weeks) → Preview (4 weeks) → Shipped
 ```
 
 ### Example 3: Research Project

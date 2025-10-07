@@ -12,7 +12,7 @@ See [5w2h.md](5w2h.md) for complete strategic analysis (What, Why, Who, When, Wh
 
 ## Roadmap
 
-View Genie-specific initiatives: [Filter by project:genie](https://github.com/orgs/namastexlabs/projects/1/views/3?filterQuery=project%3Agenie)
+View Genie-specific initiatives: [Filter by project:genie](https://github.com/orgs/namastexlabs/projects/9?filterQuery=label%3Aproject%3Agenie)
 
 ## Active Wishes
 

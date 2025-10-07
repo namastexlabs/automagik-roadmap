@@ -32,7 +32,7 @@ This repository is the **single source of truth** for strategic initiatives acro
 - 📊 **The Command Center**: Where all projects align on priorities and timelines
 - 🎯 **The Context Repository**: Strategic analysis (5w2h) and detailed wishes for each project
 - 🤝 **The Community Hub**: Where stakeholders provide feedback and track progress
-- 📈 **The Progress Tracker**: From Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
+- 📈 **The Progress Tracker**: From Ideation → Exploring → RFC → Prioritization → Executing → Preview → Shipped
 
 ### 💡 Why a Public Roadmap?
 
@@ -78,6 +78,7 @@ Each project folder contains:
 **Quick Filters:**
 - 📅 [All Initiatives](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Ainitiative)
 - 🚧 [Executing](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3AExecuting)
+- 📋 [Prioritization](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3APrioritization)
 - ✅ [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3AShipped)
 - ⚡ [This Quarter (Q4 2025)](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aquarter%3A2025-q4)
 - 🔥 [High Priority](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Apriority%3Ahigh+label%3Ainitiative)
@@ -108,10 +109,11 @@ Each project folder contains:
 
 Our initiatives follow a structured lifecycle inspired by [GitHub's public roadmap](https://github.com/github/roadmap):
 
+- 💡 **Ideation** - Initial ideation and brainstorming
 - 🔍 **Exploring** - Early investigation, validating the idea
 - 💬 **RFC** - Request for comments, gathering community feedback
-- 🎨 **In Design** - Designing architecture and approach
-- 🔨 **In Development** - Active implementation
+- 📋 **Prioritization** - Prioritization and planning phase
+- 🔨 **Executing** - Active execution and implementation
 - 🧪 **Preview** - Beta/preview release for testing
 - ✅ **Shipped** - Generally available, live in production
 - 📦 **Archived** - No longer active or deprioritized

@@ -57,7 +57,7 @@ Open-source projects often struggle with:
 
 **In Open Source:**
 - Often a core maintainer or active contributor
-- May be assigned when initiative moves to "In Development"
+- May be assigned when initiative moves to "Executing"
 - Can change if person becomes unavailable
 
 ---
@@ -410,8 +410,8 @@ RASCI may change as initiatives move through stages:
 |-------|---------------------|
 | **Exploring** | R may be "TBD", A is product/project lead |
 | **RFC** | C expands to community, I grows |
-| **In Design** | R assigned (architect/designer), S identified |
-| **In Dev** | R is developer, S is technical helpers |
+| **Prioritization** | R assigned (architect/designer), S identified |
+| **Executing** | R is developer, S is technical helpers |
 | **Preview** | S may include testers, I expands to beta users |
 | **Shipped** | R may shift to maintainer for ongoing support |
 

@@ -8,7 +8,7 @@ Complete taxonomy and usage guide for Automagik roadmap labels.
 
 The Automagik roadmap uses a **multi-dimensional label system** to organize and filter initiatives. Labels are grouped into **6 dimensions**, allowing precise categorization and powerful filtering.
 
-**Total Labels:** ~40 labels across 6 dimensions
+**Total Labels:** 56 labels across 6 dimensions
 
 **Inspiration:** GitHub's public roadmap label system
 
@@ -46,7 +46,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 | `Ideation` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
 | `Exploring` | `#FBCA04` | Early investigation and validation | 1-4 weeks |
 | `RFC` | `#FFA500` | Request for comments, gathering feedback | 2-6 weeks |
-| `Priorization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
+| `Prioritization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
 | `Executing` | `#1D76DB` | Active execution and implementation | 4-16 weeks |
 | `Preview` | `#9C27B0` | Beta or preview release for testing | 2-8 weeks |
 | `Shipped` | `#0E8A16` | Generally available in production | Ongoing |
@@ -59,9 +59,9 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 **Flow:**
 ```
-Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
-                                                                      ↓
-                                                                  Archived
+Ideation → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+                                                                         ↓
+                                                                     Archived
 ```
 
 ---
@@ -180,7 +180,7 @@ Technical domain or functional area.
 ```yaml
 Labels:
   - project:omni
-  - Priorization
+  - Prioritization
   - type:feature
   - priority:high
   - quarter:2026-q1

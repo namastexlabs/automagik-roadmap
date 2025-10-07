@@ -12,7 +12,7 @@ See [5w2h.md](5w2h.md) for complete strategic analysis (What, Why, Who, When, Wh
 
 ## Roadmap
 
-View Forge-specific initiatives: [Filter by project:forge](https://github.com/orgs/namastexlabs/projects/1/views/3?filterQuery=project%3Aforge)
+View Forge-specific initiatives: [Filter by project:forge](https://github.com/orgs/namastexlabs/projects/9?filterQuery=label%3Aproject%3Aforge)
 
 ## Active Wishes
 

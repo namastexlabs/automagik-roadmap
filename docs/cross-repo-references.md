@@ -232,8 +232,8 @@ Depends on core library: namastexlabs/automagik-infra#45
 
 View Omni-specific initiatives on the roadmap:
 - [All Omni Initiatives](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni)
-- [In Development](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni+label%3Astage%3Ain-dev)
-- [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni+label%3Astage%3Ashipped)
+- [Executing](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni+label%3AExecuting)
+- [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni+label%3AShipped)
 - [This Quarter](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni+label%3Aquarter%3A2025-q4)
 
 ## 📂 Detailed Wishes

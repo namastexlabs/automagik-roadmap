@@ -44,11 +44,11 @@ It uses GitHub Issues, Projects, and Labels to track what we're building, why we
 **Multiple ways:**
 
 1. **GitHub Issues:** [Browse all initiatives](https://github.com/namastexlabs/automagik-roadmap/issues)
-2. **Project Board:** [View project board](https://github.com/orgs/namastexlabs/projects/1) *(link will be updated after creation)*
+2. **Project Board:** [View project board](https://github.com/orgs/namastexlabs/projects/9)
 3. **Filtered Views:**
    - [By Project](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aproject%3Aomni)
    - [This Quarter](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aquarter%3A2025-q4)
-   - [In Development](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Astage%3Ain-dev)
+   - [Executing](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3AExecuting)
 
 ---
 
@@ -75,10 +75,11 @@ See [Label Guide](label-guide.md) for all available labels.
 
 Initiatives progress through stages from exploration to delivery:
 
+- 💡 **Ideation** - Initial ideation and brainstorming
 - 🔍 **Exploring** - Early investigation
 - 💬 **RFC** - Request for comments
-- 🎨 **In Design** - Design phase
-- 🔨 **In Development** - Active implementation
+- 📋 **Prioritization** - Prioritization and planning phase
+- 🔨 **Executing** - Active execution and implementation
 - 🧪 **Preview** - Beta/preview release
 - ✅ **Shipped** - Generally available
 - 📦 **Archived** - No longer active
