@@ -1,10 +1,10 @@
-# Spark - AI Infrastructure
+# Spark - Cron System
 
 **Repository:** [namastexlabs/automagik-spark](https://github.com/namastexlabs/automagik-spark)
 
 ## Overview
 
-AI infrastructure and foundational services for the Automagik ecosystem.
+Temporal automation system that gives AI agents and workflows autonomous life. The "smart alarm clock" that transforms reactive agents into proactive systems working 24/7 - scheduling workflows, orchestrating executions, and sparking repos to action.
 
 ## Strategic Context
 

@@ -10,16 +10,16 @@
   description: Hive - Multi-agent orchestration
 - name: project:spark
   color: '0052CC'
-  description: Spark - AI infrastructure
+  description: Spark - Cron system that sparks repos
 - name: project:forge
   color: '0052CC'
-  description: Forge - Task planning and execution
+  description: Forge - AI-powered development orchestrator
 - name: project:genie
   color: '0052CC'
-  description: Genie - Autonomous agents
+  description: Genie - Autonomous agent framework
 - name: project:tools
   color: '0052CC'
-  description: Tools - CLI utilities
+  description: Tools - MCP tools builder & marketplace
 - name: project:cross-project
   color: '0052CC'
   description: Spans multiple projects

@@ -1,10 +1,10 @@
-# Genie - Autonomous Agents
+# Genie - Autonomous Agent Framework
 
 **Repository:** [namastexlabs/automagik-genie](https://github.com/namastexlabs/automagik-genie)
 
 ## Overview
 
-Autonomous agent framework with plan → wish → forge → review workflow, MCP integration, and meta-learning capabilities.
+Structured autonomous agent framework implementing the plan → wish → forge → review workflow. Provides orchestration primitives, MCP integration, meta-learning capabilities, and specialized delivery agents for systematic AI-powered development.
 
 ## Strategic Context
 

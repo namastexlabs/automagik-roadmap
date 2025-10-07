@@ -1,10 +1,10 @@
-# Forge - Task Planning & Execution
+# Forge - AI Development Orchestrator
 
 **Repository:** [namastexlabs/automagik-forge](https://github.com/namastexlabs/automagik-forge)
 
 ## Overview
 
-Task planning and execution framework with MCP integration, breaking wishes into execution groups with validation hooks.
+The maestro of AI-powered development - transforms "vibe coding" chaos into structured productivity. A Kanban board that not only organizes tasks but executes them through any AI agent (Claude, Gemini, Cursor, etc.), with git worktree isolation and multi-agent orchestration. BYOL (Bring Your Own LLM) architecture keeps you in control.
 
 ## Strategic Context
 

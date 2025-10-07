@@ -25,10 +25,10 @@ Welcome to the Automagik public roadmap! This repository provides transparency i
 |---------|-------------|------------|---------|
 | **[Omni](projects/omni/)** | Omnichannel messaging with MCP | [namastexlabs/automagik-omni](https://github.com/namastexlabs/automagik-omni) | [5w2h](projects/omni/5w2h.md) |
 | **[Hive](projects/hive/)** | Multi-agent orchestration | [namastexlabs/automagik-hive](https://github.com/namastexlabs/automagik-hive) | [5w2h](projects/hive/5w2h.md) |
-| **[Spark](projects/spark/)** | AI infrastructure | [namastexlabs/automagik-spark](https://github.com/namastexlabs/automagik-spark) | [5w2h](projects/spark/5w2h.md) |
-| **[Forge](projects/forge/)** | Task planning & execution | [namastexlabs/automagik-forge](https://github.com/namastexlabs/automagik-forge) | [5w2h](projects/forge/5w2h.md) |
-| **[Genie](projects/genie/)** | Autonomous agents | [namastexlabs/automagik-genie](https://github.com/namastexlabs/automagik-genie) | [5w2h](projects/genie/5w2h.md) |
-| **[Tools](projects/tools/)** | CLI utilities | [namastexlabs/automagik-tools](https://github.com/namastexlabs/automagik-tools) | [5w2h](projects/tools/5w2h.md) |
+| **[Spark](projects/spark/)** | Cron system that sparks repos | [namastexlabs/automagik-spark](https://github.com/namastexlabs/automagik-spark) | [5w2h](projects/spark/5w2h.md) |
+| **[Forge](projects/forge/)** | AI-powered development orchestrator | [namastexlabs/automagik-forge](https://github.com/namastexlabs/automagik-forge) | [5w2h](projects/forge/5w2h.md) |
+| **[Genie](projects/genie/)** | Autonomous agent framework | [namastexlabs/automagik-genie](https://github.com/namastexlabs/automagik-genie) | [5w2h](projects/genie/5w2h.md) |
+| **[Tools](projects/tools/)** | MCP tools builder & marketplace | [namastexlabs/automagik-tools](https://github.com/namastexlabs/automagik-tools) | [5w2h](projects/tools/5w2h.md) |
 
 ---
 
