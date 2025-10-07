@@ -10,9 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/namastexlabs/automagik-roadmap/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/namastexlabs/automagik-roadmap?style=flat-square&color=00D9FF" /></a>
+  <a href="https://github.com/namastexlabs/automagik-roadmap/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-00D9FF?style=flat-square" /></a>
   <a href="https://discord.gg/xcW8c7fF3R"><img alt="Discord" src="https://img.shields.io/discord/1095114867012292758?style=flat-square&color=00D9FF&label=discord" /></a>
-  <a href="https://github.com/namastexlabs/automagik-roadmap/issues"><img alt="Initiatives" src="https://img.shields.io/github/issues/namastexlabs/automagik-roadmap/initiative?style=flat-square&color=00D9FF&label=initiatives" /></a>
+  <a href="https://github.com/namastexlabs/automagik-roadmap/issues?q=label%3Ainitiative"><img alt="Initiatives" src="https://img.shields.io/badge/initiatives-5-00D9FF?style=flat-square" /></a>
 </p>
 
 <p align="center">
