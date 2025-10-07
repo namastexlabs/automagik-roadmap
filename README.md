@@ -32,7 +32,7 @@ This repository is the **single source of truth** for strategic initiatives acro
 - 📊 **The Command Center**: Where all projects align on priorities and timelines
 - 🎯 **The Context Repository**: Strategic analysis (5w2h) and detailed wishes for each project
 - 🤝 **The Community Hub**: Where stakeholders provide feedback and track progress
-- 📈 **The Progress Tracker**: From Exploring → RFC → Design → Dev → Preview → Shipped
+- 📈 **The Progress Tracker**: From Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
 
 ### 💡 Why a Public Roadmap?
 
@@ -77,8 +77,8 @@ Each project folder contains:
 
 **Quick Filters:**
 - 📅 [All Initiatives](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Ainitiative)
-- 🚧 [In Development](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Astage%3Ain-dev)
-- ✅ [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Astage%3Ashipped)
+- 🚧 [Executing](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3AExecuting)
+- ✅ [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3AShipped)
 - ⚡ [This Quarter (Q4 2025)](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aquarter%3A2025-q4)
 - 🔥 [High Priority](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Apriority%3Ahigh+label%3Ainitiative)
 
@@ -123,7 +123,7 @@ We use a **6-dimensional label system** to organize initiatives:
 | Dimension | Examples | Purpose |
 |-----------|----------|---------|
 | **Project** | `project:omni`, `project:hive` | Which project(s) are involved |
-| **Stage** | `stage:exploring`, `stage:in-dev` | Current development phase |
+| **Stage** | `Exploring`, `Executing` | Current development phase |
 | **Type** | `type:feature`, `type:research` | Kind of initiative |
 | **Priority** | `priority:critical`, `priority:high` | Urgency level |
 | **Quarter** | `quarter:2025-q4`, `quarter:2026-q1` | Target timeframe |
