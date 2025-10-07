@@ -1,21 +1,59 @@
-# 🗺️ Automagik Public Roadmap
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/automagik-roadmap-dark-png.png">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/automagik-roadmap-light-png.png">
+    <img alt="Automagik Roadmap Logo" src=".github/assets/automagik-roadmap-light-png.png" width="400">
+  </picture>
+</p>
+<h2 align="center">Public Roadmap for the Automagik Ecosystem</h2>
 
-Welcome to the Automagik public roadmap! This repository provides transparency into strategic initiatives across all Automagik projects.
+<p align="center">
+  <strong>🗺️ Transparency, Ownership, Results-Driven</strong><br>
+  Strategic initiatives across Omni, Hive, Spark, Forge, Genie, and Tools<br>
+  Track what we're building, why we're building it, and who's building it
+</p>
 
-> **Disclaimer:** This roadmap represents our current plans and priorities. Items may change based on community feedback, technical constraints, and strategic shifts. No dates or commitments are guaranteed.
+<p align="center">
+  <a href="https://github.com/namastexlabs/automagik-roadmap/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/namastexlabs/automagik-roadmap?style=flat-square&color=00D9FF" /></a>
+  <a href="https://discord.gg/automagik"><img alt="Discord" src="https://img.shields.io/discord/1095114867012292758?style=flat-square&color=00D9FF&label=discord" /></a>
+  <a href="https://github.com/namastexlabs/automagik-roadmap/issues"><img alt="Initiatives" src="https://img.shields.io/github/issues/namastexlabs/automagik-roadmap/initiative?style=flat-square&color=00D9FF&label=initiatives" /></a>
+</p>
+
+<p align="center">
+  <a href="#-projects">Projects</a> •
+  <a href="#-how-to-propose">How to Propose</a> •
+  <a href="#-labels--stages">Labels & Stages</a> •
+  <a href="#-contributing">Contributing</a> •
+  <a href="#-documentation">Documentation</a>
+</p>
 
 ---
 
-## 📊 View the Roadmap
+## 🗺️ What is the Automagik Roadmap?
 
-🔗 **[View Project Board](https://github.com/orgs/namastexlabs/projects/1)** *(link will be updated after project creation)*
+This repository is the **single source of truth** for strategic initiatives across the entire Automagik ecosystem. Think of it as:
 
-**Views:**
-- **Timeline** - Quarterly roadmap view
-- **Stage Board** - Kanban columns by development stage
-- **By Project** - Grouped by project
-- **This Quarter** - Current Q4 2025 focus
-- **Table** - Complete data view
+- 📊 **The Command Center**: Where all projects align on priorities and timelines
+- 🎯 **The Context Repository**: Strategic analysis (5w2h) and detailed wishes for each project
+- 🤝 **The Community Hub**: Where stakeholders provide feedback and track progress
+- 📈 **The Progress Tracker**: From Exploring → RFC → Design → Dev → Preview → Shipped
+
+### 💡 Why a Public Roadmap?
+
+**Transparency** builds trust. **Ownership** drives results. **Structure** enables scale.
+
+**Before:**
+- ❌ Roadmap scattered across Slack, Notion, and individual heads
+- ❌ Community asks "when will X be ready?" without visibility
+- ❌ Cross-project dependencies create surprise blockers
+- ❌ No clear ownership = things fall through the cracks
+
+**After (with this repo):**
+- ✅ Single place to see what's being built across all projects
+- ✅ Clear RASCI ownership (Responsible, Accountable, Support, Consulted, Informed)
+- ✅ Expected results tracked for every initiative
+- ✅ Community can comment, vote, and contribute ideas
+- ✅ Quarterly planning and review cadence
 
 ---
 
@@ -23,24 +61,48 @@ Welcome to the Automagik public roadmap! This repository provides transparency i
 
 | Project | Description | Repository | Context |
 |---------|-------------|------------|---------|
-| **[Omni](projects/omni/)** | Omnichannel messaging with MCP | [namastexlabs/automagik-omni](https://github.com/namastexlabs/automagik-omni) | [5w2h](projects/omni/5w2h.md) |
-| **[Hive](projects/hive/)** | Multi-agent orchestration | [namastexlabs/automagik-hive](https://github.com/namastexlabs/automagik-hive) | [5w2h](projects/hive/5w2h.md) |
-| **[Spark](projects/spark/)** | Cron system that sparks repos | [namastexlabs/automagik-spark](https://github.com/namastexlabs/automagik-spark) | [5w2h](projects/spark/5w2h.md) |
-| **[Forge](projects/forge/)** | AI-powered development orchestrator | [namastexlabs/automagik-forge](https://github.com/namastexlabs/automagik-forge) | [5w2h](projects/forge/5w2h.md) |
-| **[Genie](projects/genie/)** | Autonomous agent framework | [namastexlabs/automagik-genie](https://github.com/namastexlabs/automagik-genie) | [5w2h](projects/genie/5w2h.md) |
-| **[Tools](projects/tools/)** | MCP tools builder & marketplace | [namastexlabs/automagik-tools](https://github.com/namastexlabs/automagik-tools) | [5w2h](projects/tools/5w2h.md) |
+| **[Omni](projects/omni/)** | Omnichannel messaging with MCP | [automagik-omni](https://github.com/namastexlabs/automagik-omni) | [5w2h](projects/omni/5w2h.md) |
+| **[Hive](projects/hive/)** | Multi-agent orchestration | [automagik-hive](https://github.com/namastexlabs/automagik-hive) | [5w2h](projects/hive/5w2h.md) |
+| **[Spark](projects/spark/)** | Cron system that sparks repos | [automagik-spark](https://github.com/namastexlabs/automagik-spark) | [5w2h](projects/spark/5w2h.md) |
+| **[Forge](projects/forge/)** | AI-powered development orchestrator | [automagik-forge](https://github.com/namastexlabs/automagik-forge) | [5w2h](projects/forge/5w2h.md) |
+| **[Genie](projects/genie/)** | Autonomous agent framework | [automagik-genie](https://github.com/namastexlabs/automagik-genie) | [5w2h](projects/genie/5w2h.md) |
+| **[Tools](projects/tools/)** | MCP tools builder & marketplace | [automagik-tools](https://github.com/namastexlabs/automagik-tools) | [5w2h](projects/tools/5w2h.md) |
+
+Each project folder contains:
+- **5w2h.md** - Strategic analysis (What, Why, Who, When, Where, How, How Much)
+- **wishes/** - Detailed initiative plans following the [automagik-genie](https://github.com/namastexlabs/automagik-genie) pattern
+- **README.md** - Project overview with repository links
 
 ---
 
-## 📋 How to Propose an Initiative
+## 📊 View the Roadmap
 
-1. **[Create a new issue](../../issues/new/choose)** using the Initiative template
-2. Fill in the **RASCI ownership** (Responsible, Accountable, Support, Consulted, Informed)
-3. Define **expected results** with measurable outcomes
-4. Add relevant labels (project, stage, priority, quarter, area)
-5. The issue will automatically be added to the project board
+🔗 **[View Project Board](https://github.com/orgs/namastexlabs/projects/1)** *(link will be updated after project creation)*
 
-**Community feedback is welcome!** Comment on issues to share your thoughts.
+**Available Views:**
+- 📅 **Timeline** - Quarterly roadmap view
+- 📋 **Stage Board** - Kanban columns by development stage
+- 📁 **By Project** - Grouped by project
+- ⏰ **This Quarter** - Current Q4 2025 focus
+- 📊 **Table** - Complete data view with all fields
+
+---
+
+## 📋 How to Propose
+
+**Want to suggest a new initiative?**
+
+1. **[Create a new issue](../../issues/new/choose)** using the **Initiative template**
+2. Fill in the required fields:
+   - **Project**: Which Automagik project(s) are affected
+   - **Description**: What are we building and why?
+   - **Expected Results**: Measurable outcomes (RESULTADO_ESPERADO)
+   - **RASCI Ownership**: Who's responsible, accountable, supporting, consulted, informed
+3. Add relevant **labels** (project, stage, priority, quarter, area)
+4. The issue will **automatically** be added to the project board
+5. Community can **comment** and provide feedback
+
+**💬 Community feedback is welcome!** Share your thoughts on any initiative.
 
 ---
 
@@ -48,48 +110,57 @@ Welcome to the Automagik public roadmap! This repository provides transparency i
 
 ### Development Stages
 
-- 🔍 **Exploring** - Early investigation and research
-- 💬 **RFC** - Request for comments, gathering feedback
-- 🎨 **In Design** - Design and planning phase
+Our initiatives follow a structured lifecycle inspired by [GitHub's public roadmap](https://github.com/github/roadmap):
+
+- 🔍 **Exploring** - Early investigation, validating the idea
+- 💬 **RFC** - Request for comments, gathering community feedback
+- 🎨 **In Design** - Designing architecture and approach
 - 🔨 **In Development** - Active implementation
 - 🧪 **Preview** - Beta/preview release for testing
-- ✅ **Shipped** - Generally available
-- 📦 **Archived** - No longer active
+- ✅ **Shipped** - Generally available, live in production
+- 📦 **Archived** - No longer active or deprioritized
 
-### Label Dimensions
+### Multi-Dimensional Labels
 
-Our multi-dimensional label system helps organize initiatives:
+We use a **6-dimensional label system** to organize initiatives:
 
-- **Project:** `project:omni`, `project:hive`, etc.
-- **Stage:** `stage:exploring`, `stage:in-dev`, etc.
-- **Type:** `type:feature`, `type:enhancement`, `type:research`, etc.
-- **Priority:** `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
-- **Quarter:** `quarter:2025-q4`, `quarter:2026-q1`, etc.
-- **Area:** `area:api`, `area:mcp`, `area:agents`, etc.
+| Dimension | Examples | Purpose |
+|-----------|----------|---------|
+| **Project** | `project:omni`, `project:hive` | Which project(s) are involved |
+| **Stage** | `stage:exploring`, `stage:in-dev` | Current development phase |
+| **Type** | `type:feature`, `type:research` | Kind of initiative |
+| **Priority** | `priority:critical`, `priority:high` | Urgency level |
+| **Quarter** | `quarter:2025-q4`, `quarter:2026-q1` | Target timeframe |
+| **Area** | `area:api`, `area:mcp`, `area:agents` | Technical domain |
 
-[View complete label guide](docs/label-guide.md)
+**Total:** ~40 labels across 6 dimensions for precise organization.
+
+[View complete label guide →](docs/label-guide.md)
 
 ---
 
 ## 📚 Documentation
 
-- **[Stage Definitions](docs/stage-definitions.md)** - Detailed stage criteria and transitions
-- **[Label Guide](docs/label-guide.md)** - Complete label taxonomy
-- **[RASCI Guide](docs/rasci-guide.md)** - Ownership model for open source
+- **[Stage Definitions](docs/stage-definitions.md)** - Detailed criteria for each stage
+- **[Label Guide](docs/label-guide.md)** - Complete label taxonomy and usage
+- **[RASCI Guide](docs/rasci-guide.md)** - Ownership model for open source projects
 - **[Wish Template](docs/wish-template.md)** - How to structure detailed initiatives
-- **[Cross-Repo References](docs/cross-repo-references.md)** - Linking projects together
+- **[Cross-Repo References](docs/cross-repo-references.md)** - Linking initiatives across repos
 
 ---
 
 ## 📊 CSV Export
 
-Weekly CSV exports are available in [`exports/`](exports/) for reporting and analysis.
+Weekly CSV exports are available in [`exports/`](exports/) for stakeholder reporting and analysis.
 
 **Export format includes:**
 - Project, Initiative, Description
 - Stage, Quarter, Priority
 - Expected Results
-- Owner, Dates, Links
+- Owner, Created/Updated dates
+- Links to issues and wish folders
+
+Exports run **automatically every Monday** via GitHub Actions.
 
 ---
 
@@ -97,9 +168,33 @@ Weekly CSV exports are available in [`exports/`](exports/) for reporting and ana
 
 We welcome community input on our roadmap!
 
-- **Comment on issues** to share feedback
-- **Propose new initiatives** via issue templates
-- **Join discussions** on our [Discord](https://discord.gg/automagik)
+**How to contribute:**
+- 💬 **Comment on issues** to share feedback and ideas
+- 🎯 **Propose new initiatives** via issue templates
+- 📝 **Create detailed wishes** in project folders
+- 💡 **Join discussions** on our [Discord](https://discord.gg/automagik)
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+---
+
+## ⚖️ Disclaimer
+
+This roadmap represents our **current plans and priorities**. Items may change based on:
+- Community feedback and feature requests
+- Technical constraints and dependencies
+- Strategic shifts and market changes
+- Resource availability and capacity
+
+**No dates or commitments are guaranteed.** This is a living document that evolves with the ecosystem.
+
+---
+
+## 🔗 Links
+
+- **Discord**: [Join the community](https://discord.gg/automagik)
+- **GitHub Org**: [@namastexlabs](https://github.com/namastexlabs)
+- **Documentation**: [docs.automagik.ai](https://docs.automagik.ai)
 
 ---
 
@@ -109,4 +204,7 @@ MIT License - See [LICENSE](LICENSE)
 
 ---
 
-**Questions?** Check our [FAQ](docs/faq.md) or reach out on [Discord](https://discord.gg/automagik).
+<p align="center">
+  <strong>Built with transparency by <a href="https://github.com/namastexlabs">Namastex Labs</a></strong><br>
+  Questions? Check our <a href="docs/faq.md">FAQ</a> or reach out on <a href="https://discord.gg/automagik">Discord</a>
+</p>
