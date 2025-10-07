@@ -35,36 +35,40 @@
   description: 'Cross-project - Spans multiple Automagik projects'
 
 # ============================================
-# STAGE DIMENSION (7 labels)
+# STAGE DIMENSION (8 labels)
 # ============================================
+
+- name: stage:ideation
+  color: 'E1BEE7'
+  description: 'Ideação - Initial ideation and brainstorming'
 
 - name: stage:exploring
   color: 'FBCA04'
-  description: 'Exploring - Early investigation and validation'
+  description: 'Investigação - Early investigation and validation'
 
 - name: stage:rfc
   color: 'FFA500'
-  description: 'RFC - Request for comments, gathering feedback'
+  description: 'Proposta - Request for comments, gathering feedback'
 
-- name: stage:in-design
+- name: stage:priorization
   color: 'D876E3'
-  description: 'In Design - Designing architecture and approach'
+  description: 'Priorização - Prioritization and planning'
 
-- name: stage:in-dev
+- name: stage:executing
   color: '1D76DB'
-  description: 'In Development - Active implementation'
+  description: 'Execução - Active execution and implementation'
 
 - name: stage:preview
-  color: '0E8A16'
-  description: 'Preview - Beta or preview release'
+  color: '9C27B0'
+  description: 'Preview - Beta or preview release for testing'
 
 - name: stage:shipped
   color: '0E8A16'
-  description: 'Shipped - Generally available in production'
+  description: 'Finalizado - Generally available in production'
 
 - name: stage:archived
   color: '6C757D'
-  description: 'Archived - No longer active or deprioritized'
+  description: 'Arquivado - No longer active or deprioritized'
 
 # ============================================
 # TYPE DIMENSION (6 labels)
