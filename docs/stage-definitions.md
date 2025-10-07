@@ -10,16 +10,37 @@ Every initiative progresses through a series of stages from initial exploration 
 
 **Stage Flow:**
 ```
-Exploring → RFC → In Design → In Development → Preview → Shipped
-                                                            ↓
-                                                        Archived
+Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
+                                                                      ↓
+                                                                  Archived
 ```
+
+---
+
+## 💡 Ideation
+
+**Definition:** Initial ideation and brainstorming phase. Early concept formation.
+
+**Activities:**
+- Initial idea capture
+- High-level brainstorming
+- Preliminary problem definition
+- Opportunity identification
+
+**Exit Criteria:**
+- Idea is clearly articulated
+- Initial stakeholder interest
+- Worth exploring further
+
+**Typical Duration:** 1-2 weeks
+
+**Labels:** `Ideation`
 
 ---
 
 ## 🔍 Exploring
 
-**Definition:** Early investigation phase. We're validating whether this initiative is worth pursuing.
+**Definition:** Early investigation and validation phase. We're validating whether this initiative is worth pursuing.
 
 **Activities:**
 - Problem research and validation
@@ -36,7 +57,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 **Typical Duration:** 1-4 weeks
 
-**Labels:** `stage:exploring`
+**Labels:** `Exploring`
 
 ---
 
@@ -59,15 +80,15 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 **Typical Duration:** 2-6 weeks
 
-**Labels:** `stage:rfc`
+**Labels:** `RFC`
 
-**Note:** RFC can happen in parallel with "Exploring" or "In Design" for community-driven projects.
+**Note:** RFC can happen in parallel with "Exploring" or "Priorization" for community-driven projects.
 
 ---
 
-## 🎨 In Design
+## 📋 Priorization
 
-**Definition:** Designing the solution architecture, UX, and technical approach.
+**Definition:** Prioritization and planning phase. Determining implementation approach and timeline.
 
 **Activities:**
 - Creating technical specifications
@@ -76,6 +97,8 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 - Designing user flows (if applicable)
 - Identifying dependencies
 - Writing wish document (if using wish structure)
+- Prioritizing features and requirements
+- Resource planning
 
 **Exit Criteria:**
 - Technical spec completed
@@ -83,16 +106,17 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 - Dependencies identified and planned
 - Success criteria defined
 - Wish document created (optional)
+- Implementation priority established
 
 **Typical Duration:** 2-8 weeks
 
-**Labels:** `stage:in-design`
+**Labels:** `Priorization`
 
 ---
 
-## 🔨 In Development
+## 🔨 Executing
 
-**Definition:** Active implementation of the initiative.
+**Definition:** Active execution and implementation of the initiative.
 
 **Activities:**
 - Writing code
@@ -111,7 +135,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 **Typical Duration:** 4-16 weeks (varies widely)
 
-**Labels:** `stage:in-dev`
+**Labels:** `Executing`
 
 **Progress Indicators:**
 - Update issue with weekly progress
@@ -122,7 +146,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 ## 🧪 Preview
 
-**Definition:** Beta or preview release for early adopters and testing.
+**Definition:** Beta or preview release for testing.
 
 **Activities:**
 - Beta testing with select users
@@ -141,7 +165,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 **Typical Duration:** 2-8 weeks
 
-**Labels:** `stage:preview`
+**Labels:** `Preview`
 
 **Note:** Not all initiatives require a preview stage. Small features may go straight to shipped.
 
@@ -149,7 +173,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 ## ✅ Shipped
 
-**Definition:** Generally available and in production.
+**Definition:** Generally available in production.
 
 **Activities:**
 - Production deployment
@@ -166,7 +190,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 **Duration:** Ongoing
 
-**Labels:** `stage:shipped`
+**Labels:** `Shipped`
 
 **Follow-up:**
 - Track expected results
@@ -178,7 +202,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 ## 📦 Archived
 
-**Definition:** Initiative is no longer active or has been superseded.
+**Definition:** No longer active or deprioritized.
 
 **Reasons for Archiving:**
 - Initiative completed and stable (no further work planned)
@@ -191,7 +215,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 - Link to replacement (if applicable)
 - Close issue with summary
 
-**Labels:** `stage:archived`
+**Labels:** `Archived`
 
 ---
 
@@ -201,7 +225,7 @@ Exploring → RFC → In Design → In Development → Preview → Shipped
 
 1. **Update the issue:**
    - Add a comment explaining the transition
-   - Update the `stage:*` label
+   - Update the stage label
    - Update project board fields
 
 2. **Notify stakeholders:**

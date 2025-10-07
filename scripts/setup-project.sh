@@ -145,7 +145,7 @@ Add native Slack integration to Automagik Omni for bidirectional messaging betwe
 
 **Wish Folder:** projects/omni/wishes/slack-integration/ (to be created)
 **Related Repositories:** namastexlabs/automagik-omni" \
-    "initiative,project:omni,stage:exploring,type:feature,priority:high,quarter:2026-q1,area:mcp,area:messaging"
+    "initiative,project:omni,Exploring,type:feature,priority:high,quarter:2026-q1,area:mcp,area:messaging"
 
 # Example Initiative 2: Hive - Multi-Agent Swarm Coordination
 create_initiative \
@@ -195,7 +195,7 @@ Implement swarm intelligence patterns for coordinating multiple AI agents workin
 
 **Wish Folder:** projects/hive/wishes/swarm-coordination/
 **Related Repositories:** namastexlabs/automagik-hive" \
-    "initiative,project:hive,stage:rfc,type:feature,priority:high,quarter:2026-q1,area:agents,area:workflows"
+    "initiative,project:hive,RFC,type:feature,priority:high,quarter:2026-q1,area:agents,area:workflows"
 
 # Example Initiative 3: Cross-Project - Unified Auth System
 create_initiative \
@@ -252,7 +252,7 @@ Implement shared authentication and authorization system across all Automagik pr
 - namastexlabs/automagik-omni
 - namastexlabs/automagik-hive
 - namastexlabs/automagik-spark" \
-    "initiative,project:cross-project,stage:exploring,type:infrastructure,priority:critical,quarter:2025-q4,area:auth,area:security"
+    "initiative,project:cross-project,Exploring,type:infrastructure,priority:critical,quarter:2025-q4,area:auth,area:security"
 
 # Example Initiative 4: Tools - MCP Tool Marketplace
 create_initiative \
@@ -303,7 +303,7 @@ Create a public marketplace for discovering and sharing MCP tools built by the c
 
 **Wish Folder:** projects/tools/wishes/mcp-marketplace/
 **Related Repositories:** namastexlabs/automagik-tools" \
-    "initiative,project:tools,stage:in-design,type:feature,priority:medium,quarter:2026-q1,area:ui,area:mcp"
+    "initiative,project:tools,Priorization,type:feature,priority:medium,quarter:2026-q1,area:ui,area:mcp"
 
 # Example Initiative 5: Spark - Intelligent Scheduling
 create_initiative \
@@ -353,7 +353,7 @@ Add AI-powered scheduling to Spark that learns optimal execution times based on 
 
 **Wish Folder:** projects/spark/wishes/intelligent-scheduling/
 **Related Repositories:** namastexlabs/automagik-spark" \
-    "initiative,project:spark,stage:exploring,type:enhancement,priority:medium,quarter:2026-q2,area:workflows,area:performance"
+    "initiative,project:spark,Exploring,type:enhancement,priority:medium,quarter:2026-q2,area:workflows,area:performance"
 
 echo -e "${GREEN}✓ Example initiatives created${NC}"
 echo ""

@@ -37,19 +37,20 @@ Identifies which Automagik project(s) the initiative belongs to.
 
 ---
 
-### 2. 🔄 Stage Dimension (7 labels)
+### 2. 🔄 Stage Dimension (8 labels)
 
 Indicates the current development phase. See [Stage Definitions](stage-definitions.md) for detailed criteria.
 
 | Label | Color | Description | Typical Duration |
 |-------|-------|-------------|------------------|
-| `stage:exploring` | `#FBCA04` | Early investigation | 1-4 weeks |
-| `stage:rfc` | `#FFA500` | Request for comments | 2-6 weeks |
-| `stage:in-design` | `#D876E3` | Design phase | 2-8 weeks |
-| `stage:in-dev` | `#1D76DB` | Active development | 4-16 weeks |
-| `stage:preview` | `#0E8A16` | Beta/preview release | 2-8 weeks |
-| `stage:shipped` | `#0E8A16` | Generally available | Ongoing |
-| `stage:archived` | `#6C757D` | No longer active | - |
+| `Ideation` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
+| `Exploring` | `#FBCA04` | Early investigation and validation | 1-4 weeks |
+| `RFC` | `#FFA500` | Request for comments, gathering feedback | 2-6 weeks |
+| `Priorization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
+| `Executing` | `#1D76DB` | Active execution and implementation | 4-16 weeks |
+| `Preview` | `#9C27B0` | Beta or preview release for testing | 2-8 weeks |
+| `Shipped` | `#0E8A16` | Generally available in production | Ongoing |
+| `Archived` | `#6C757D` | No longer active or deprioritized | - |
 
 **Usage:**
 - Every initiative MUST have exactly one stage label
@@ -58,9 +59,9 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 **Flow:**
 ```
-exploring → rfc → in-design → in-dev → preview → shipped
-                                                    ↓
-                                                archived
+Ideation → Exploring → RFC → Priorization → Executing → Preview → Shipped
+                                                                      ↓
+                                                                  Archived
 ```
 
 ---
@@ -179,7 +180,7 @@ Technical domain or functional area.
 ```yaml
 Labels:
   - project:omni
-  - stage:in-design
+  - Priorization
   - type:feature
   - priority:high
   - quarter:2026-q1
@@ -191,7 +192,7 @@ Labels:
 ```yaml
 Labels:
   - project:cross-project
-  - stage:in-dev
+  - Executing
   - type:infrastructure
   - priority:medium
   - quarter:2025-q4
@@ -203,7 +204,7 @@ Labels:
 ```yaml
 Labels:
   - project:hive
-  - stage:rfc
+  - RFC
   - type:research
   - priority:low
   - quarter:backlog
@@ -217,7 +218,7 @@ Labels:
 
 ### View All Omni Initiatives in Development
 ```
-label:project:omni label:stage:in-dev
+label:project:omni label:Executing
 ```
 
 ### View Critical Priorities This Quarter

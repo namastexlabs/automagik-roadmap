@@ -406,9 +406,9 @@ In your wish document:
 ```
 
 ### Status Sync
-- Wish "Exploring" → Issue `stage:exploring`
-- Wish "In Progress" → Issue `stage:in-dev`
-- Wish "Complete" → Issue `stage:shipped`
+- Wish "Exploring" → Issue `Exploring`
+- Wish "In Progress" → Issue `Executing`
+- Wish "Complete" → Issue `Shipped`
 
 ---
 

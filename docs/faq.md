@@ -61,7 +61,7 @@ Use **label filters** in GitHub Issues:
 label:project:omni
 
 # Hive initiatives in development
-label:project:hive label:stage:in-dev
+label:project:hive label:Executing
 
 # Critical priorities this quarter
 label:priority:critical label:quarter:2025-q4
