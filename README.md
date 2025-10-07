@@ -73,14 +73,14 @@ Each project folder contains:
 
 ## 📊 View the Roadmap
 
-🔗 **[View Project Board](https://github.com/orgs/namastexlabs/projects/1)** *(link will be updated after project creation)*
+🔗 **[View Project Board](https://github.com/orgs/namastexlabs/projects/9)** - Live project board with all initiatives
 
-**Available Views:**
-- 📅 **Timeline** - Quarterly roadmap view
-- 📋 **Stage Board** - Kanban columns by development stage
-- 📁 **By Project** - Grouped by project
-- ⏰ **This Quarter** - Current Q4 2025 focus
-- 📊 **Table** - Complete data view with all fields
+**Quick Filters:**
+- 📅 [All Initiatives](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Ainitiative)
+- 🚧 [In Development](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Astage%3Ain-dev)
+- ✅ [Shipped](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Astage%3Ashipped)
+- ⚡ [This Quarter (Q4 2025)](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Aquarter%3A2025-q4)
+- 🔥 [High Priority](https://github.com/namastexlabs/automagik-roadmap/issues?q=is%3Aissue+label%3Apriority%3Ahigh+label%3Ainitiative)
 
 ---
 
