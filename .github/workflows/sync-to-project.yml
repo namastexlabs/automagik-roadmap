@@ -135,6 +135,9 @@ jobs:
             core.setOutput('labels', labels.join(','));
 
       - name: Apply labels
+        # Only apply labels if we actually parsed data from the issue body
+        # (i.e., issue was created via form, not via CLI script which already sets labels)
+        if: steps.parse.outputs.project != ''
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
