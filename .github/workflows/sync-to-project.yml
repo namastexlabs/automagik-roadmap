@@ -16,13 +16,34 @@ jobs:
           private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
-      - name: Add to project
+      - name: Add to project via GraphQL
         id: add-project
-        uses: actions/add-to-project@v0.5.0
+        uses: actions/github-script@v7
         with:
-          project-url: https://github.com/orgs/namastexlabs/projects/9
           github-token: ${{ steps.generate-token.outputs.token }}
-          labeled: initiative
+          script: |
+            const mutation = `
+              mutation {
+                addProjectV2ItemById(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  contentId: "${{ github.event.issue.node_id }}"
+                }) {
+                  item {
+                    id
+                  }
+                }
+              }
+            `;
+
+            try {
+              const result = await github.graphql(mutation);
+              console.log('✓ Added to project board');
+              console.log('Item ID:', result.addProjectV2ItemById.item.id);
+              core.setOutput('item_id', result.addProjectV2ItemById.item.id);
+            } catch (error) {
+              console.log('Error adding to project:', error.message);
+              core.setFailed(error.message);
+            }
 
       - name: Parse issue form data
         id: parse
@@ -126,60 +147,7 @@ jobs:
               labels: labels
             });
 
-      - name: Get project item ID (with retry)
-        id: item-id
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ steps.generate-token.outputs.token }}
-          retries: 3
-          retry-exempt-status-codes: 400,401,403,404,422
-          script: |
-            const query = `
-              query {
-                organization(login: "namastexlabs") {
-                  projectV2(number: 9) {
-                    items(first: 100) {
-                      nodes {
-                        id
-                        content {
-                          ... on Issue {
-                            number
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `;
-
-            // Retry up to 5 times with delay
-            let item = null;
-            for (let i = 0; i < 5; i++) {
-              console.log(`Attempt ${i + 1}: Searching for issue #${context.issue.number}...`);
-
-              const result = await github.graphql(query);
-              item = result.organization.projectV2.items.nodes.find(
-                node => node.content && node.content.number === context.issue.number
-              );
-
-              if (item) {
-                console.log(`✓ Found project item: ${item.id}`);
-                break;
-              }
-
-              if (i < 4) {
-                console.log(`✗ Not found yet, waiting 5 seconds...`);
-                await new Promise(resolve => setTimeout(resolve, 5000));
-              }
-            }
-
-            if (!item) {
-              core.setFailed('Could not find project item after 5 attempts');
-              return;
-            }
-
-            core.setOutput('item_id', item.id);
+      # No need to search - we got the item_id from add-project step!
 
       - name: Set Project field
         if: steps.parse.outputs.project
@@ -201,7 +169,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_ec"
                   value: {singleSelectOptionId: "${projectOptions['${{ steps.parse.outputs.project }}']}"}
                 }) { projectV2Item { id } }
@@ -232,7 +200,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_hc"
                   value: {singleSelectOptionId: "${stageOptions['${{ steps.parse.outputs.stage }}']}"}
                 }) { projectV2Item { id } }
@@ -258,7 +226,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_kA"
                   value: {singleSelectOptionId: "${priorityOptions['${{ steps.parse.outputs.priority }}']}"}
                 }) { projectV2Item { id } }
@@ -287,7 +255,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2dPxc"
                   value: {singleSelectOptionId: "${quarterOptions['${{ steps.parse.outputs.quarter }}']}"}
                 }) { projectV2Item { id } }
@@ -312,7 +280,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c5dY"
                   value: {singleSelectOptionId: "${statusOptions['${{ steps.parse.outputs.status }}']}"}
                 }) { projectV2Item { id } }
@@ -331,7 +299,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aI"
                   value: {text: "${{ steps.parse.outputs.owner }}"}
                 }) { projectV2Item { id } }
@@ -350,7 +318,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aM"
                   value: {date: "${{ steps.parse.outputs.target_date }}"}
                 }) { projectV2Item { id } }
@@ -370,7 +338,7 @@ jobs:
               mutation {
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "PVT_kwDOBvG2684BE-4E"
-                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  itemId: "${{ steps.add-project.outputs.item_id }}"
                   fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aE"
                   value: {text: "${expectedResults}"}
                 }) { projectV2Item { id } }
