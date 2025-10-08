@@ -170,39 +170,54 @@ fi
 
 # Create the issue
 echo "Creating issue..."
-ISSUE_URL=$(gh issue create \
+ISSUE_URL=$(echo "$BODY" | gh issue create \
   --repo "$ORG/$REPO" \
   --title "[Initiative] ${PROJECT_NAME^}: $TITLE" \
   --label "$LABELS" \
   --assignee "$OWNER" \
-  --body "$BODY")
+  --body-file -)
 
-ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '#\K\d+')
+ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '/issues/\K\d+')
 echo "Created issue #$ISSUE_NUMBER: $ISSUE_URL"
 
 # Add to project board
 echo "Adding to project board..."
 gh project item-add "$PROJECT_NUMBER" --owner "$ORG" --url "$ISSUE_URL"
 
-# Get project item ID
+# Get project item ID with retry logic (GraphQL can have delays)
 echo "Getting project item ID..."
-ITEM_ID=$(gh api graphql -f query="
-query {
-  organization(login: \"$ORG\") {
-    projectV2(number: $PROJECT_NUMBER) {
-      items(first: 20) {
-        nodes {
-          id
-          content {
-            ... on Issue {
-              number
+ITEM_ID=""
+for i in {1..10}; do
+  ITEM_ID=$(gh api graphql -f query="
+  query {
+    organization(login: \"$ORG\") {
+      projectV2(number: $PROJECT_NUMBER) {
+        items(first: 50) {
+          nodes {
+            id
+            content {
+              ... on Issue {
+                number
+              }
             }
           }
         }
       }
     }
-  }
-}" --jq ".data.organization.projectV2.items.nodes[] | select(.content.number == $ISSUE_NUMBER) | .id")
+  }" --jq ".data.organization.projectV2.items.nodes[] | select(.content.number == $ISSUE_NUMBER) | .id")
+
+  if [[ -n "$ITEM_ID" ]]; then
+    break
+  fi
+
+  echo "  Attempt $i: Item not found yet, retrying in 2s..."
+  sleep 2
+done
+
+if [[ -z "$ITEM_ID" ]]; then
+  echo "Error: Could not find project item ID for issue #$ISSUE_NUMBER"
+  exit 1
+fi
 
 echo "Project item ID: $ITEM_ID"
 
