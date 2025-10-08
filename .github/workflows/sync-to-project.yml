@@ -127,7 +127,7 @@ jobs:
             });
 
       - name: Wait for project item to be created
-        run: sleep 5
+        run: sleep 10
 
       - name: Get project item ID
         id: item-id
@@ -139,7 +139,7 @@ jobs:
               query {
                 organization(login: "namastexlabs") {
                   projectV2(number: 9) {
-                    items(first: 20) {
+                    items(first: 100) {
                       nodes {
                         id
                         content {
