@@ -351,6 +351,9 @@ jobs:
             await github.graphql(mutation);
 
       - name: Comment on issue
+        # Only comment if we actually parsed data from the issue body
+        # (skip for CLI-created issues that already have all metadata set)
+        if: steps.parse.outputs.project != ''
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
