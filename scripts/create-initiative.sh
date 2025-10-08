@@ -54,6 +54,9 @@ declare -A FIELD_IDS=(
   ["Stage"]="PVTSSF_lADOBvG2684BE-4Ezg2c_hc"
   ["Priority"]="PVTSSF_lADOBvG2684BE-4Ezg2c_kA"
   ["ETA"]="PVTSSF_lADOBvG2684BE-4Ezg2dPxc"
+  ["ExpectedResults"]="PVTF_lADOBvG2684BE-4Ezg2c8aE"
+  ["Owner"]="PVTF_lADOBvG2684BE-4Ezg2c8aI"
+  ["TargetDate"]="PVTF_lADOBvG2684BE-4Ezg2c8aM"
 )
 
 # Option ID mapping
@@ -268,6 +271,62 @@ mutation {
   }) { projectV2Item { id } }
 }" > /dev/null
 
+# Extract Expected Results from body (look for "Goals (Expected Results)" or "Expected Results" section)
+EXPECTED_RESULTS=$(echo "$BODY" | sed -n '/### Goals (Expected Results)/,/^##/p' | sed '1d;$d' | head -10 | sed 's/"/\\"/g')
+if [[ -z "$EXPECTED_RESULTS" ]]; then
+  EXPECTED_RESULTS=$(echo "$BODY" | sed -n '/### Expected Results/,/^##/p' | sed '1d;$d' | head -10 | sed 's/"/\\"/g')
+fi
+
+# Set Expected Results field (text field)
+if [[ -n "$EXPECTED_RESULTS" ]]; then
+  gh api graphql -f query="
+  mutation {
+    updateProjectV2ItemFieldValue(input: {
+      projectId: \"$PROJECT_ID\"
+      itemId: \"$ITEM_ID\"
+      fieldId: \"${FIELD_IDS[ExpectedResults]}\"
+      value: {text: \"$EXPECTED_RESULTS\"}
+    }) { projectV2Item { id } }
+  }" > /dev/null 2>&1 || echo "  ⚠ Could not set Expected Results field"
+fi
+
+# Set Owner field (text field with @username)
+gh api graphql -f query="
+mutation {
+  updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\"
+    itemId: \"$ITEM_ID\"
+    fieldId: \"${FIELD_IDS[Owner]}\"
+    value: {text: \"@$OWNER\"}
+  }) { projectV2Item { id } }
+}" > /dev/null 2>&1 || echo "  ⚠ Could not set Owner field"
+
+# Calculate Target Date from quarter (end of quarter)
+TARGET_DATE=""
+if [[ "$QUARTER" != "backlog" ]]; then
+  YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
+  Q=$(echo "$QUARTER" | cut -d'-' -f2 | tr -d 'Qq')
+  case $Q in
+    1) TARGET_DATE="${YEAR}-03-31" ;;
+    2) TARGET_DATE="${YEAR}-06-30" ;;
+    3) TARGET_DATE="${YEAR}-09-30" ;;
+    4) TARGET_DATE="${YEAR}-12-31" ;;
+  esac
+fi
+
+# Set Target Date field (date field)
+if [[ -n "$TARGET_DATE" ]]; then
+  gh api graphql -f query="
+  mutation {
+    updateProjectV2ItemFieldValue(input: {
+      projectId: \"$PROJECT_ID\"
+      itemId: \"$ITEM_ID\"
+      fieldId: \"${FIELD_IDS[TargetDate]}\"
+      value: {date: \"$TARGET_DATE\"}
+    }) { projectV2Item { id } }
+  }" > /dev/null 2>&1 || echo "  ⚠ Could not set Target Date field"
+fi
+
 echo ""
 echo "=== Initiative Created Successfully ==="
 echo "URL: $ISSUE_URL"
@@ -278,7 +337,9 @@ echo "  ✓ Project: $PROJECT_NAME"
 echo "  ✓ Stage: $STAGE"
 echo "  ✓ Priority: $PRIORITY"
 echo "  ✓ Quarter: $QUARTER"
-echo "  ✓ Owner: $OWNER"
+echo "  ✓ Owner: @$OWNER"
+echo "  ✓ Target Date: ${TARGET_DATE:-Not set (backlog)}"
+echo "  ✓ Expected Results: ${EXPECTED_RESULTS:0:50}..."
 echo "  ✓ Labels: $LABELS"
 echo ""
 echo "View on project board: https://github.com/orgs/$ORG/projects/$PROJECT_NUMBER"
