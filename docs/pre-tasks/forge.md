@@ -186,7 +186,7 @@ Transform Forge from individual tool to team platform with centralized deploymen
 
 **Priority:** MEDIUM
 **Quarter:** Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature, infrastructure
 **Areas:** teams, workflows, analytics, mcp
 **Wish Needed:** YES - Complex platform expansion

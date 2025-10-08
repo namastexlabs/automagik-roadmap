@@ -10,14 +10,14 @@ Every initiative progresses through a series of stages from initial exploration 
 
 **Stage Flow:**
 ```
-Ideation → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
                                                                          ↓
                                                                      Archived
 ```
 
 ---
 
-## 💡 Ideation
+## 💡 Wishlist
 
 **Definition:** Initial ideation and brainstorming phase. Early concept formation.
 
@@ -34,7 +34,7 @@ Ideation → Exploring → RFC → Prioritization → Executing → Preview → 
 
 **Typical Duration:** 1-2 weeks
 
-**Labels:** `Ideation`
+**Labels:** `Wishlist`
 
 ---
 

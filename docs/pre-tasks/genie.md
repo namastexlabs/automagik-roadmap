@@ -113,7 +113,7 @@ Built-in MCP toolkit with seamless integration to the automagik-tools marketplac
 
 **Priority:** HIGH
 **Quarter:** Q4 2025 - Q1 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature
 **Areas:** mcp, cli, tools
 **Wish Needed:** NO - Well-understood integration
@@ -174,7 +174,7 @@ Pre-built workspace templates for common use cases (customer support agent, code
 
 **Priority:** MEDIUM
 **Quarter:** Q1 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature
 **Areas:** cli, workflows
 **Wish Needed:** NO
@@ -231,7 +231,7 @@ Built-in agent capabilities including persistent memory across sessions, multi-s
 
 **Priority:** MEDIUM
 **Quarter:** Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature
 **Areas:** agents, knowledge, workflows
 **Wish Needed:** YES - Complex AI capabilities
@@ -293,7 +293,7 @@ Frictionless developer experience with interactive setup wizards, declarative YA
 
 **Priority:** LOW
 **Quarter:** Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** enhancement
 **Areas:** cli, docs
 **Wish Needed:** NO
@@ -341,7 +341,7 @@ Long-term vision including cloud workspace sync, team collaboration, deep Hive i
 
 **Priority:** LOW
 **Quarter:** Q3 2026 - Q4 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature
 **Areas:** teams, ui, cloud
 **Wish Needed:** YES - Major platform expansion

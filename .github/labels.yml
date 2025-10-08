@@ -38,7 +38,7 @@
 # STAGE DIMENSION (8 labels)
 # ============================================
 
-- name: Ideation
+- name: Wishlist
   color: 'E1BEE7'
   description: 'Initial ideation and brainstorming phase'
 

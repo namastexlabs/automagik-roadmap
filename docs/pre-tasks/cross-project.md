@@ -113,7 +113,7 @@ Standardized protocol for sharing MCP tools across the ecosystem. Any tool in th
 
 **Priority:** HIGH
 **Quarter:** Q1 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature, infrastructure
 **Areas:** mcp, api, tools
 **Wish Needed:** YES - Protocol design needed
@@ -176,7 +176,7 @@ Seamless pipeline from single-agent development (Genie) to multi-agent deploymen
 
 **Priority:** HIGH
 **Quarter:** Q1-Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature
 **Areas:** agents, workflows, cli
 **Wish Needed:** NO - Clear implementation path
@@ -243,7 +243,7 @@ Single dashboard showing health, usage, and performance across all Automagik pro
 
 **Priority:** MEDIUM
 **Quarter:** Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** feature, infrastructure
 **Areas:** analytics, ui, api
 **Wish Needed:** NO
@@ -311,7 +311,7 @@ Shared TypeScript/Python SDK with common functionality used across all projects.
 
 **Priority:** MEDIUM
 **Quarter:** Q2 2026
-**Stage:** Ideation
+**Stage:** Wishlist
 **Type:** infrastructure
 **Areas:** api, cli
 **Wish Needed:** NO

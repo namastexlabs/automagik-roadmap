@@ -101,7 +101,7 @@ Each project file follows this structure:
 - **Expected Results:** Measurable outcomes
 - **Priority:** Critical/High/Medium/Low
 - **Quarter:** 2025-Q4 / 2026-Q1 / etc.
-- **Stage:** Ideation/Exploring/etc.
+- **Stage:** Wishlist/Exploring/etc.
 - **Type:** feature/infrastructure/etc.
 - **Areas:** [area labels]
 - **Wish Needed:** Yes/No

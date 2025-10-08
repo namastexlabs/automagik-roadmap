@@ -75,7 +75,7 @@ See [Label Guide](label-guide.md) for all available labels.
 
 Initiatives progress through stages from exploration to delivery:
 
-- 💡 **Ideation** - Initial ideation and brainstorming
+- 💡 **Wishlist** - Initial ideation and brainstorming
 - 🔍 **Exploring** - Early investigation
 - 💬 **RFC** - Request for comments
 - 📋 **Prioritization** - Prioritization and planning phase

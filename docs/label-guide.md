@@ -43,7 +43,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 | Label | Color | Description | Typical Duration |
 |-------|-------|-------------|------------------|
-| `Ideation` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
+| `Wishlist` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
 | `Exploring` | `#FBCA04` | Early investigation and validation | 1-4 weeks |
 | `RFC` | `#FFA500` | Request for comments, gathering feedback | 2-6 weeks |
 | `Prioritization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
@@ -59,7 +59,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 **Flow:**
 ```
-Ideation → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
                                                                          ↓
                                                                      Archived
 ```
