@@ -87,17 +87,45 @@ Each project folder contains:
 
 ## 📋 How to Propose
 
-**Want to suggest a new initiative?**
+**Want to suggest a new initiative?** Choose your preferred method:
+
+### Option 1: GitHub Issue Form (Recommended for Quick Proposals)
 
 1. **[Create a new issue](../../issues/new/choose)** using the **Initiative template**
-2. Fill in the required fields:
-   - **Project**: Which Automagik project(s) are affected
-   - **Description**: What are we building and why?
-   - **Expected Results**: Measurable outcomes (RESULTADO_ESPERADO)
-   - **RASCI Ownership**: Who's responsible, accountable, supporting, consulted, informed
-3. Add relevant **labels** (project, stage, priority, quarter, area)
-4. The issue will **automatically** be added to the project board
-5. Community can **comment** and provide feedback
+2. Fill in the form fields (project, description, RASCI, etc.)
+3. Submit → Automatically added to project board ✨
+
+### Option 2: CLI Script (Recommended for Detailed Initiatives)
+
+Use our CLI script with structured templates:
+
+```bash
+# Use one of three template levels:
+# - Minimal (8 sections, 15-30min)
+# - Standard (12 sections, 1-2hr) ← Most common
+# - Comprehensive (20+ sections, 4-8hr) ← Full PRD
+
+cat your-initiative.md | ./scripts/create-initiative.sh \
+  --title "Your Initiative Title" \
+  --project (omni|hive|spark|forge|genie|tools|cross-project) \
+  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
+  --priority (critical|high|medium|low) \
+  --quarter (2025-Q4|2026-Q1|...|backlog) \
+  --type (feature|enhancement|research|infrastructure|documentation) \
+  --areas "area1,area2"
+```
+
+**Templates available:**
+- 📄 [Minimal](docs/templates/MINIMAL_INITIATIVE.md) - Small features, quick wins
+- 📄 [Standard](docs/templates/STANDARD_INITIATIVE.md) - Most initiatives (recommended default)
+- 📄 [Comprehensive](docs/templates/COMPREHENSIVE_INITIATIVE.md) - Major launches (full PRD)
+- 📖 [Template Guide](docs/templates/README.md) - Decision tree, comparison, tips
+
+**Features:**
+- ✅ PRD-style structure (5W2H, BDD stories, personas)
+- ✅ Automatic label application
+- ✅ Direct project board field setting
+- ✅ Retry logic for reliability
 
 **💬 Community feedback is welcome!** Share your thoughts on any initiative.
 

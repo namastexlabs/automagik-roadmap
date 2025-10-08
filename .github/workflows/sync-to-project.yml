@@ -52,6 +52,21 @@ jobs:
           script: |
             const body = context.payload.issue.body || '';
 
+            // This workflow supports multiple initiative creation methods:
+            // 1. GitHub Issue Form (.github/ISSUE_TEMPLATE/initiative.yml)
+            //    - Structured form with dropdowns for project, stage, priority, etc.
+            //    - Generates body with "### Field Name" headers
+            //    - Workflow parses these headers and syncs to project board
+            //
+            // 2. CLI Script (scripts/create-initiative.sh)
+            //    - Uses markdown templates (Minimal/Standard/Comprehensive)
+            //    - Sets labels and project board fields directly via GraphQL
+            //    - Body is free-form markdown (no structured headers)
+            //    - Workflow skips parsing (project field will be empty)
+            //
+            // If project field is empty after parsing, workflow assumes CLI-created
+            // and skips label/comment operations (already handled by script)
+
             // Parse GitHub issue form format
             function parseField(body, fieldName) {
               const regex = new RegExp(`### ${fieldName}\\s*\\n+([^#]+)`, 'i');

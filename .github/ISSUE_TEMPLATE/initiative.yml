@@ -9,6 +9,25 @@ body:
         ## 🗺️ Strategic Initiative
         Use this template to propose a new roadmap item with RASCI ownership and expected results.
 
+        **📋 Need more structure?** Check our [template guide](https://github.com/namastexlabs/automagik-roadmap/tree/main/docs/templates):
+        - **Minimal** (8 sections, 15-30min) - Small features, quick wins
+        - **Standard** (12 sections, 1-2hr) - Most initiatives (recommended)
+        - **Comprehensive** (20+ sections, 4-8hr) - Major launches, full PRD
+
+        Or use our [CLI script](https://github.com/namastexlabs/automagik-roadmap/blob/main/scripts/create-initiative.sh) with templates for full control.
+
+  - type: dropdown
+    id: template_level
+    attributes:
+      label: Template Level (Optional)
+      description: "Which template are you following? (helps workflows understand structure)"
+      options:
+        - "GitHub Form (this form)"
+        - "Minimal Template"
+        - "Standard Template"
+        - "Comprehensive Template"
+      default: 0
+
   - type: dropdown
     id: project
     attributes:
