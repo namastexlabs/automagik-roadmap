@@ -29,7 +29,7 @@ Required:
   --project      Project name (omni|hive|spark|forge|genie|tools|cross-project)
 
 Optional:
-  --stage        Stage (Wishlist|Exploring|RFC|Priorization|Executing|Preview|Shipped|Archived) [default: Exploring]
+  --stage        Stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped|Archived) [default: Exploring]
   --priority     Priority (critical|high|medium|low) [default: medium]
   --quarter      Quarter (2025-Q4|2026-Q1|2026-Q2|etc|backlog) [default: backlog]
   --owner        GitHub username for assignment [default: current user]
@@ -71,7 +71,7 @@ declare -A STAGE_OPTIONS=(
   ["Wishlist"]="d4964f90"
   ["Exploring"]="f5c85cef"
   ["RFC"]="cd5acf90"
-  ["Priorization"]="a3c2913b"
+  ["Prioritization"]="a3c2913b"
   ["Executing"]="073f61b0"
   ["Preview"]="b572947d"
   ["Shipped"]="3d0b8ddd"
@@ -136,8 +136,8 @@ if [[ ! -v PROJECT_OPTIONS[$PROJECT_NAME] ]]; then
   exit 1
 fi
 
-# Build labels
-LABELS="initiative,project:${PROJECT_NAME},${STAGE},priority:${PRIORITY},quarter:${QUARTER}"
+# Build labels (quarter is NOT a label, only a project field)
+LABELS="initiative,project:${PROJECT_NAME},${STAGE},priority:${PRIORITY}"
 
 if [[ -n "$TYPE" ]]; then
   LABELS="${LABELS},type:${TYPE}"

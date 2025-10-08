@@ -1,7 +1,7 @@
 name: Sync Initiative to Project Board
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [opened, edited]
 
 jobs:
   sync-to-project:
