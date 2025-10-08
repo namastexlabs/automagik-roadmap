@@ -1,14 +1,383 @@
-name: Add to Roadmap Project
+name: Sync Initiative to Project Board
 on:
   issues:
-    types: [opened]
+    types: [opened, edited, labeled]
 
 jobs:
-  add-to-project:
+  sync-to-project:
     runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'initiative')
     steps:
-      - uses: actions/add-to-project@v0.5.0
+      - name: Add to project
+        id: add-project
+        uses: actions/add-to-project@v0.5.0
         with:
-          project-url: https://github.com/orgs/namastexlabs/projects/1
+          project-url: https://github.com/orgs/namastexlabs/projects/9
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
           labeled: initiative
+
+      - name: Parse issue form data
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+
+            // Parse GitHub issue form format
+            function parseField(body, fieldName) {
+              const regex = new RegExp(`### ${fieldName}\\s*\\n+([^#]+)`, 'i');
+              const match = body.match(regex);
+              return match ? match[1].trim() : '';
+            }
+
+            // Extract all fields
+            const project = parseField(body, 'Project');
+            const stage = parseField(body, 'Stage');
+            const priority = parseField(body, 'Priority');
+            const quarter = parseField(body, 'Quarter \\(ETA\\)');
+            const targetDate = parseField(body, 'Target Date \\(Optional\\)');
+            const type = parseField(body, 'Type');
+            const areas = parseField(body, 'Areas \\(Optional\\)');
+            const responsible = parseField(body, 'Responsible');
+            const expectedResults = parseField(body, 'Expected Results \\(RESULTADO_ESPERADO\\)');
+
+            // Map stage to Status
+            const stageToStatus = {
+              'Wishlist': 'Todo',
+              'Ideation': 'Todo',
+              'Exploring': 'Todo',
+              'RFC': 'Todo',
+              'Prioritization': 'Todo',
+              'Executing': 'In Progress',
+              'Preview': 'In Progress',
+              'Shipped': 'Done',
+              'Archived': 'Done'
+            };
+            const status = stageToStatus[stage] || 'Todo';
+
+            // Calculate target date if not provided
+            let finalTargetDate = targetDate;
+            if (!targetDate && quarter && quarter !== 'backlog') {
+              const [year, q] = quarter.split('-q');
+              const quarterEndDates = {
+                '1': '03-31',
+                '2': '06-30',
+                '3': '09-30',
+                '4': '12-31'
+              };
+              finalTargetDate = `${year}-${quarterEndDates[q]}`;
+            }
+
+            core.setOutput('project', project);
+            core.setOutput('stage', stage);
+            core.setOutput('priority', priority);
+            core.setOutput('quarter', quarter);
+            core.setOutput('target_date', finalTargetDate);
+            core.setOutput('type', type);
+            core.setOutput('areas', areas);
+            core.setOutput('owner', responsible);
+            core.setOutput('status', status);
+            core.setOutput('expected_results', expectedResults.substring(0, 300));
+
+      - name: Build labels
+        id: labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = ['initiative'];
+            const project = '${{ steps.parse.outputs.project }}';
+            const stage = '${{ steps.parse.outputs.stage }}';
+            const priority = '${{ steps.parse.outputs.priority }}';
+            const quarter = '${{ steps.parse.outputs.quarter }}';
+            const type = '${{ steps.parse.outputs.type }}';
+            const areas = '${{ steps.parse.outputs.areas }}';
+
+            if (project) labels.push(`project:${project}`);
+            if (stage) labels.push(stage);
+            if (priority) labels.push(`priority:${priority}`);
+            if (quarter) labels.push(`quarter:${quarter}`);
+            if (type) labels.push(`type:${type}`);
+            if (areas) {
+              areas.split(',').forEach(area => {
+                labels.push(`area:${area.trim()}`);
+              });
+            }
+
+            core.setOutput('labels', labels.join(','));
+
+      - name: Apply labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const labels = '${{ steps.labels.outputs.labels }}'.split(',');
+            await github.rest.issues.setLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: labels
+            });
+
+      - name: Wait for project item to be created
+        run: sleep 5
+
+      - name: Get project item ID
+        id: item-id
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const query = `
+              query {
+                organization(login: "namastexlabs") {
+                  projectV2(number: 9) {
+                    items(first: 20) {
+                      nodes {
+                        id
+                        content {
+                          ... on Issue {
+                            number
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            const result = await github.graphql(query);
+            const item = result.organization.projectV2.items.nodes.find(
+              node => node.content.number === context.issue.number
+            );
+
+            if (!item) {
+              core.setFailed('Could not find project item');
+              return;
+            }
+
+            core.setOutput('item_id', item.id);
+
+      - name: Set Project field
+        if: steps.parse.outputs.project
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const projectOptions = {
+              'omni': '9c171c42',
+              'hive': 'a28ceeff',
+              'spark': '0a588179',
+              'forge': '2a9e974c',
+              'genie': '93d4bd3c',
+              'tools': 'f00fd26a',
+              'cross-project': 'c1f1ab29'
+            };
+
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_ec"
+                  value: {singleSelectOptionId: "${projectOptions['${{ steps.parse.outputs.project }}']}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Stage field
+        if: steps.parse.outputs.stage
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const stageOptions = {
+              'Wishlist': 'd4964f90',
+              'Ideation': 'd4964f90',
+              'Exploring': 'f5c85cef',
+              'RFC': 'cd5acf90',
+              'Prioritization': 'a3c2913b',
+              'Executing': '073f61b0',
+              'Preview': 'b572947d',
+              'Shipped': '3d0b8ddd',
+              'Archived': '0e15297c'
+            };
+
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_hc"
+                  value: {singleSelectOptionId: "${stageOptions['${{ steps.parse.outputs.stage }}']}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Priority field
+        if: steps.parse.outputs.priority
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const priorityOptions = {
+              'critical': '700a2c58',
+              'high': 'd7a47ff6',
+              'medium': '79c50f9e',
+              'low': 'c7f229a8'
+            };
+
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c_kA"
+                  value: {singleSelectOptionId: "${priorityOptions['${{ steps.parse.outputs.priority }}']}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set ETA/Quarter field
+        if: steps.parse.outputs.quarter
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const quarterOptions = {
+              'backlog': '88ae1263',
+              '2025-q4': 'a35fa4f5',
+              '2026-q1': 'a0cccfe6',
+              '2026-q2': 'cf1026cb',
+              '2026-q3': '3c402b09',
+              '2026-q4': 'ec810765',
+              '2027-q1': '4ac5ad3f'
+            };
+
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2dPxc"
+                  value: {singleSelectOptionId: "${quarterOptions['${{ steps.parse.outputs.quarter }}']}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Status field
+        if: steps.parse.outputs.status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const statusOptions = {
+              'Todo': 'f75ad846',
+              'In Progress': '47fc9ee4',
+              'Done': '98236657'
+            };
+
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTSSF_lADOBvG2684BE-4Ezg2c5dY"
+                  value: {singleSelectOptionId: "${statusOptions['${{ steps.parse.outputs.status }}']}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Owner field
+        if: steps.parse.outputs.owner
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aI"
+                  value: {text: "${{ steps.parse.outputs.owner }}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Target Date field
+        if: steps.parse.outputs.target_date
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aM"
+                  value: {date: "${{ steps.parse.outputs.target_date }}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Set Expected Results field
+        if: steps.parse.outputs.expected_results
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          script: |
+            const expectedResults = `${{ steps.parse.outputs.expected_results }}`.replace(/"/g, '\\"');
+            const mutation = `
+              mutation {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: "PVT_kwDOBvG2684BE-4E"
+                  itemId: "${{ steps.item-id.outputs.item_id }}"
+                  fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aE"
+                  value: {text: "${expectedResults}"}
+                }) { projectV2Item { id } }
+              }
+            `;
+
+            await github.graphql(mutation);
+
+      - name: Comment on issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = `✅ **Initiative synced to project board**
+
+            | Field | Value |
+            |-------|-------|
+            | Project | ${{ steps.parse.outputs.project }} |
+            | Stage | ${{ steps.parse.outputs.stage }} |
+            | Priority | ${{ steps.parse.outputs.priority }} |
+            | Quarter | ${{ steps.parse.outputs.quarter }} |
+            | Status | ${{ steps.parse.outputs.status }} |
+            | Owner | ${{ steps.parse.outputs.owner }} |
+            | Target Date | ${{ steps.parse.outputs.target_date }} |
+
+            [View on project board](https://github.com/orgs/namastexlabs/projects/9)`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });

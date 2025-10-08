@@ -106,6 +106,88 @@ body:
   - type: markdown
     attributes:
       value: |
+        ## 📊 Planning & Scheduling
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Stage
+      description: Current lifecycle stage
+      options:
+        - Wishlist
+        - Ideation
+        - Exploring
+        - RFC
+        - Prioritization
+        - Executing
+        - Preview
+        - Shipped
+        - Archived
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Business priority
+      options:
+        - critical
+        - high
+        - medium
+        - low
+      default: 2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: quarter
+    attributes:
+      label: Quarter (ETA)
+      description: Target delivery quarter
+      options:
+        - backlog
+        - 2025-q4
+        - 2026-q1
+        - 2026-q2
+        - 2026-q3
+        - 2026-q4
+        - 2027-q1
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: target_date
+    attributes:
+      label: Target Date (Optional)
+      description: "Specific target date (YYYY-MM-DD)"
+      placeholder: "2026-03-31"
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: Initiative type
+      options:
+        - feature
+        - enhancement
+        - research
+        - infrastructure
+        - documentation
+      default: 0
+
+  - type: input
+    id: areas
+    attributes:
+      label: Areas (Optional)
+      description: "Comma-separated areas (api, cli, mcp, workflows, agents, etc.)"
+      placeholder: "api, mcp"
+
+  - type: markdown
+    attributes:
+      value: |
         ## 🔗 References
 
   - type: input
