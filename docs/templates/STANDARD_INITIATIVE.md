@@ -1,4 +1,4 @@
-# [Initiative] {Project}: {Title}
+# {Title}
 
 **One-line Summary:** {Problem definition} → {Solution/Deliverable} → {Expected impact with metrics} | Timeline: {Duration} | Key risks: {Top 1-2 risks}
 

@@ -25,7 +25,7 @@ show_usage() {
 Usage: $0 --title "Initiative Title" [options]
 
 Required:
-  --title        Initiative title (without [Initiative] prefix)
+  --title        Initiative title (clean title, no prefix needed)
   --project      Project name (omni|hive|spark|forge|genie|tools|cross-project)
 
 Optional:
@@ -37,7 +37,7 @@ Optional:
   --areas        Area labels comma-separated (api,mcp,cli,etc)
 
 Example:
-  $0 --title "Omni: Slack Integration" \\
+  $0 --title "Slack Integration" \\
      --project omni \\
      --stage Exploring \\
      --priority high \\
@@ -175,7 +175,7 @@ fi
 echo "Creating issue..."
 ISSUE_URL=$(echo "$BODY" | gh issue create \
   --repo "$ORG/$REPO" \
-  --title "[Initiative] ${PROJECT_NAME^}: $TITLE" \
+  --title "$TITLE" \
   --label "$LABELS" \
   --assignee "$OWNER" \
   --body-file -)

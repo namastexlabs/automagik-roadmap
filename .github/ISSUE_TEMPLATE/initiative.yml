@@ -1,6 +1,6 @@
 name: 🎯 Roadmap Initiative
 description: Propose a new strategic initiative
-title: "[Initiative] "
+title: ""
 labels: ["initiative"]
 body:
   - type: markdown
