@@ -309,7 +309,7 @@ jobs:
             await github.graphql(mutation);
 
       - name: Set Target Date field
-        if: steps.parse.outputs.target_date
+        if: steps.parse.outputs.target_date && steps.parse.outputs.target_date != '_No response_'
         uses: actions/github-script@v7
         with:
           github-token: ${{ steps.generate-token.outputs.token }}
