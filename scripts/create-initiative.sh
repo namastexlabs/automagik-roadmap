@@ -154,7 +154,7 @@ if [[ -n "$AREAS" ]]; then
 fi
 
 echo "=== Creating Initiative ==="
-echo "Title: [Initiative] ${PROJECT_NAME^}: $TITLE"
+echo "Title: $TITLE"
 echo "Project: $PROJECT_NAME"
 echo "Stage: $STAGE"
 echo "Priority: $PRIORITY"
