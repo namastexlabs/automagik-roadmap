@@ -6,7 +6,11 @@ on:
 jobs:
   sync-to-project:
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'initiative')
+    # Only run if initiative label AND secrets are configured
+    if: |
+      contains(github.event.issue.labels.*.name, 'initiative') &&
+      secrets.PROJECT_APP_ID != '' &&
+      secrets.PROJECT_APP_PRIVATE_KEY != ''
     steps:
       - name: Generate token from GitHub App
         id: generate-token
@@ -14,7 +18,7 @@ jobs:
         with:
           app-id: ${{ secrets.PROJECT_APP_ID }}
           private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
-          owner: namastexlabs
+          owner: ${{ github.repository_owner }}
 
       - name: Add to project
         id: add-project
