@@ -8,12 +8,20 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.event.issue.labels.*.name, 'initiative')
     steps:
+      - name: Generate token from GitHub App
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PROJECT_APP_ID }}
+          private-key: ${{ secrets.PROJECT_APP_PRIVATE_KEY }}
+          owner: namastexlabs
+
       - name: Add to project
         id: add-project
         uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/orgs/namastexlabs/projects/9
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           labeled: initiative
 
       - name: Parse issue form data
@@ -125,7 +133,7 @@ jobs:
         id: item-id
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const query = `
               query {
@@ -162,7 +170,7 @@ jobs:
         if: steps.parse.outputs.project
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const projectOptions = {
               'omni': '9c171c42',
@@ -191,7 +199,7 @@ jobs:
         if: steps.parse.outputs.stage
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const stageOptions = {
               'Wishlist': 'd4964f90',
@@ -222,7 +230,7 @@ jobs:
         if: steps.parse.outputs.priority
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const priorityOptions = {
               'critical': '700a2c58',
@@ -248,7 +256,7 @@ jobs:
         if: steps.parse.outputs.quarter
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const quarterOptions = {
               'backlog': '88ae1263',
@@ -277,7 +285,7 @@ jobs:
         if: steps.parse.outputs.status
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const statusOptions = {
               'Todo': 'f75ad846',
@@ -302,7 +310,7 @@ jobs:
         if: steps.parse.outputs.owner
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const mutation = `
               mutation {
@@ -321,7 +329,7 @@ jobs:
         if: steps.parse.outputs.target_date
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const mutation = `
               mutation {
@@ -340,7 +348,7 @@ jobs:
         if: steps.parse.outputs.expected_results
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          github-token: ${{ steps.generate-token.outputs.token }}
           script: |
             const expectedResults = `${{ steps.parse.outputs.expected_results }}`.replace(/"/g, '\\"');
             const mutation = `
