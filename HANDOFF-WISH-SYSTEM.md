@@ -401,22 +401,91 @@ Create comprehensive documentation for wish system including user guides, develo
 
 ---
 
+## 📈 Implementation Progress
+
+### Completed (2025-10-10)
+
+**genie#27 - Repository Infrastructure** ✅ Partially Complete
+
+**Labels:** ✅ Complete (commit 1e5236b)
+- Added wish workflow labels: `wish:active`, `wish:archived`, `wish:implementation`
+- Labels synced via `.github/labels.yml`
+- Documented label usage in taxonomy
+
+**Templates:** ✅ Complete (commit 1e5236b)
+- Enhanced `planned-feature.yml` with wish status dropdown
+- Added wish workflow state tracking (Active/Implementation/Ready for archive)
+- Maintained existing wish path field for documentation linking
+
+**Repository Settings:** ✅ Complete (commit 1e5236b)
+- Set `blank_issues_enabled: false` in config.yml
+- Forced use of structured templates
+- Updated contact links for support
+
+**Workflows:** ✅ Core workflows created (commit 1e5236b)
+- `wish-archive.yml`: Automated archival on PR merge
+  - Extracts wishes from merged PRs (.ai/wishes/ or .genie/wishes/)
+  - Enriches with metadata (PR URL, quarter, initiative, author)
+  - Transfers to roadmap `wishes/{project}/{quarter}/`
+  - Updates MANIFEST.md
+  - Triggers cleanup workflow
+  - Comments on PR with archival summary
+- `wish-cleanup.yml`: Safe removal of archived wishes
+  - Verifies archival in roadmap repo before removal
+  - Only removes files confirmed in roadmap
+  - Preserves git history
+  - Comments on original PR with cleanup summary
+
+**Integration Status:**
+- ✅ Uses existing GitHub App authentication (PROJECT_APP_ID/KEY)
+- ✅ Maintains full traceability (PR → wish → initiative)
+- ✅ Automated end-to-end workflow design complete
+- ⏳ Testing required before production deployment
+
+### Next Steps
+
+**Immediate (Week 1):**
+1. **Test wish-archive workflow**
+   - Create test PR with sample wish
+   - Verify extraction and metadata enrichment
+   - Confirm roadmap transfer
+   - Validate cleanup trigger
+
+2. **Deploy to remaining repos**
+   - Copy workflow files to omni, hive, spark, forge, tools
+   - Ensure PROJECT_APP_ID and PROJECT_APP_PRIVATE_KEY secrets exist
+   - Test each repo's archival independently
+
+3. **Begin genie#28 - Genie Core Updates**
+   - Update Genie to use GitHub issue form API
+   - Implement template field population logic
+   - Add automatic initiative linking support
+
+**Week 2-3:**
+- Complete genie#29 (Wish management and archival pipeline)
+- Normalize and review 90+ existing wishes
+- Execute historical archival
+- Deploy wish system to all 6 repos
+
+---
+
 ## ✅ Handoff Complete
 
 **What's Ready:**
 - Initiative #29 status: Executing
-- 4 sub-issues created and linked
+- 4 sub-issues created and linked (genie#27-30)
 - Template pattern documented
 - Integration points clear
-- Next steps defined
+- **genie#27 core implementation complete (labels, templates, workflows)**
 
 **What's Needed:**
-- Review and prioritize acceptance criteria in existing issues
-- Begin implementation starting with #27
-- Create additional issues as needed following pattern
-- Coordinate cross-repo deployment
+- Test wish-archive and wish-cleanup workflows
+- Deploy workflows to remaining 5 repos
+- Begin implementation of genie#28 (Genie core updates)
+- Execute historical wish normalization and archival
 
 **Questions?**
 - Template unclear? See examples in genie#27-29
 - Need more issues? Follow pattern above
 - Integration questions? Reference HANDOFF.md for cross-repo linking
+- Workflow testing? See Implementation Progress section above
