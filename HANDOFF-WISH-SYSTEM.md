@@ -405,7 +405,7 @@ Create comprehensive documentation for wish system including user guides, develo
 
 ### Completed (2025-10-10)
 
-**genie#27 - Repository Infrastructure** ✅ Partially Complete
+**genie#27 - Repository Infrastructure** 🔄 In Progress
 
 **Labels:** ✅ Complete (commit 1e5236b)
 - Added wish workflow labels: `wish:active`, `wish:archived`, `wish:implementation`
@@ -422,50 +422,48 @@ Create comprehensive documentation for wish system including user guides, develo
 - Forced use of structured templates
 - Updated contact links for support
 
-**Workflows:** ✅ Core workflows created (commit 1e5236b)
-- `wish-archive.yml`: Automated archival on PR merge
-  - Extracts wishes from merged PRs (.ai/wishes/ or .genie/wishes/)
-  - Enriches with metadata (PR URL, quarter, initiative, author)
-  - Transfers to roadmap `wishes/{project}/{quarter}/`
-  - Updates MANIFEST.md
-  - Triggers cleanup workflow
-  - Comments on PR with archival summary
-- `wish-cleanup.yml`: Safe removal of archived wishes
-  - Verifies archival in roadmap repo before removal
-  - Only removes files confirmed in roadmap
-  - Preserves git history
-  - Comments on original PR with cleanup summary
+**Workflows:** 🔄 Design Phase (commit e404333 - removed premature implementation)
+- Workflows need more design consideration before implementation
+- Initial workflow specs documented in HANDOFF Technical Details section
+- Key design questions to resolve:
+  - Wish extraction logic (file detection, metadata parsing)
+  - Quarter calculation and project structure
+  - Verification strategy before cleanup
+  - Error handling and rollback mechanisms
+  - Testing approach for cross-repo operations
 
 **Integration Status:**
-- ✅ Uses existing GitHub App authentication (PROJECT_APP_ID/KEY)
-- ✅ Maintains full traceability (PR → wish → initiative)
-- ✅ Automated end-to-end workflow design complete
-- ⏳ Testing required before production deployment
+- ✅ GitHub App authentication available (PROJECT_APP_ID/KEY)
+- ✅ Cross-repo linking pattern established from HANDOFF.md
+- ⏳ Workflow implementation pending design completion
+- ⏳ Testing strategy to be defined
 
 ### Next Steps
 
 **Immediate (Week 1):**
-1. **Test wish-archive workflow**
-   - Create test PR with sample wish
-   - Verify extraction and metadata enrichment
-   - Confirm roadmap transfer
-   - Validate cleanup trigger
+1. **Complete genie#27 - Workflow Design**
+   - Resolve design questions for wish-archive workflow
+   - Define wish extraction strategy (file detection, metadata)
+   - Design verification logic for cleanup safety
+   - Document error handling approach
+   - Create testing plan for cross-repo operations
 
-2. **Deploy to remaining repos**
-   - Copy workflow files to omni, hive, spark, forge, tools
-   - Ensure PROJECT_APP_ID and PROJECT_APP_PRIVATE_KEY secrets exist
-   - Test each repo's archival independently
-
-3. **Begin genie#28 - Genie Core Updates**
+2. **Begin genie#28 - Genie Core Updates**
    - Update Genie to use GitHub issue form API
    - Implement template field population logic
    - Add automatic initiative linking support
+   - Enable Genie to work with new wish workflow labels
+
+3. **Prepare genie#29 - Pipeline Implementation**
+   - Review current wish structure across all repos
+   - Audit 90+ existing wishes for normalization needs
+   - Plan historical archival strategy
 
 **Week 2-3:**
-- Complete genie#29 (Wish management and archival pipeline)
-- Normalize and review 90+ existing wishes
-- Execute historical archival
-- Deploy wish system to all 6 repos
+- Implement wish-archive and wish-cleanup workflows (after design complete)
+- Test workflows in genie repo first (dogfooding)
+- Deploy to remaining repos (omni, hive, spark, forge, tools)
+- Execute historical wish archival
 
 ---
 
@@ -476,16 +474,19 @@ Create comprehensive documentation for wish system including user guides, develo
 - 4 sub-issues created and linked (genie#27-30)
 - Template pattern documented
 - Integration points clear
-- **genie#27 core implementation complete (labels, templates, workflows)**
+- **genie#27 foundation complete (labels, templates, repo settings)**
+
+**What's In Progress:**
+- Workflow design for wish-archive and wish-cleanup
+- Need to resolve key design questions before implementation
 
 **What's Needed:**
-- Test wish-archive and wish-cleanup workflows
-- Deploy workflows to remaining 5 repos
+- Complete workflow design and implementation (genie#27)
 - Begin implementation of genie#28 (Genie core updates)
-- Execute historical wish normalization and archival
+- Prepare for genie#29 (pipeline and historical archival)
 
 **Questions?**
 - Template unclear? See examples in genie#27-29
 - Need more issues? Follow pattern above
 - Integration questions? Reference HANDOFF.md for cross-repo linking
-- Workflow testing? See Implementation Progress section above
+- Implementation status? See Implementation Progress section above
