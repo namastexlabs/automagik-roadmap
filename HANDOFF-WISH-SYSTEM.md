@@ -3,7 +3,7 @@
 **Date:** 2025-10-10
 **Initiative:** #29 - Wish Sync & Genie Update - Unified Workflow System
 **Status:** Executing
-**Current Sub-Issues:** 4 created (genie#27-30)
+**Current Sub-Issues:** 8 created (genie: 4, hive: 1, spark: 1, tools: 1, omni: 1)
 
 ---
 
@@ -93,29 +93,62 @@ Related work:
 
 ## 🏗️ Current Structure
 
-### Existing Sub-Issues (in genie repo)
+### Existing Sub-Issues
+
+**Genie Repo (Core Implementation):**
 
 **genie#27 - Repository infrastructure for wish system**
 - **Scope:** Labels, templates, repo settings, GitHub Actions
 - **Covers:** All repository-level setup needed for automation
-- **Status:** Open, Executing
+- **Status:** Open, In Progress (labels/templates complete, workflows in design)
 - **Acceptance Criteria Groups:** Labels, Templates, Repository Settings, Workflows
 
 **genie#28 - Genie core updates for automated issue/PR workflows**
 - **Scope:** Update Genie CLI/agents to use templates, integrate with automation
 - **Covers:** Core code changes to Genie itself
-- **Status:** Open, Executing
+- **Status:** Open, Todo
 - **Acceptance Criteria Groups:** Core Updates, Issue Generation, Validation & Testing, Documentation
 
 **genie#29 - Wish management and archival pipeline**
 - **Scope:** Normalize wishes, build pipeline, deploy to all repos, cleanup
 - **Covers:** End-to-end wish lifecycle management
-- **Status:** Open, Executing
+- **Status:** Open, Todo
 - **Acceptance Criteria Groups:** Wish Review & Normalization, Archival Pipeline, Cleanup System, Cross-Repo Deployment, Success Metrics
 
 **genie#30 - TEST: Workflow parsing validation**
 - **Scope:** Testing issue to validate workflows work correctly
-- **Status:** Open, Executing
+- **Status:** Open, Todo
+
+**Project Repos (Infrastructure Deployment):**
+
+**hive#39 - Deploy wish system infrastructure to hive**
+- **Scope:** Full infrastructure deployment (labels, templates, workflows, secrets)
+- **Covers:** All repository setup for hive
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**spark#12 - Deploy wish system infrastructure to spark**
+- **Scope:** Full infrastructure deployment (labels, templates, workflows, secrets)
+- **Covers:** All repository setup for spark
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**tools#2 - Deploy wish system infrastructure to tools**
+- **Scope:** Full infrastructure deployment (labels, templates, workflows, secrets)
+- **Covers:** All repository setup for tools
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**omni#35 - Integrate wish system enhancements to omni**
+- **Scope:** Add wish labels and template fields to existing infrastructure
+- **Covers:** Enhancement to existing Event Fabric Foundation setup
+- **Status:** Open, Todo
+- **Complexity:** XS - Few hours
+
+**Forge - Issues Disabled**
+- **Note:** automagik-forge has GitHub Issues disabled
+- **Action Required:** Enable issues in repository settings before creating deployment issue
+- **Issue Created Accidentally:** BloopAI/vibe-kanban#995 (wrong repo, can be closed)
 
 ### Roadmap Initiative
 
