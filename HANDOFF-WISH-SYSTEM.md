@@ -3,7 +3,7 @@
 **Date:** 2025-10-10
 **Initiative:** #29 - Wish Sync & Genie Update - Unified Workflow System
 **Status:** Executing
-**Current Sub-Issues:** 8 created (genie: 4, hive: 1, spark: 1, tools: 1, omni: 1)
+**Current Sub-Issues:** 13 created (genie: 5, hive: 2, spark: 2, tools: 2, omni: 2)
 
 ---
 
@@ -149,6 +149,38 @@ Related work:
 - **Note:** automagik-forge has GitHub Issues disabled
 - **Action Required:** Enable issues in repository settings before creating deployment issue
 - **Issue Created Accidentally:** BloopAI/vibe-kanban#995 (wrong repo, can be closed)
+
+**Wish Review Issues (All Repos):**
+
+**genie#31 - Review and normalize old wishes in genie**
+- **Scope:** Template/reference implementation for wish normalization
+- **Covers:** Define standard format, normalize genie wishes, document process
+- **Status:** Open, Todo
+- **Complexity:** M - 3-5 days
+
+**hive#40 - Review and normalize old wishes in hive**
+- **Scope:** Review 88+ wishes, normalize, extract metadata
+- **Covers:** Audit, quality review, archival preparation
+- **Status:** Open, Todo
+- **Complexity:** M - 3-5 days
+
+**spark#13 - Review and normalize old wishes in spark**
+- **Scope:** Review all wishes, normalize, extract metadata
+- **Covers:** Audit, quality review, archival preparation
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**tools#3 - Review and normalize old wishes in tools**
+- **Scope:** Review all wishes, normalize, extract metadata
+- **Covers:** Audit, quality review, archival preparation
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**omni#36 - Review and normalize old wishes in omni**
+- **Scope:** Review all wishes, normalize, extract metadata, link to Event Fabric phases
+- **Covers:** Audit, quality review, archival preparation
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
 
 ### Roadmap Initiative
 
