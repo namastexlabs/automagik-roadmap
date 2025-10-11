@@ -3,7 +3,7 @@
 **Date:** 2025-10-10
 **Initiative:** #29 - Wish Sync & Genie Update - Unified Workflow System
 **Status:** Executing
-**Current Sub-Issues:** 13 created (genie: 5, hive: 2, spark: 2, tools: 2, omni: 2)
+**Current Sub-Issues:** 15 created (genie: 5, hive: 2, spark: 2, forge: 2, tools: 2, omni: 2)
 
 ---
 
@@ -145,10 +145,12 @@ Related work:
 - **Status:** Open, Todo
 - **Complexity:** XS - Few hours
 
-**Forge - Issues Disabled**
-- **Note:** automagik-forge has GitHub Issues disabled
-- **Action Required:** Enable issues in repository settings before creating deployment issue
-- **Issue Created Accidentally:** BloopAI/vibe-kanban#995 (wrong repo, can be closed)
+**forge#25 - Deploy wish system infrastructure to forge**
+- **Scope:** Full infrastructure deployment (labels, templates, workflows, secrets)
+- **Covers:** All repository setup for forge
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+- **Note:** Issues now enabled in forge repo
 
 **Wish Review Issues (All Repos):**
 
@@ -178,6 +180,12 @@ Related work:
 
 **omni#36 - Review and normalize old wishes in omni**
 - **Scope:** Review all wishes, normalize, extract metadata, link to Event Fabric phases
+- **Covers:** Audit, quality review, archival preparation
+- **Status:** Open, Todo
+- **Complexity:** S - 1-2 days
+
+**forge#26 - Review and normalize old wishes in forge**
+- **Scope:** Review all wishes, normalize, extract metadata
 - **Covers:** Audit, quality review, archival preparation
 - **Status:** Open, Todo
 - **Complexity:** S - 1-2 days
