@@ -341,11 +341,11 @@ This initiative builds on the recently completed cross-repo linking system:
 
 **Before (scattered):**
 ```
-automagik-hive/.ai/wishes/
+automagik-hive/.genie/wishes/
   ├── old-wish-1.md (88+ files here)
   └── old-wish-2.md
 
-automagik-omni/.ai/wishes/
+automagik-omni/.genie/wishes/
   ├── some-wish.md
   └── another-wish.md
 
@@ -374,7 +374,7 @@ Each archived wish enhanced with frontmatter:
 ```yaml
 ---
 original_repo: automagik-hive
-original_path: .ai/wishes/example-wish.md
+original_path: .genie/wishes/example-wish.md
 initiative_number: 32
 pr_url: https://github.com/namastexlabs/automagik-hive/pull/45
 completed_at: 2025-10-15T10:30:00Z
