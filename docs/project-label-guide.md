@@ -16,7 +16,7 @@ Automagik project repositories use a **unified label taxonomy** adapted from the
 - ✅ Adds release versioning labels (`release:patch`, `release:minor`, `release:major`)
 - ✅ Adds status tracking labels (`status:blocked`, `status:in-progress`)
 
-**Total Labels:** ~53 base labels + 2-4 repo-specific
+**Total Labels:** ~56 base labels + 2-4 repo-specific (includes wish workflow labels)
 
 ---
 
@@ -198,7 +198,43 @@ Community contribution signals.
 
 ---
 
-### 8. 🔧 Administrative (4 labels)
+### 8. 🧞 Wish Workflow (3 labels)
+
+Community feature request workflow tracking.
+
+| Label | Color | Description | Applied By | When to Use |
+|-------|-------|-------------|------------|-------------|
+| `wish:triage` | `#E1BEE7` | User wish pending team review | Make a Wish template (auto) | New community feature ideas |
+| `wish:active` | `#1D76DB` | Wish approved and being worked on | Team (manual) | After triage approval |
+| `wish:archived` | `#6C757D` | Wish completed and archived | Workflow (auto on PR merge) | Implementation complete |
+
+**Workflow:**
+```
+User submits wish via Make a Wish template
+  ↓
+Auto-labeled with wish:triage
+  ↓
+Team reviews and triages
+  ↓
+If approved: Change to wish:active, create initiative/issue
+  ↓
+Implementation PR merges
+  ↓
+Wish document auto-archived to roadmap repo
+  ↓
+Auto-labeled with wish:archived
+```
+
+**Usage:**
+- `wish:triage` - Filter for community ideas awaiting review
+- `wish:active` - Track approved wishes in development
+- `wish:archived` - Historical record of completed wishes
+- Separate from `planned-feature` (roadmap) workflow
+- Users don't need technical knowledge to make wishes
+
+---
+
+### 9. 🔧 Administrative (4 labels)
 
 Issue management.
 
@@ -254,6 +290,13 @@ Labels:
   - release:major
 ```
 
+### Example 5: Community Wish
+```yaml
+Labels:
+  - wish:triage           # Auto-applied by template
+  - status:needs-triage   # Awaiting team review
+```
+
 ---
 
 ## Issue Templates
@@ -280,7 +323,23 @@ For community suggestions and enhancement ideas.
 - Priority (dropdown)
 - Areas (checkboxes)
 
-### Template 3: Planned Feature
+### Template 3: Make a Wish 🧞
+For community feature ideas and suggestions (no technical knowledge needed).
+
+**Auto-Applied Labels:**
+- `wish:triage`
+
+**User Provides:**
+- What's your wish? (required)
+- Why would this be useful? (optional)
+- Any additional context? (optional)
+
+**Team Process:**
+- Reviews during triage
+- Converts to initiative or issue if approved
+- Adds `wish:active` label when work begins
+
+### Template 4: Planned Feature
 For team/agent-created work linked to roadmap initiatives.
 
 **Auto-Applied Labels:**

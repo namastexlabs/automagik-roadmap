@@ -87,15 +87,36 @@ Each project folder contains:
 
 ## 📋 How to Propose
 
-**Want to suggest a new initiative?** Choose your preferred method:
+**Want to suggest something?** We have different paths based on what you need:
 
-### Option 1: GitHub Issue Form (Recommended for Quick Proposals)
+### 🧞 Option 1: Make a Wish (Recommended for Feature Ideas)
+
+**Got an idea but not sure how to structure it?** Use our simple wish form:
+
+1. **[Make a Wish](../../issues/new/choose)** using the **🧞 Make a Wish** template
+2. Tell us:
+   - What's your wish?
+   - Why would it be useful? (optional)
+   - Any additional context? (optional)
+3. Submit → Gets `wish:triage` label, team will review and guide it forward ✨
+
+**Perfect for:**
+- 💡 Feature ideas
+- 🎯 Improvement suggestions
+- 🤔 "Wouldn't it be cool if..." thoughts
+- 🚀 Quick submissions without formal structure
+
+---
+
+### 📋 Option 2: GitHub Issue Form (For Structured Initiatives)
+
+**Have a well-defined initiative ready?** Use the formal template:
 
 1. **[Create a new issue](../../issues/new/choose)** using the **Initiative template**
-2. Fill in the form fields (project, description, RASCI, etc.)
+2. Fill in the form fields (project, description, RASCI, expected results)
 3. Submit → Automatically added to project board ✨
 
-### Option 2: CLI Script (Recommended for Detailed Initiatives)
+### 🛠️ Option 3: CLI Script (For Maximum Detail)
 
 Use our CLI script with structured templates:
 
@@ -161,6 +182,16 @@ We use a **6-dimensional label system** to organize initiatives:
 
 **Total:** ~40 labels across 6 dimensions for precise organization.
 
+### Wish Workflow Labels
+
+For community-submitted feature ideas:
+
+| Label | Meaning | Usage |
+|-------|---------|-------|
+| `wish:triage` | User wish pending team review | Auto-applied by Make a Wish template |
+| `wish:active` | Wish approved and being worked on | Set by team during triage |
+| `wish:archived` | Wish completed and archived | Auto-applied when PR merges |
+
 [View complete label guide →](docs/label-guide.md)
 
 ---
@@ -195,10 +226,16 @@ Exports run **automatically every Monday** via GitHub Actions.
 We welcome community input on our roadmap!
 
 **How to contribute:**
+- 🧞 **Make a wish** for feature ideas (no technical knowledge needed!)
 - 💬 **Comment on issues** to share feedback and ideas
-- 🎯 **Propose new initiatives** via issue templates
-- 📝 **Create detailed wishes** in project folders
+- 🎯 **Propose initiatives** via structured templates
+- 🔧 **Submit PRs** to project repos (link to issues for auto-labeling)
 - 💡 **Join discussions** on our [Discord](https://discord.gg/xcW8c7fF3R)
+
+**For Developers:**
+- All project repos have PR templates with issue linking
+- Link PRs to issues using `- Closes #X` for automatic metadata inheritance
+- Wish documents in `.genie/wishes/` are auto-archived when PRs merge
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
