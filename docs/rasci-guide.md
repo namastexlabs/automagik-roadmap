@@ -410,7 +410,7 @@ RASCI may change as initiatives move through stages:
 |-------|---------------------|
 | **Exploring** | R may be "TBD", A is product/project lead |
 | **RFC** | C expands to community, I grows |
-| **Priorization** | R assigned (architect/designer), S identified |
+| **Prioritization** | R assigned (architect/designer), S identified |
 | **Executing** | R is developer, S is technical helpers |
 | **Preview** | S may include testers, I expands to beta users |
 | **Shipped** | R may shift to maintainer for ongoing support |

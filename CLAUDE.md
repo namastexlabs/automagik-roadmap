@@ -13,7 +13,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 - **Genie** - Autonomous agent framework
 - **Tools** - MCP tools builder & marketplace
 
-**Core Concept:** Initiatives progress through lifecycle stages (Wishlist → Exploring → RFC → Priorization → Executing → Preview → Shipped) with RASCI ownership and expected results tracking.
+**Core Concept:** Initiatives progress through lifecycle stages (Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped) with RASCI ownership and expected results tracking.
 
 ## Architecture
 
@@ -81,7 +81,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 From `.github/labels.yml` - 56 labels total:
 
 1. **Project** (7): `project:omni`, `project:hive`, etc.
-2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Priorization`, `Executing`, `Preview`, `Shipped`, `Archived`
+2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Prioritization`, `Executing`, `Preview`, `Shipped`, `Archived`
 3. **Type** (6): `type:feature`, `type:enhancement`, `type:research`, `type:infrastructure`, `type:documentation`, `type:bug-initiative`
 4. **Priority** (4): `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
 5. **Quarter** (7): `quarter:2025-q4`, `quarter:2026-q1`, ..., `quarter:backlog`
@@ -101,7 +101,7 @@ From `.github/labels.yml` - 56 labels total:
 cat docs/templates/STANDARD_INITIATIVE.md | ./scripts/create-initiative.sh \
   --title "Initiative Title" \
   --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Priorization|Executing|Preview|Shipped) \
+  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
   --priority (critical|high|medium|low) \
   --quarter (2025-Q4|2026-Q1|backlog) \
   --owner github-username \
@@ -300,7 +300,7 @@ Exploring (Validation, 1-4 weeks)
     ↓
 RFC (Community feedback, 2-6 weeks)
     ↓
-Priorization (Planning, 2-8 weeks)
+Prioritization (Planning, 2-8 weeks)
     ↓
 Executing (Implementation, 4-16 weeks)
     ↓

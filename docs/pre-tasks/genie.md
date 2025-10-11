@@ -41,7 +41,7 @@ Foundation CLI for AI agent workspace lifecycle management. Enable developers to
 
 **Priority:** CRITICAL
 **Quarter:** Q4 2025
-**Stage:** Exploring → Priorization
+**Stage:** Exploring → Prioritization
 **Type:** feature, infrastructure
 **Areas:** cli, workflows
 **Wish Needed:** YES - Core platform feature

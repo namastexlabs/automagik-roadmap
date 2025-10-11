@@ -113,7 +113,7 @@ Built-in quality assurance through automated review subtasks, conversational ref
 
 **Priority:** HIGH
 **Quarter:** Q1 2026
-**Stage:** Priorization
+**Stage:** Prioritization
 **Type:** feature
 **Areas:** workflows, testing, api
 **Wish Needed:** NO - Well-understood feature set

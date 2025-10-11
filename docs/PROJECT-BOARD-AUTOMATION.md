@@ -478,7 +478,7 @@ Replace the entire "Set project board fields" step with this:
 | Wishlist | `d4964f90` | Early ideation |
 | Exploring | `f5c85cef` | Validation phase |
 | RFC | `cd5acf90` | Community feedback |
-| Priorization | `a3c2913b` | Planning |
+| Prioritization | `a3c2913b` | Planning |
 | **Executing** | `073f61b0` | **Active implementation (DEFAULT)** |
 | Preview | `b572947d` | Beta testing |
 | Shipped | `3d0b8ddd` | Production |

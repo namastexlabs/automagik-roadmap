@@ -67,7 +67,7 @@ def map_stage_to_portuguese(stage: str) -> str:
         'Ideation': 'Ideação',
         'Exploring': 'Investigação',
         'RFC': 'Proposta',
-        'Priorization': 'Priorização',
+        'Prioritization': 'Priorização',
         'Executing': 'Execução',
         'Preview': 'Preview',
         'Shipped': 'Finalizado',
@@ -111,7 +111,7 @@ def export_roadmap():
         # Extract labels
         project = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('project:')), '')
         # Stage labels are now pretty names without prefix
-        stage = next((l.name for l in issue.labels if l.name in ['Wishlist', 'Ideation', 'Exploring', 'RFC', 'Priorization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
+        stage = next((l.name for l in issue.labels if l.name in ['Wishlist', 'Ideation', 'Exploring', 'RFC', 'Prioritization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
         quarter = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('quarter:')), '')
 
         # Extract fields from issue body

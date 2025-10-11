@@ -10,7 +10,7 @@ Every initiative progresses through a series of stages from initial exploration 
 
 **Stage Flow:**
 ```
-Wishlist → Exploring → RFC → Priorization → Executing → Preview → Shipped
+Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
                                                                          ↓
                                                                      Archived
 ```
@@ -82,13 +82,13 @@ Wishlist → Exploring → RFC → Priorization → Executing → Preview → Sh
 
 **Labels:** `RFC`
 
-**Note:** RFC can happen in parallel with "Exploring" or "Priorization" for community-driven projects.
+**Note:** RFC can happen in parallel with "Exploring" or "Prioritization" for community-driven projects.
 
 ---
 
-## 📋 Priorization
+## 📋 Prioritization
 
-**Definition:** Priorization and planning phase. Determining implementation approach and timeline.
+**Definition:** Prioritization and planning phase. Determining implementation approach and timeline.
 
 **Activities:**
 - Creating technical specifications
@@ -110,7 +110,7 @@ Wishlist → Exploring → RFC → Priorization → Executing → Preview → Sh
 
 **Typical Duration:** 2-8 weeks
 
-**Labels:** `Priorization`
+**Labels:** `Prioritization`
 
 ---
 
@@ -277,12 +277,12 @@ A: Yes. If design needs rework or more community feedback is needed, move back t
 
 ### Example 1: Small Feature
 ```
-Exploring (1 week) → Priorization (1 week) → Executing (2 weeks) → Shipped
+Exploring (1 week) → Prioritization (1 week) → Executing (2 weeks) → Shipped
 ```
 
 ### Example 2: Major Initiative
 ```
-Exploring (4 weeks) → RFC (6 weeks) → Priorization (8 weeks) →
+Exploring (4 weeks) → RFC (6 weeks) → Prioritization (8 weeks) →
 Executing (12 weeks) → Preview (4 weeks) → Shipped
 ```
 
