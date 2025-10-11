@@ -227,6 +227,22 @@
   description: 'Security - Security features, compliance, auditing'
 
 # ============================================
+# WISH WORKFLOW LABELS (3 labels)
+# ============================================
+
+- name: wish:triage
+  color: 'E1BEE7'
+  description: 'Wish Triage - User-submitted wish pending team review'
+
+- name: wish:active
+  color: '1D76DB'
+  description: 'Wish Active - Currently being worked on'
+
+- name: wish:archived
+  color: '6C757D'
+  description: 'Wish Archived - Completed and moved to roadmap archive'
+
+# ============================================
 # META LABELS (6 labels)
 # ============================================
 

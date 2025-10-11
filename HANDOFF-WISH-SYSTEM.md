@@ -7,6 +7,24 @@
 
 ---
 
+## 🧞 Make a Wish Template
+
+Simple, friendly way for users to share ideas - no technical knowledge needed!
+
+**What users see:**
+- "What's your wish?" - Just describe your idea
+- "Why would this be useful?" - Optional
+- "Anything else?" - Optional
+
+**What happens:**
+- Gets `wish:triage` label
+- Team reviews and responds
+- Does NOT auto-add to project board (we triage first)
+
+**Deploy to all 6 repos as part of infrastructure rollout.**
+
+---
+
 ## 🎯 What This Initiative Does
 
 **Goal:** Automate the lifecycle of "wishes" (AI-assisted development artifacts) across all 6 Automagik repos, eliminating manual archival and ensuring unified Genie tooling.
@@ -213,7 +231,8 @@ This initiative builds on the recently completed cross-repo linking system:
 - Project Board: Auto-adds issues and populates fields (Stage, Status, Project)
 
 **What Wish System Adds:**
-- Wish-specific labels (`wish:archived`, `wish:active`, `wish:implementation`)
+- Wish-specific labels (`wish:triage`, `wish:active`, `wish:archived`)
+- User-friendly "Make a Wish" template for feature requests
 - Wish metadata in templates (document path, implementation status)
 - Automated archival workflow triggered on PR merge
 - Wish cleanup workflow for removing archived wishes
@@ -480,15 +499,23 @@ Create comprehensive documentation for wish system including user guides, develo
 
 **genie#27 - Repository Infrastructure** 🔄 In Progress
 
-**Labels:** ✅ Complete (commit 1e5236b)
-- Added wish workflow labels: `wish:active`, `wish:archived`, `wish:implementation`
+**Labels:** ✅ Complete (commit 1e5236b + latest)
+- Added wish workflow labels: `wish:triage`, `wish:active`, `wish:archived`
+- `wish:triage` - User-submitted wishes pending team review
+- `wish:active` - Currently being worked on
+- `wish:archived` - Completed and moved to roadmap archive
 - Labels synced via `.github/labels.yml`
 - Documented label usage in taxonomy
 
-**Templates:** ✅ Complete (commit 1e5236b)
+**Templates:** ✅ Complete (commit 1e5236b + latest)
 - Enhanced `planned-feature.yml` with wish status dropdown
 - Added wish workflow state tracking (Active/Implementation/Ready for archive)
 - Maintained existing wish path field for documentation linking
+- **NEW:** Added `make-a-wish.yml` - User-friendly template for community wishes
+  - Minimal fields (wish description, project, why, optional context)
+  - Auto-applies `wish:triage` label
+  - Friendly onboarding flow ("What happens next?" guidance)
+  - Does NOT auto-add to project board (manual triage process)
 
 **Repository Settings:** ✅ Complete (commit 1e5236b)
 - Set `blank_issues_enabled: false` in config.yml
