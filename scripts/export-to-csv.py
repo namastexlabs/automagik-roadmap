@@ -6,7 +6,7 @@ CSV Columns:
 - PROJECT: Project name (omni, hive, spark, etc.)
 - INITIATIVE: Initiative title
 - DESCRIPTION: Brief description
-- STAGE: Current stage (Ideation, Exploring, RFC, etc.)
+- STAGE: Current stage (Wishlist, Exploring, RFC, etc.)
 - ETA: Target quarter (Q4 2025, etc.)
 - EXPECTED_RESULT: Measurable outcomes
 - STATUS_DETAIL: Current status
@@ -64,7 +64,6 @@ def map_stage_to_portuguese(stage: str) -> str:
     """Map GitHub stage labels to Portuguese translations for CSV export."""
     stage_mapping = {
         'Wishlist': 'Lista de Desejos',
-        'Ideation': 'Ideação',
         'Exploring': 'Investigação',
         'RFC': 'Proposta',
         'Prioritization': 'Priorização',
@@ -111,7 +110,7 @@ def export_roadmap():
         # Extract labels
         project = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('project:')), '')
         # Stage labels are now pretty names without prefix
-        stage = next((l.name for l in issue.labels if l.name in ['Wishlist', 'Ideation', 'Exploring', 'RFC', 'Prioritization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
+        stage = next((l.name for l in issue.labels if l.name in ['Wishlist', 'Exploring', 'RFC', 'Prioritization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
         quarter = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('quarter:')), '')
 
         # Extract fields from issue body

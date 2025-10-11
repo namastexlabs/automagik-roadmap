@@ -134,7 +134,6 @@ body:
       description: Current lifecycle stage
       options:
         - Wishlist
-        - Ideation
         - Exploring
         - RFC
         - Prioritization

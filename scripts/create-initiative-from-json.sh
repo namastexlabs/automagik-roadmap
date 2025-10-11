@@ -13,7 +13,7 @@ Input JSON format:
 {
   "title": "Initiative Title",
   "project": "omni|hive|spark|forge|genie|tools|cross-project",
-  "stage": "Wishlist|Ideation|Exploring|RFC|Prioritization|Executing|Preview|Shipped",
+  "stage": "Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped",
   "priority": "critical|high|medium|low",
   "quarter": "2025-q4|2026-q1|2026-q2|backlog|etc",
   "owner": "github-username",

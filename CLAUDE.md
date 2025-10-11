@@ -294,7 +294,7 @@ From `docs/rasci-guide.md`:
 From `docs/stage-definitions.md`:
 
 ```
-Wishlist (Ideation, 1-2 weeks)
+Wishlist (Initial ideation, 1-2 weeks)
     ↓
 Exploring (Validation, 1-4 weeks)
     ↓

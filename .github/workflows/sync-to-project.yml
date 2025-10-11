@@ -88,7 +88,6 @@ jobs:
             // Map stage to Status
             const stageToStatus = {
               'Wishlist': 'Todo',
-              'Ideation': 'Todo',
               'Exploring': 'Todo',
               'RFC': 'Todo',
               'Prioritization': 'Todo',
@@ -204,7 +203,6 @@ jobs:
           script: |
             const stageOptions = {
               'Wishlist': 'd4964f90',
-              'Ideation': 'd4964f90',
               'Exploring': 'f5c85cef',
               'RFC': 'cd5acf90',
               'Prioritization': 'a3c2913b',
