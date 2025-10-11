@@ -171,7 +171,7 @@ Just copy-paste sections from the larger templates as needed!
 cat your-initiative.md | ./scripts/create-initiative.sh \
   --title "Your Initiative Title" \
   --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped|Archived) \
+  --stage (Wishlist|Exploring|RFC|Priorization|Executing|Preview|Shipped|Archived) \
   --priority (critical|high|medium|low) \
   --quarter (2025-Q4|2026-Q1|2026-Q2|...|backlog) \
   --type (feature|enhancement|research|infrastructure|documentation) \

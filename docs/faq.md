@@ -78,7 +78,7 @@ Initiatives progress through stages from exploration to delivery:
 - 💡 **Wishlist** - Initial ideation and brainstorming
 - 🔍 **Exploring** - Early investigation
 - 💬 **RFC** - Request for comments
-- 📋 **Prioritization** - Prioritization and planning phase
+- 📋 **Priorization** - Priorization and planning phase
 - 🔨 **Executing** - Active execution and implementation
 - 🧪 **Preview** - Beta/preview release
 - ✅ **Shipped** - Generally available

@@ -46,7 +46,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 | `Wishlist` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
 | `Exploring` | `#FBCA04` | Early investigation and validation | 1-4 weeks |
 | `RFC` | `#FFA500` | Request for comments, gathering feedback | 2-6 weeks |
-| `Prioritization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
+| `Priorization` | `#D876E3` | Priorization and planning | 2-8 weeks |
 | `Executing` | `#1D76DB` | Active execution and implementation | 4-16 weeks |
 | `Preview` | `#9C27B0` | Beta or preview release for testing | 2-8 weeks |
 | `Shipped` | `#0E8A16` | Generally available in production | Ongoing |
@@ -59,7 +59,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 **Flow:**
 ```
-Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+Wishlist → Exploring → RFC → Priorization → Executing → Preview → Shipped
                                                                          ↓
                                                                      Archived
 ```
@@ -180,7 +180,7 @@ Technical domain or functional area.
 ```yaml
 Labels:
   - project:omni
-  - Prioritization
+  - Priorization
   - type:feature
   - priority:high
   - quarter:2026-q1

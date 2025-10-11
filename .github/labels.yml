@@ -50,9 +50,9 @@
   color: 'FFA500'
   description: 'Request for comments, gathering feedback'
 
-- name: Prioritization
+- name: Priorization
   color: 'D876E3'
-  description: 'Prioritization and planning'
+  description: 'Priorization and planning'
 
 - name: Executing
   color: '1D76DB'

@@ -13,7 +13,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 - **Genie** - Autonomous agent framework
 - **Tools** - MCP tools builder & marketplace
 
-**Core Concept:** Initiatives progress through lifecycle stages (Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped) with RASCI ownership and expected results tracking.
+**Core Concept:** Initiatives progress through lifecycle stages (Wishlist → Exploring → RFC → Priorization → Executing → Preview → Shipped) with RASCI ownership and expected results tracking.
 
 ## Architecture
 
@@ -81,13 +81,16 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 From `.github/labels.yml` - 56 labels total:
 
 1. **Project** (7): `project:omni`, `project:hive`, etc.
-2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Prioritization`, `Executing`, `Preview`, `Shipped`, `Archived`
+2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Priorization`, `Executing`, `Preview`, `Shipped`, `Archived`
 3. **Type** (6): `type:feature`, `type:enhancement`, `type:research`, `type:infrastructure`, `type:documentation`, `type:bug-initiative`
 4. **Priority** (4): `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
 5. **Quarter** (7): `quarter:2025-q4`, `quarter:2026-q1`, ..., `quarter:backlog`
 6. **Area** (15+): `area:api`, `area:cli`, `area:mcp`, `area:agents`, `area:performance`, `area:security`, etc.
 
-**Important:** Quarter labels are NOT used in CLI script. Instead, the `--quarter` parameter sets the **ETA project field** directly.
+**Important Label Behavior:**
+- **CLI Script:** Does NOT apply quarter labels. The `--quarter` parameter sets the **ETA project field** directly via GraphQL.
+- **GitHub Form:** DOES apply quarter labels via workflow (`.github/workflows/sync-to-project.yml:142`) AND sets ETA field.
+- Both methods ultimately set the same ETA project field, but form submissions also get visual quarter labels for filtering.
 
 ## Creating Initiatives
 
@@ -98,7 +101,7 @@ From `.github/labels.yml` - 56 labels total:
 cat docs/templates/STANDARD_INITIATIVE.md | ./scripts/create-initiative.sh \
   --title "Initiative Title" \
   --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
+  --stage (Wishlist|Exploring|RFC|Priorization|Executing|Preview|Shipped) \
   --priority (critical|high|medium|low) \
   --quarter (2025-Q4|2026-Q1|backlog) \
   --owner github-username \
@@ -268,9 +271,12 @@ query {
 - Verify markdown formatting (script removes bold/bullets)
 
 **Problem: Quarter label applied but ETA field empty**
-- CLI script doesn't use quarter labels (only project field)
-- Workflow applies quarter labels for GitHub form submissions
-- Check if issue was CLI-created (no workflow comment = CLI)
+- This should never happen - both methods set ETA field
+- If it does: Manually set ETA field via GraphQL (see commands above)
+- **Label vs Field:**
+  - CLI: Sets ETA field only (no quarter label)
+  - Form: Sets both ETA field AND quarter label
+  - Both are valid - label is cosmetic for GitHub filtering
 
 ## Project Context
 
@@ -294,7 +300,7 @@ Exploring (Validation, 1-4 weeks)
     ↓
 RFC (Community feedback, 2-6 weeks)
     ↓
-Prioritization (Planning, 2-8 weeks)
+Priorization (Planning, 2-8 weeks)
     ↓
 Executing (Implementation, 4-16 weeks)
     ↓
