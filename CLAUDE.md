@@ -171,8 +171,16 @@ cat docs/templates/STANDARD_INITIATIVE.md | ./scripts/create-initiative.sh \
 cat my-initiative.md | ./scripts/create-initiative.sh \
   --title "Cross-repo Work" --project cross-project --areas "performance,security"
 
-# Create from JSON (alternative method)
-echo '{"title":"Feature","project":"hive","quarter":"2026-q1"}' | ./scripts/create-initiative-from-json.sh
+# Create from JSON (simple format - backwards compatible)
+echo '{"title":"Feature","project":"hive","quarter":"2026-q1","description":"..."}' | ./scripts/create-initiative-from-json.sh
+
+# Create from JSON (rich format - recommended, see SAMPLE_INITIATIVE.json)
+cat docs/templates/SAMPLE_INITIATIVE.json | ./scripts/create-initiative-from-json.sh
+
+# Rich format supports full STANDARD_INITIATIVE.md structure via JSON:
+# - one_line_summary, rasci, overview (5W2H), value_proposition
+# - options, phases, dependencies, risks, success_metrics
+# See docs/templates/SAMPLE_INITIATIVE.json for complete example
 
 # Update Target Date manually (if needed)
 gh api graphql -f query='
