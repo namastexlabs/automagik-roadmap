@@ -48,95 +48,202 @@ SUCCESS_CRITERIA=$(echo "$JSON" | jq -r '.success_criteria // [] | map("- [ ] " 
 RESPONSIBLE=$(echo "$JSON" | jq -r '.responsible // .owner // "vasconceloscezar"')
 ACCOUNTABLE=$(echo "$JSON" | jq -r '.accountable // .owner // "vasconceloscezar"')
 
-# Build issue body in template format
+# Build issue body in RICH MARKDOWN format (NOT template format)
 BODY=$(cat <<EOF
-### Project
+# $TITLE
 
-$PROJECT
+**One-line Summary:** $DESCRIPTION | Timeline: TBD | Key risks: TBD
 
-### Description
+**Version:** 1.0 | **Status:** $STAGE | **Last Updated:** $(date +%Y-%m-%d)
 
+---
+
+## RASCI
+
+**Responsible:** Development team (implementation execution)
+
+**Accountable:** @$ACCOUNTABLE (owns success/failure and strategic decisions)
+
+**Support:** TBD
+
+**Consulted:** TBD
+
+**Informed:** Automagik ecosystem teams
+
+---
+
+## Links & Related Documents
+
+- **Related Initiatives:** TBD
+- **Wish Documents:** TBD
+
+---
+
+## Overview (5W2H)
+
+### What
 $DESCRIPTION
 
-### Expected Results (RESULTADO_ESPERADO)
+### Why (Problem)
+**Current Limitations:**
+TBD - Document the problem this initiative solves
 
+**Business Impact:**
+TBD - Explain why this matters now
+
+### Who
+**For whom:** End users, developers, operators
+
+**By whom:** Automagik $PROJECT team
+
+### When
+**Timeline:** $QUARTER
+
+**Milestones:** TBD
+
+### Where
+**Touchpoints:** TBD - Systems/services affected
+
+**Platforms:** TBD - Technical stack
+
+### How
+**Approach:** TBD - High-level implementation strategy
+
+---
+
+## Value Proposition
+
+### Goals (Expected Results)
 $EXPECTED_RESULTS
 
 ### Success Criteria
-
 $SUCCESS_CRITERIA
 
-### Responsible
+### Non-Goals
+TBD - What's explicitly out of scope
 
-@$RESPONSIBLE
+### Expected Impact
 
-### Accountable
+**For the Organization:**
+TBD - Strategic benefits
 
-@$ACCOUNTABLE
+**For Users/Customers:**
+TBD - End-user benefits
 
-### Support
+**Metrics:**
+TBD - Success metrics and targets
 
-_No response_
+---
 
-### Consulted
+## Problem & Context
 
-_No response_
+### Current State
+TBD - Describe existing system/situation
 
-### Informed
+### Why This Matters Now
+TBD - Why prioritize this initiative
 
-_No response_
+---
 
-### Stage
+## Options & Proposals
 
-$STAGE
+| Proposal | Description | Advantages | Disadvantages | Cost | Recommendation |
+|----------|-------------|------------|---------------|------|----------------|
+| **Recommended Approach** | $DESCRIPTION | TBD | TBD | TBD | ⭐ Recommended |
 
-### Priority
+---
 
-$PRIORITY
+## Scope
 
-### Quarter (ETA)
+### In Scope
+TBD - What will be delivered
 
-$QUARTER
+### Out of Scope
+TBD - What won't be delivered in this initiative
 
-### Target Date (Optional)
+---
 
-_No response_
+## Timeline & Phases
 
-### Type
+### Phase 1: Foundation (Weeks 1-2)
+- [ ] TBD
 
-$TYPE
+**Success Criteria:** TBD
 
-### Areas (Optional)
+### Phase 2: Implementation (Weeks 3-4)
+- [ ] TBD
 
-$AREAS
+**Success Criteria:** TBD
 
-### Wish Folder (Optional)
+### Phase 3: Validation (Weeks 5-6)
+- [ ] TBD
 
-_No response_
+**Success Criteria:** TBD
 
-### Related Repositories
+---
 
-_No response_
+## Dependencies & Risks
+
+### Dependencies
+
+| Dependency | Type | Owner | Status | Impact if Blocked |
+|------------|------|-------|--------|-------------------|
+| TBD | Internal | TBD | TBD | TBD |
+
+### Risks & Mitigation
+
+| Risk | Probability | Impact | Mitigation Strategy | Contingency Plan |
+|------|-------------|--------|---------------------|------------------|
+| TBD | Medium | High | TBD | TBD |
+
+---
+
+## Success Metrics & Tracking
+
+### Launch Metrics
+TBD - Metrics to track at launch
+
+### Growth Metrics
+TBD - Metrics to track over time
+
+### Long-term Metrics
+TBD - Strategic success indicators
+
+### Monitoring & Dashboards
+TBD - How we'll monitor success
+
+---
+
+## Open Questions & Future Considerations
+
+### Open Questions
+- [ ] TBD
+
+### Future Considerations
+TBD - Ideas for future phases
 EOF
 )
 
-# Create issue
+# Create issue with clean title (script will be piped to standard create-initiative.sh)
+# Generate the markdown body and pipe to the standard script for proper handling
 echo "Creating initiative: $TITLE"
-ISSUE_URL=$(gh issue create \
-  --repo namastexlabs/automagik-roadmap \
-  --title "[Initiative] ${PROJECT^}: $TITLE" \
-  --label "initiative" \
-  --body "$BODY")
 
-ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '\d+$')
+# Build the command for the standard script
+TEMP_BODY_FILE=$(mktemp)
+echo "$BODY" > "$TEMP_BODY_FILE"
 
-echo ""
-echo "✅ Initiative created: $ISSUE_URL"
-echo ""
-echo "The GitHub Actions workflow will automatically:"
-echo "  - Add to project board"
-echo "  - Set all custom fields"
-echo "  - Apply labels"
-echo ""
-echo "Check status: gh run list --workflow=sync-to-project.yml --limit 1"
-echo "View on board: https://github.com/orgs/namastexlabs/projects/9"
+# Call the standard script with proper parameters
+cat "$TEMP_BODY_FILE" | ./scripts/create-initiative.sh \
+  --title "$TITLE" \
+  --project "$PROJECT" \
+  --stage "$STAGE" \
+  --priority "$PRIORITY" \
+  --quarter "$QUARTER" \
+  --owner "$OWNER" \
+  --type "$TYPE" \
+  --areas "$AREAS"
+
+rm "$TEMP_BODY_FILE"
+
+# Note: The standard script handles all the rest (labels, project board, fields)
+# and will output success messages
