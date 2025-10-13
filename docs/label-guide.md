@@ -8,7 +8,7 @@ Complete taxonomy and usage guide for Automagik roadmap labels.
 
 The Automagik roadmap uses a **multi-dimensional label system** to organize and filter initiatives. Labels are grouped into **6 dimensions**, allowing precise categorization and powerful filtering.
 
-**Total Labels:** 56 labels across 6 dimensions
+**Total Labels:** 59 labels across 6 dimensions
 
 **Inspiration:** GitHub's public roadmap label system
 
@@ -108,7 +108,7 @@ Indicates urgency and importance.
 
 ---
 
-### 5. 📅 Quarter Dimension (5+ labels)
+### 5. 📅 Quarter Dimension (10 labels)
 
 Target timeframe for completion.
 
@@ -119,6 +119,10 @@ Target timeframe for completion.
 | `quarter:2026-q2` | `#5319E7` | Apr-Jun 2026 |
 | `quarter:2026-q3` | `#5319E7` | Jul-Sep 2026 |
 | `quarter:2026-q4` | `#5319E7` | Oct-Dec 2026 |
+| `quarter:2027-q1` | `#5319E7` | Jan-Mar 2027 |
+| `quarter:2027-q2` | `#5319E7` | Apr-Jun 2027 |
+| `quarter:2027-q3` | `#5319E7` | Jul-Sep 2027 |
+| `quarter:2027-q4` | `#5319E7` | Oct-Dec 2027 |
 | `quarter:backlog` | `#6C757D` | Not yet scheduled |
 
 **Usage:**
@@ -134,7 +138,7 @@ Target timeframe for completion.
 
 ---
 
-### 6. 🔧 Area Dimension (12+ labels)
+### 6. 🔧 Area Dimension (15 labels)
 
 Technical domain or functional area.
 

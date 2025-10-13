@@ -78,13 +78,13 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 
 #### 3. Label System (6 Dimensions)
 
-From `.github/labels.yml` - 56 labels total:
+From `.github/labels.yml` - 59 labels total:
 
 1. **Project** (7): `project:omni`, `project:hive`, etc.
 2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Prioritization`, `Executing`, `Preview`, `Shipped`, `Archived`
 3. **Type** (6): `type:feature`, `type:enhancement`, `type:research`, `type:infrastructure`, `type:documentation`, `type:bug-initiative`
 4. **Priority** (4): `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
-5. **Quarter** (7): `quarter:2025-q4`, `quarter:2026-q1`, ..., `quarter:backlog`
+5. **Quarter** (10): `quarter:2025-q4`, `quarter:2026-q1` through `quarter:2027-q4`, `quarter:backlog`
 6. **Area** (15+): `area:api`, `area:cli`, `area:mcp`, `area:agents`, `area:performance`, `area:security`, etc.
 
 **Important Label Behavior:**
