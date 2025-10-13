@@ -1,0 +1,9 @@
+PROJECT,INITIATIVE,DESCRIPTION,STAGE,ETA,EXPECTED_RESULT,STATUS_DETAIL,START_DATE,END_DATE,ISSUE_URL,WISH_FOLDER,OWNER
+CROSS-PROJECT,Wish Sync & Genie Update - Unified Workflow System,"### What Two-part initiative: (1) Automated wish archival system that moves completed wishes from project repos to roadmap on PR merge, and (2) Update automagik-genie to latest version across all 6 Automagik projects (hive, omni, spark, forge, tools, genie itself) for consistent AI-assisted developm",,,,TRACKED,08/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/29,,@vasconceloscezar
+CROSS-PROJECT,OpenTelemetry Implementation Across Automagik Ecosystem,"# OpenTelemetry Implementation Across Automagik Ecosystem
+
+**One-line Summary:** Lack of usage insights across repos → Implement opt-in OpenTelemetry across all 6 Automagik projects → Enable data-driv",Investigação,,,TRACKED,08/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/31,,@vasconceloscezar
+FORGE,Forge Upstream Separation - Library-Based Architecture Migration,"### What Restructure automagik-forge from a direct vibe-kanban fork into a library-based architecture where vibe-kanban lives in a separate forked repository, and Forge uses it as a composable library with dedicated extension packages for forge-specific features.",Execução,,,DONE,08/10/2025,11/10/2025,https://github.com/namastexlabs/automagik-roadmap/issues/30,,@namastex888
+OMNI,Webhook Event Driven Omni ,"# Event Fabric Foundation - Universal Event-Driven Platform
+
+**One-line Summary:** WhatsApp-centric message storage → Universal event-driven platform with provider-agnostic schema → Cross-channel cont",Proposta,,,TRACKED,09/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/32,,@namastex888
