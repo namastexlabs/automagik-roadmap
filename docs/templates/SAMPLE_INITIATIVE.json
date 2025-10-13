@@ -1,0 +1,288 @@
+{
+  "title": "Real-Time Collaboration for Agent Configuration",
+  "project": "omni",
+  "stage": "Exploring",
+  "priority": "medium",
+  "quarter": "2026-Q1",
+  "owner": "vasconceloscezar",
+  "type": "feature",
+  "areas": ["api", "ui", "workflows"],
+
+  "one_line_summary": {
+    "problem": "Teams struggle to coordinate agent configuration changes across multiple environments",
+    "solution": "Real-time collaborative editing with conflict resolution and version control",
+    "impact": "Reduce configuration errors by 80%, enable 5+ team members to work simultaneously",
+    "timeline": "8 weeks",
+    "key_risks": "WebSocket scaling complexity, merge conflict resolution UX"
+  },
+
+  "rasci": {
+    "responsible": "Frontend team (UI/UX), Backend team (WebSocket infrastructure)",
+    "accountable": "vasconceloscezar",
+    "support": "DevOps (infrastructure), UX research (usability testing)",
+    "consulted": "Agent developers (workflow patterns), Enterprise customers (requirements)",
+    "informed": "All Automagik teams, Early adopters, Community Discord"
+  },
+
+  "links": {
+    "related_initiatives": ["#32", "#39"],
+    "prs": [],
+    "design_docs": [],
+    "metrics_dashboard": ""
+  },
+
+  "overview": {
+    "what": "Build a real-time collaborative configuration editor that allows multiple team members to edit agent workflows, prompts, and settings simultaneously with live presence indicators, conflict resolution, and automatic version history.",
+    "why": {
+      "current_limitations": [
+        "Single-user editing creates bottlenecks (only one person can edit at a time)",
+        "No visibility into who's making changes (accidental overwrites common)",
+        "Manual merge conflicts when multiple devs work on same agent",
+        "Lost changes due to concurrent edits (last write wins problem)"
+      ],
+      "business_impact": "Blocks enterprise teams (5+ developers), slows development velocity by 40%, causes production incidents from config conflicts"
+    },
+    "who": {
+      "for_whom": "Enterprise teams with 5+ developers, multi-region teams, DevOps engineers managing production configs",
+      "by_whom": "Automagik Omni frontend + backend teams with WebSocket expertise"
+    },
+    "when": {
+      "timeline": "Q1 2026 (January - March, 8 weeks)",
+      "milestones": [
+        "Week 2: WebSocket infrastructure + presence system",
+        "Week 4: Real-time editing with conflict detection",
+        "Week 6: Operational transform algorithm + merge UI",
+        "Week 8: Version history + production validation"
+      ]
+    },
+    "where": {
+      "touchpoints": "Web UI (config editor), API (WebSocket endpoints), CLI (watch mode for local dev)",
+      "platforms": "Web (React), Server (FastAPI + WebSockets), Database (PostgreSQL for version history)"
+    },
+    "how": "Implement Operational Transform (OT) algorithm for conflict-free replicated data, WebSocket server for real-time sync, presence system with cursor positions, version history with git-like branching"
+  },
+
+  "value_proposition": {
+    "goals": [
+      "Enable 5+ team members to edit simultaneously without conflicts",
+      "Reduce configuration errors by 80% (from 10/week to 2/week)",
+      "Decrease config deployment time from 30 minutes to 5 minutes",
+      "Provide 100% visibility into who changed what and when",
+      "Support rollback to any previous version within 5 seconds",
+      "Maintain <100ms latency for real-time updates across regions"
+    ],
+    "non_goals": [
+      "Not building version control hosting (use Git for code, this is for config only)",
+      "Not implementing video/voice chat (focus on config collaboration)",
+      "Not supporting offline editing (require active connection for real-time features)",
+      "Not building custom merge tools (use standard 3-way merge UI)"
+    ],
+    "expected_impact": {
+      "organization": [
+        "Increase team productivity by 40% (eliminate config bottlenecks)",
+        "Reduce production incidents by 60% (prevent config conflicts)",
+        "Enable enterprise sales ($500k+ deals requiring multi-user features)",
+        "Improve developer satisfaction scores by 35% (better collaboration tools)"
+      ],
+      "users": [
+        "See teammates' cursors and edits in real-time (Google Docs-like experience)",
+        "Never lose work due to concurrent edits (automatic conflict resolution)",
+        "Understand config history with visual timeline (who changed what when)",
+        "Roll back bad changes instantly (one-click version restore)"
+      ],
+      "metrics": [
+        "Concurrent editors: 1 (current) → 5+ (target)",
+        "Config errors: 10/week → 2/week (80% reduction)",
+        "Deployment time: 30 min → 5 min (83% faster)",
+        "Team satisfaction: 3.2/5 → 4.5/5 (40% improvement)"
+      ]
+    }
+  },
+
+  "problem_context": "Enterprise teams with 5+ developers currently face severe collaboration bottlenecks. Only one person can edit agent configurations at a time, leading to 'edit queues' where developers wait 15-30 minutes for their turn. When multiple people edit concurrently, the last writer wins, causing lost work and production incidents (3 P1 incidents in Q3 2025 traced to config conflicts). Customer feedback from 3 enterprise pilots indicates this is a blocker for teams >5 people. Competitors (Twilio, Vonage) offer real-time collaboration, putting us at disadvantage for enterprise deals.",
+
+  "options": [
+    {
+      "name": "Full Operational Transform (OT)",
+      "description": "Implement full OT algorithm with WebSocket infrastructure, presence system, conflict resolution",
+      "advantages": ["True real-time collaboration", "Conflict-free editing", "Production-ready scalability"],
+      "disadvantages": ["Complex implementation (OT algorithm)", "8-week timeline", "WebSocket infrastructure cost"],
+      "cost": "8 dev-weeks",
+      "recommendation": "recommended"
+    },
+    {
+      "name": "Pessimistic Locking",
+      "description": "Lock config sections when user starts editing, prevent concurrent access",
+      "advantages": ["Simple implementation (2 weeks)", "No conflicts possible"],
+      "disadvantages": ["Still creates bottlenecks", "Poor UX (waiting for locks)", "Doesn't solve root problem"],
+      "cost": "2 dev-weeks",
+      "recommendation": "not_recommended"
+    },
+    {
+      "name": "Last Write Wins with Notifications",
+      "description": "Keep current system, add notifications when someone else is editing",
+      "advantages": ["Minimal implementation (1 week)", "Low risk"],
+      "disadvantages": ["Conflicts still happen", "Lost work still possible", "Doesn't meet enterprise requirements"],
+      "cost": "1 dev-week",
+      "recommendation": "not_recommended"
+    }
+  ],
+
+  "scope": {
+    "in_scope": [
+      "Real-time collaborative editing for agent configs (prompts, workflows, settings)",
+      "Presence system (show who's online, cursor positions, active selections)",
+      "Operational Transform algorithm for conflict-free replication",
+      "Conflict detection and 3-way merge UI",
+      "Version history with timeline view (git-like diffs)",
+      "WebSocket server with Redis pub/sub for horizontal scaling",
+      "Rollback to any previous version",
+      "Change attribution (who made each edit)"
+    ],
+    "out_of_scope": [
+      "Video/voice chat integration (future consideration)",
+      "Offline editing support (require active connection)",
+      "Custom merge tools beyond standard 3-way merge",
+      "Real-time code collaboration (focus on config only)",
+      "Integration with external version control (Git)",
+      "Mobile app support (web-only for Phase 1)"
+    ]
+  },
+
+  "phases": [
+    {
+      "name": "WebSocket Infrastructure",
+      "weeks": "1-2",
+      "tasks": [
+        "Set up WebSocket server with Socket.IO",
+        "Implement Redis pub/sub for multi-server scaling",
+        "Build presence system (online users, cursor positions)",
+        "Create connection management (reconnection, heartbeat)",
+        "Load testing (100 concurrent editors per config)"
+      ],
+      "success_criteria": "100 concurrent users supported, <100ms message latency, automatic reconnection working"
+    },
+    {
+      "name": "Real-Time Editing & Conflict Detection",
+      "weeks": "3-4",
+      "tasks": [
+        "Implement Operational Transform algorithm",
+        "Build change detection and diff system",
+        "Create conflict markers in UI",
+        "Add optimistic UI updates with rollback",
+        "Integration tests for concurrent editing scenarios"
+      ],
+      "success_criteria": "5 users editing simultaneously without data loss, conflicts detected and marked, OT tests passing"
+    },
+    {
+      "name": "Merge UI & Version History",
+      "weeks": "5-6",
+      "tasks": [
+        "Build 3-way merge interface",
+        "Implement version history storage (PostgreSQL)",
+        "Create timeline view with diffs",
+        "Add rollback functionality",
+        "Change attribution system"
+      ],
+      "success_criteria": "Merge conflicts resolvable via UI, full version history accessible, rollback working within 5 seconds"
+    },
+    {
+      "name": "Production Hardening & Validation",
+      "weeks": "7-8",
+      "tasks": [
+        "Performance optimization (caching, indexing)",
+        "Security audit (WebSocket authentication, authorization)",
+        "Enterprise customer pilot (3 teams)",
+        "Documentation and training materials",
+        "Monitoring dashboards and alerts"
+      ],
+      "success_criteria": "Enterprise pilot successful, <100ms latency maintained, security audit passed, documentation complete"
+    }
+  ],
+
+  "dependencies": [
+    {
+      "item": "WebSocket infrastructure deployment",
+      "type": "Internal",
+      "owner": "DevOps",
+      "status": "Ready",
+      "impact_if_blocked": "Cannot scale beyond single server, deployment delayed"
+    },
+    {
+      "item": "PostgreSQL version history storage",
+      "type": "Internal",
+      "owner": "Database team",
+      "status": "Needs planning",
+      "impact_if_blocked": "Version history disabled, rollback unavailable"
+    },
+    {
+      "item": "Enterprise customer for pilot testing",
+      "type": "External",
+      "owner": "Sales team",
+      "status": "Identified (3 prospects)",
+      "impact_if_blocked": "Cannot validate enterprise use cases, delay GA"
+    }
+  ],
+
+  "risks": [
+    {
+      "risk": "OT algorithm complexity leads to bugs",
+      "probability": "Medium",
+      "impact": "High",
+      "mitigation": "Use battle-tested library (ShareDB), comprehensive test suite, phased rollout",
+      "contingency": "Fall back to pessimistic locking if critical bugs found"
+    },
+    {
+      "risk": "WebSocket scaling costs exceed budget",
+      "probability": "Low",
+      "impact": "Medium",
+      "mitigation": "Redis pub/sub for horizontal scaling, connection limits per user",
+      "contingency": "Increase budget or limit concurrent editors to 10"
+    },
+    {
+      "risk": "User confusion with merge conflict UI",
+      "probability": "Medium",
+      "impact": "Medium",
+      "mitigation": "UX research with 10+ users, clear documentation, in-app guidance",
+      "contingency": "Provide expert support for first 30 days, iterate based on feedback"
+    }
+  ],
+
+  "success_metrics": {
+    "launch": [
+      "Concurrent editors supported: 5+ simultaneous users",
+      "Real-time latency: <100ms p99",
+      "Conflict resolution accuracy: 100% (no data loss)",
+      "Version history completeness: 100% of changes tracked"
+    ],
+    "growth": [
+      "Adoption: 50% of teams using real-time features within 30 days",
+      "Config errors: Reduced from 10/week to <3/week",
+      "Deployment time: Reduced from 30 min to <10 min",
+      "User satisfaction: >4.2/5 on collaboration features"
+    ],
+    "long_term": [
+      "Enterprise deals: 3+ closed within 6 months (previously blocked)",
+      "Team productivity: 40% improvement measured via deployment frequency",
+      "Production incidents: 60% reduction in config-related P1/P2 incidents",
+      "Platform stickiness: 80% of users engaging with collaboration features weekly"
+    ]
+  },
+
+  "open_questions": [
+    "Should we support branching/merging like Git or keep linear version history?",
+    "What's the maximum number of concurrent editors we need to support per config?",
+    "Do we need offline editing support for Phase 2 or defer to Phase 3?",
+    "Should rollback require approval or allow any team member to rollback?",
+    "What's the retention policy for version history (keep all forever or prune after N days)?"
+  ],
+
+  "future_considerations": [
+    "Video/voice chat integration for pair programming",
+    "AI-powered conflict resolution suggestions",
+    "Integration with external Git repositories",
+    "Mobile app support for on-call config changes",
+    "Advanced branching/merging workflows",
+    "Real-time collaboration for code (beyond just config)"
+  ]
+}
