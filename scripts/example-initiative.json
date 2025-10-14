@@ -1,0 +1,16 @@
+{
+  "title": "Example Initiative Title",
+  "project": "hive",
+  "stage": "Exploring",
+  "priority": "medium",
+  "quarter": "2026-Q1",
+  "owner": "vasconceloscezar",
+  "type": "feature",
+  "areas": ["api", "cli"],
+  "description": "Brief description of what this initiative aims to accomplish and why it matters",
+  "goals": [
+    "Specific measurable outcome 1",
+    "Specific measurable outcome 2",
+    "Specific measurable outcome 3"
+  ]
+}
