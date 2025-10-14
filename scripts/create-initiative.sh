@@ -190,9 +190,14 @@ ISSUE_URL=$(echo "$BODY" | gh issue create \
 ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '/issues/\K\d+')
 echo "Created issue #$ISSUE_NUMBER: $ISSUE_URL"
 
-# Add to project board
-echo "Adding to project board..."
-gh project item-add "$PROJECT_NUMBER" --owner "$ORG" --url "$ISSUE_URL"
+# NOTE: We do NOT manually add to project board here!
+# The .github/workflows/sync-to-project.yml workflow automatically adds issues
+# with the 'initiative' label to the project board. Adding it manually here
+# would create a duplicate project item.
+
+# Wait for workflow to add the issue to the project board (usually takes 2-5 seconds)
+echo "Waiting for workflow to add issue to project board..."
+sleep 5
 
 # Get project item ID with retry logic (GraphQL can have delays)
 echo "Getting project item ID..."
