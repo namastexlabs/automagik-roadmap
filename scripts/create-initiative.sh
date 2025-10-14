@@ -54,6 +54,7 @@ declare -A FIELD_IDS=(
   ["Stage"]="PVTSSF_lADOBvG2684BE-4Ezg2c_hc"
   ["Priority"]="PVTSSF_lADOBvG2684BE-4Ezg2c_kA"
   ["ETA"]="PVTSSF_lADOBvG2684BE-4Ezg2dPxc"
+  ["Status"]="PVTSSF_lADOBvG2684BE-4Ezg2c5dY"
   ["ExpectedResults"]="PVTF_lADOBvG2684BE-4Ezg2c8aE"
   ["Owner"]="PVTF_lADOBvG2684BE-4Ezg2c8aI"
   ["TargetDate"]="PVTF_lADOBvG2684BE-4Ezg2c8aM"
@@ -96,6 +97,12 @@ declare -A QUARTER_OPTIONS=(
   ["2026-Q3"]="3c402b09"
   ["2026-Q4"]="ec810765"
   ["2027-Q1"]="4ac5ad3f"
+)
+
+declare -A STATUS_OPTIONS=(
+  ["Todo"]="f75ad846"
+  ["In Progress"]="47fc9ee4"
+  ["Done"]="98236657"
 )
 
 # Parse command line arguments
@@ -190,12 +197,12 @@ gh project item-add "$PROJECT_NUMBER" --owner "$ORG" --url "$ISSUE_URL"
 # Get project item ID with retry logic (GraphQL can have delays)
 echo "Getting project item ID..."
 ITEM_ID=""
-for i in {1..10}; do
+for i in {1..15}; do
   ITEM_ID=$(gh api graphql -f query="
   query {
     organization(login: \"$ORG\") {
       projectV2(number: $PROJECT_NUMBER) {
-        items(first: 50) {
+        items(first: 100) {
           nodes {
             id
             content {
@@ -213,8 +220,8 @@ for i in {1..10}; do
     break
   fi
 
-  echo "  Attempt $i: Item not found yet, retrying in 2s..."
-  sleep 2
+  echo "  Attempt $i: Item not found yet, retrying in 3s..."
+  sleep 3
 done
 
 if [[ -z "$ITEM_ID" ]]; then
@@ -228,6 +235,7 @@ echo "Project item ID: $ITEM_ID"
 echo "Setting custom fields..."
 
 # Set Project field
+echo -n "  Setting Project field... "
 gh api graphql -f query="
 mutation {
   updateProjectV2ItemFieldValue(input: {
@@ -236,9 +244,10 @@ mutation {
     fieldId: \"${FIELD_IDS[Project]}\"
     value: {singleSelectOptionId: \"${PROJECT_OPTIONS[$PROJECT_NAME]}\"}
   }) { projectV2Item { id } }
-}" > /dev/null
+}" > /dev/null && echo "✓" || echo "✗"
 
 # Set Stage field
+echo -n "  Setting Stage field... "
 gh api graphql -f query="
 mutation {
   updateProjectV2ItemFieldValue(input: {
@@ -247,9 +256,10 @@ mutation {
     fieldId: \"${FIELD_IDS[Stage]}\"
     value: {singleSelectOptionId: \"${STAGE_OPTIONS[$STAGE]}\"}
   }) { projectV2Item { id } }
-}" > /dev/null
+}" > /dev/null && echo "✓" || echo "✗"
 
 # Set Priority field
+echo -n "  Setting Priority field... "
 gh api graphql -f query="
 mutation {
   updateProjectV2ItemFieldValue(input: {
@@ -258,9 +268,10 @@ mutation {
     fieldId: \"${FIELD_IDS[Priority]}\"
     value: {singleSelectOptionId: \"${PRIORITY_OPTIONS[$PRIORITY]}\"}
   }) { projectV2Item { id } }
-}" > /dev/null
+}" > /dev/null && echo "✓" || echo "✗"
 
 # Set ETA/Quarter field
+echo -n "  Setting ETA field... "
 gh api graphql -f query="
 mutation {
   updateProjectV2ItemFieldValue(input: {
@@ -269,7 +280,35 @@ mutation {
     fieldId: \"${FIELD_IDS[ETA]}\"
     value: {singleSelectOptionId: \"${QUARTER_OPTIONS[$QUARTER]}\"}
   }) { projectV2Item { id } }
-}" > /dev/null
+}" > /dev/null && echo "✓" || echo "✗"
+
+# Map Stage to Status
+case "$STAGE" in
+  Wishlist|Exploring|RFC|Prioritization)
+    STATUS="Todo"
+    ;;
+  Executing|Preview)
+    STATUS="In Progress"
+    ;;
+  Shipped|Archived)
+    STATUS="Done"
+    ;;
+  *)
+    STATUS="Todo"
+    ;;
+esac
+
+# Set Status field
+echo -n "  Setting Status field... "
+gh api graphql -f query="
+mutation {
+  updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\"
+    itemId: \"$ITEM_ID\"
+    fieldId: \"${FIELD_IDS[Status]}\"
+    value: {singleSelectOptionId: \"${STATUS_OPTIONS[$STATUS]}\"}
+  }) { projectV2Item { id } }
+}" > /dev/null && echo "✓" || echo "✗"
 
 # Extract Expected Results from body (look for "Goals (Expected Results)" or "Expected Results" section)
 EXPECTED_RESULTS=$(echo "$BODY" | sed -n '/### Goals (Expected Results)/,/^##/p' | sed '1d;$d' | head -10 | sed 's/"/\\"/g')
@@ -279,6 +318,7 @@ fi
 
 # Set Expected Results field (text field)
 if [[ -n "$EXPECTED_RESULTS" ]]; then
+  echo -n "  Setting Expected Results field... "
   gh api graphql -f query="
   mutation {
     updateProjectV2ItemFieldValue(input: {
@@ -287,10 +327,11 @@ if [[ -n "$EXPECTED_RESULTS" ]]; then
       fieldId: \"${FIELD_IDS[ExpectedResults]}\"
       value: {text: \"$EXPECTED_RESULTS\"}
     }) { projectV2Item { id } }
-  }" > /dev/null 2>&1 || echo "  ⚠ Could not set Expected Results field"
+  }" > /dev/null 2>&1 && echo "✓" || echo "⚠"
 fi
 
 # Set Owner field (text field with @username)
+echo -n "  Setting Owner field... "
 gh api graphql -f query="
 mutation {
   updateProjectV2ItemFieldValue(input: {
@@ -299,7 +340,7 @@ mutation {
     fieldId: \"${FIELD_IDS[Owner]}\"
     value: {text: \"@$OWNER\"}
   }) { projectV2Item { id } }
-}" > /dev/null 2>&1 || echo "  ⚠ Could not set Owner field"
+}" > /dev/null 2>&1 && echo "✓" || echo "⚠"
 
 # Calculate Target Date from quarter (end of quarter)
 TARGET_DATE=""
@@ -316,6 +357,7 @@ fi
 
 # Set Target Date field (date field)
 if [[ -n "$TARGET_DATE" ]]; then
+  echo -n "  Setting Target Date field... "
   gh api graphql -f query="
   mutation {
     updateProjectV2ItemFieldValue(input: {
@@ -324,7 +366,7 @@ if [[ -n "$TARGET_DATE" ]]; then
       fieldId: \"${FIELD_IDS[TargetDate]}\"
       value: {date: \"$TARGET_DATE\"}
     }) { projectV2Item { id } }
-  }" > /dev/null 2>&1 || echo "  ⚠ Could not set Target Date field"
+  }" > /dev/null 2>&1 && echo "✓" || echo "⚠"
 fi
 
 echo ""
@@ -335,6 +377,7 @@ echo ""
 echo "All fields set:"
 echo "  ✓ Project: $PROJECT_NAME"
 echo "  ✓ Stage: $STAGE"
+echo "  ✓ Status: $STATUS"
 echo "  ✓ Priority: $PRIORITY"
 echo "  ✓ Quarter: $QUARTER"
 echo "  ✓ Owner: @$OWNER"
