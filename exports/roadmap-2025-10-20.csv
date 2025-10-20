@@ -1,0 +1,54 @@
+PROJECT,INITIATIVE,DESCRIPTION,STAGE,ETA,EXPECTED_RESULT,STATUS_DETAIL,START_DATE,END_DATE,ISSUE_URL,WISH_FOLDER,OWNER
+CROSS-PROJECT,Wish Sync & Genie Update - Unified Workflow System,"### What Two-part initiative: (1) Automated wish archival system that moves completed wishes from project repos to roadmap on PR merge, and (2) Update automagik-genie to latest version across all 6 Automagik projects (hive, omni, spark, forge, tools, genie itself) for consistent AI-assisted developm",,,,TRACKED,08/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/29,,@vasconceloscezar
+CROSS-PROJECT,Automagik Suite Integration,"### What Build deep, native integrations between Hive and all Automagik Suite products (Forge, Omni, Spark, Tools). Enable workflows to span products seamlessly Hive agents execute Forge tasks, respond via Omni channels, run on Spark schedules, and use Tools marketplace. Create 5+ cross-product work",Investigação,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/61,,@vasconceloscezar
+CROSS-PROJECT,Standardize GitHub Workflows Across All Automagik Repositories,"# Standardize GitHub Workflows Across All Automagik Repositories
+
+**One-line Summary:** Inconsistent workflow automation across 6 repos → Deploy universal workflows (auto-close issues, label-sync, tes",Investigação,,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/38,,@vasconceloscezar
+CROSS-PROJECT,OpenTelemetry Implementation Across Automagik Ecosystem,"# OpenTelemetry Implementation Across Automagik Ecosystem
+
+**One-line Summary:** Lack of usage insights across repos → Implement opt-in OpenTelemetry across all 6 Automagik projects → Enable data-driv",Investigação,,,TRACKED,08/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/31,,@vasconceloscezar
+FORGE,Forge Upstream Separation - Library-Based Architecture Migration,"### What Restructure automagik-forge from a direct vibe-kanban fork into a library-based architecture where vibe-kanban lives in a separate forked repository, and Forge uses it as a composable library with dedicated extension packages for forge-specific features.",Execução,,,DONE,08/10/2025,11/10/2025,https://github.com/namastexlabs/automagik-roadmap/issues/30,,@namastex888
+HIVE,Workflow Step Execution & Debugging,"### What Enable developers to execute individual workflow steps in isolation for debugging, testing, and development. Add CLI and API support for running specific steps, inspecting state between steps, and resuming from checkpoints. Transform workflows from black boxes into observable, controllable ",Investigação,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/60,,@vasconceloscezar
+HIVE,Developer Experience & Examples Ecosystem,"### What Create a separate automagik-examples repository with production-ready Hive templates, workflows, agents, and patterns. Enhance Hive CLI to consume these examples seamlessly via `ai/` folder convention. Enable developers to install Hive as a standalone uv package and get started in under 30 ",Investigação,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/59,,@vasconceloscezar
+OMNI,"Make Agents Feel Human with Typing Indicators, Voice Messages, and Images","# Human-Like Agent Interactions - Typing, Status, Voice & Multimodal Support
+
+**One-line Summary:** Transform robotic agent responses → Natural human-like interactions with typing indicators, online/o",Investigação,Q1 2026,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/45,,
+OMNI,"Remember Users Across All Platforms - Start on Instagram, Continue on WhatsApp","# Cross-Platform User Identity & Context Preservation
+
+**One-line Summary:** Enable seamless user recognition across all messaging platforms with continuous conversation context - start on Instagram, ",Investigação,Q1 2026,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/41,,
+OMNI,"Connect Agents to Slack, Instagram, Telegram, Teams, and 9 More Platforms","# Multi-Platform Messaging - Universal Channel Integration
+
+**One-line Summary:** WhatsApp + Discord only → 13+ platform support (Slack, Instagram, Telegram, Teams, Messenger, LinkedIn, WeChat, TikTok",Investigação,Q1 2026,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/40,,
+OMNI,"Use Any AI Agent - OpenAI, Anthropic, or Your Own Custom System","# Use Any AI Agent - Universal Agent Interface Abstraction
+
+**One-line Summary:** Break Hive vendor lock-in → Universal agent interface supporting OpenAI Assistants, Anthropic Claude, LangChain, and c",Investigação,Q2 2026,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/46,,
+OMNI,Fix Bugs Faster with Helpful Error Messages and Smart Monitoring,"# Fix Bugs Faster with Helpful Error Messages and Smart Monitoring
+
+**One-line Summary:** Transform debugging from reactive firefighting → proactive intelligence with contextual error messages, struct",Investigação,Q4 2025,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/44,,
+OMNI,Get Your First Agent Running in Under 5 Minutes,"# Get Your First Agent Running in Under 5 Minutes
+
+**One-line Summary:** Make Omni the easiest messaging platform to get started with - from clone to running agent in <5 minutes with zero configuratio",Investigação,Q4 2025,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/43,,
+OMNI,Control Who Can Talk to Your Agents and Route Users to Specialized Bots,"# Access Control & Agent Routing - Granular Authorization and Intelligent User-to-Agent Mapping
+
+**One-line Summary:** Basic whitelist/blacklist (PR #21) → Enterprise-grade access control (ACL/RBAC/AB",Investigação,Q4 2025,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/42,,
+OMNI,"Scale to Handle 10,000+ Messages Per Hour with Zero Downtime","# Enterprise-Ready Infrastructure and Production Hardening
+
+**One-line Summary:** Transform Omni from functional prototype → enterprise-ready platform handling 10k+ messages/hour with zero downtime | ",Investigação,Q4 2025,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/39,,
+OMNI,Webhook Event Driven Omni ,"# Event Fabric Foundation - Universal Event-Driven Platform
+
+**One-line Summary:** WhatsApp-centric message storage → Universal event-driven platform with provider-agnostic schema → Cross-channel cont",Proposta,,,TRACKED,09/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/32,,@namastex888
+SPARK,Comprehensive Documentation Overhaul & Developer Experience Improvements,"# Comprehensive Documentation Overhaul & Developer Experience Improvements
+
+**One-line Summary:** Poor documentation causes 2-hour setup times, terminology confusion ('workflow' collision with Hive), ",Investigação,,,TRACKED,13/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/49,,@vasconceloscezar
+TOOLS,Smart Tools with SLM Mini-Agents,"# Smart Tools with SLM Mini-Agents
+
+**One-line Summary:** MCP tools are static API wrappers requiring precise manual input → Integrate specialized Small Language Models as mini-agents making each tool",Investigação,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/56,,@vasconceloscezar
+TOOLS,Simple MCP Tool Sharing Platform,"# Simple MCP Tool Sharing Platform
+
+**One-line Summary:** Developers recreate the same MCP tools repeatedly with no way to discover or share existing work → Build basic tool discovery and sharing plat",Lista de Desejos,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/58,,@vasconceloscezar
+TOOLS,Documentation & Developer Experience Overhaul,"# Documentation & Developer Experience Overhaul
+
+**One-line Summary:** Auto-generated documentation is incomplete and tests lack comprehensive coverage → Rebuild doc generation engine and enhance test",Lista de Desejos,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/57,,@vasconceloscezar
+TOOLS,Reduce Tool Creation to Under 5 Minutes,"# Reduce Tool Creation to Under 5 Minutes
+
+**One-line Summary:** Tool creation currently takes 30 minutes causing developer frustration → Optimize prompts, reduce file generation, improve token manage",Priorização,,,TRACKED,14/10/2025,,https://github.com/namastexlabs/automagik-roadmap/issues/55,,@vasconceloscezar
