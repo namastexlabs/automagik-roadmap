@@ -118,28 +118,33 @@ Each project folder contains:
 
 ### 🛠️ Option 3: CLI Script (For Maximum Detail)
 
-Use our CLI script with structured templates:
+Use our JSON script for fast, automated creation:
 
 ```bash
-# Use one of three template levels:
-# - Minimal (8 sections, 15-30min)
-# - Standard (12 sections, 1-2hr) ← Most common
-# - Comprehensive (20+ sections, 4-8hr) ← Full PRD
+# Quick creation with JSON
+cat << EOF | ./scripts/create-initiative-from-json.sh
+{
+  "title": "Your Initiative Title",
+  "project": "omni",
+  "stage": "Exploring",
+  "priority": "high",
+  "quarter": "2026-q1",
+  "start_date": "2026-01-01",
+  "target_date": "2026-03-31",
+  "type": "feature",
+  "areas": ["api", "performance"],
+  "description": "One-line summary",
+  "goals": ["Goal 1", "Goal 2", "Goal 3"]
+}
+EOF
 
-cat your-initiative.md | ./scripts/create-initiative.sh \
-  --title "Your Initiative Title" \
-  --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
-  --priority (critical|high|medium|low) \
-  --quarter (2025-Q4|2026-Q1|...|backlog) \
-  --type (feature|enhancement|research|infrastructure|documentation) \
-  --areas "area1,area2"
+# Auto-selects owner (genie/forge → namastex888, others → vasconceloscezar)
+# All fields set automatically (~40s creation time)
+# See: ./scripts/create-initiative-from-json.sh --help
 ```
 
-**Templates available:**
-- 📄 [Minimal](docs/templates/MINIMAL_INITIATIVE.md) - Small features, quick wins
-- 📄 [Standard](docs/templates/STANDARD_INITIATIVE.md) - Most initiatives (recommended default)
-- 📄 [Comprehensive](docs/templates/COMPREHENSIVE_INITIATIVE.md) - Major launches (full PRD)
+**Templates for detailed specs (optional):**
+- 📄 [LEAN](docs/templates/LEAN_INITIATIVE.md) - Streamlined format (recommended)
 - 📖 [Template Guide](docs/templates/README.md) - Decision tree, comparison, tips
 
 **Features:**

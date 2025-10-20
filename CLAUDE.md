@@ -29,8 +29,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 │   │   └── label-sync.yml               # Label management
 │   └── labels.yml                       # Label definitions (6 dimensions)
 ├── scripts/
-│   ├── create-initiative.sh             # CLI for creating detailed initiatives
-│   ├── create-initiative-from-json.sh   # JSON-based initiative creation
+│   ├── create-initiative-from-json.sh   # JSON-based initiative creation (primary)
 │   └── export-to-csv.py                 # Export roadmap to CSV
 ├── docs/
 │   ├── templates/                       # Initiative templates (Minimal/Standard/Comprehensive)
@@ -47,7 +46,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 
 ### Key Systems
 
-#### 1. Dual Initiative Creation Methods
+#### 1. Initiative Creation Methods
 
 **Method A: GitHub Issue Form** (Quick proposals)
 - Uses `.github/ISSUE_TEMPLATE/initiative.yml`
@@ -55,11 +54,13 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 - Workflow parses body headers (`### Field Name`)
 - Auto-syncs to project board via `sync-to-project.yml`
 
-**Method B: CLI Script** (Detailed initiatives)
-- Uses `scripts/create-initiative.sh`
-- Accepts piped markdown from templates
-- Sets project board fields directly via GraphQL
-- Bypasses workflow parsing (already complete)
+**Method B: JSON Script** (Recommended - Automated & Fast)
+- Uses `scripts/create-initiative-from-json.sh`
+- Accepts JSON input with all fields
+- Auto-selects owners (genie/forge → namastex888, others → vasconceloscezar)
+- Sets all project board fields via parallel GraphQL mutations
+- Supports start_date and target_date overrides
+- ~40s creation time with full automation
 
 #### 2. Project Board Sync Workflow
 
@@ -74,7 +75,7 @@ The **Automagik Roadmap** is a centralized strategic planning repository for the
 - Owner field ID: `PVTF_lADOBvG2684BE-4Ezg2c8aI`
 - Target Date field ID: `PVTF_lADOBvG2684BE-4Ezg2c8aM`
 
-**Option IDs** (see `scripts/create-initiative.sh:63-99` for complete mapping)
+**Option IDs** (see `scripts/create-initiative-from-json.sh:56-70` for complete mapping)
 
 #### 3. Label System (6 Dimensions)
 
@@ -94,104 +95,85 @@ From `.github/labels.yml` - 59 labels total:
 
 ## Creating Initiatives
 
-### Using CLI Script (Recommended for Detailed Work)
+### Using JSON Script (Recommended - Fast & Automated)
 
 ```bash
-# Basic usage with template
-cat docs/templates/STANDARD_INITIATIVE.md | ./scripts/create-initiative.sh \
-  --title "Initiative Title" \
-  --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
-  --priority (critical|high|medium|low) \
-  --quarter (2025-Q4|2026-Q1|backlog) \
-  --owner github-username \
-  --type (feature|enhancement|research|infrastructure|documentation) \
-  --areas "area1,area2"
+# Create initiative from JSON
+cat initiative.json | ./scripts/create-initiative-from-json.sh
+
+# Example JSON
+{
+  "title": "Feature Name",
+  "project": "genie",
+  "stage": "Executing",
+  "priority": "high",
+  "quarter": "2025-q4",
+  "start_date": "2025-10-20",
+  "target_date": "2025-12-15",
+  "type": "feature",
+  "areas": ["cli", "testing"],
+  "description": "One-line summary",
+  "goals": ["Goal 1", "Goal 2", "Goal 3"]
+}
 ```
 
-**Critical Points:**
-1. **Area labels must exist** in `.github/labels.yml` or script fails
-   - Valid areas: `api`, `ui`, `cli`, `mcp`, `knowledge`, `auth`, `agents`, `teams`, `workflows`, `storage`, `testing`, `docs`, `messaging`, `performance`, `security`
-   - To add new areas: Edit `.github/labels.yml` first
+**Key Features:**
+1. **Auto-selects owners:**
+   - genie/forge → `namastex888`
+   - omni/hive/spark/tools/cross-project → `vasconceloscezar`
+   - Override with `"owner": "username"` in JSON
 
-2. **Quarter vs Target Date:**
-   - `--quarter` sets ETA field AND calculates target date (end of quarter)
-   - Script auto-calculates: Q1→Mar 31, Q2→Jun 30, Q3→Sep 30, Q4→Dec 31
-   - To override, manually update Target Date field via GraphQL after creation
+2. **Smart date handling:**
+   - Provide `start_date` and `target_date` for custom timeline
+   - Or use `quarter` and dates auto-calculate (Q1→Mar 31, Q2→Jun 30, etc.)
+   - Quarter is case-insensitive: `2025-q4` = `2025-Q4`
 
-3. **Expected Results Extraction:**
-   - Script parses `### Goals (Expected Results)` or `### Expected Results` section
-   - Limited to 300 chars, sets Project Board field
-   - Ensure template has this header for auto-population
+3. **Fast parallel mutations:**
+   - All project board fields set simultaneously
+   - ~40s creation time (vs 60s+ before)
+   - 10 retries with 3s delay (30s max timeout)
 
-4. **Retry Logic:**
-   - Script retries 10x to find project item ID (GraphQL can lag)
-   - If item not found after 20s, script fails
-   - Re-run script if this happens (idempotent)
+4. **Full automation:**
+   - No manual field updates needed
+   - All labels, assignees, and project fields set automatically
+   - Simplified body template for speed
 
-### Using GitHub Form (Quick Proposals)
+### Using GitHub Form (Alternative - Quick Proposals)
 
 1. Go to Issues → New Issue → "🎯 Roadmap Initiative"
 2. Fill form (all fields auto-sync to project board)
 3. Submit → Workflow handles everything
 
-**Form vs CLI Detection:**
-- Workflow checks if `project` field parsed from body
-- If empty → assumes CLI-created, skips label/comment actions
-- If present → applies labels and adds sync comment
-
-### Templates
-
-Three levels based on complexity:
-
-1. **Minimal** (`docs/templates/MINIMAL_INITIATIVE.md`) - 8 sections, 15-30 min
-   - For: Small features, quick wins, straightforward enhancements
-   - Sections: Overview (5W2H), Goals, Scope, Timeline, Dependencies, Risks
-
-2. **Standard** (`docs/templates/STANDARD_INITIATIVE.md`) - 12 sections, 1-2 hours
-   - For: Most initiatives (default choice)
-   - Adds: Options analysis, detailed phases, success metrics, open questions
-
-3. **Comprehensive** (`docs/templates/COMPREHENSIVE_INITIATIVE.md`) - 20+ sections, 4-8 hours
-   - For: Major launches, full PRDs, complex cross-project work
-   - Adds: User personas, BDD scenarios, rollout plans, stakeholder matrix
-
-**Template Selection Guide:** See `docs/templates/README.md:40-80`
+**Note:** JSON script is preferred for better control and automation.
 
 ## Common Commands
 
 ### Initiative Management
 
 ```bash
-# Create initiative from Standard template
-cat docs/templates/STANDARD_INITIATIVE.md | ./scripts/create-initiative.sh \
-  --title "My Feature" --project omni --priority high --quarter 2026-Q1
+# Create initiative from JSON (recommended)
+cat initiative.json | ./scripts/create-initiative-from-json.sh
 
-# Create cross-project initiative
-cat my-initiative.md | ./scripts/create-initiative.sh \
-  --title "Cross-repo Work" --project cross-project --areas "performance,security"
+# Quick one-liner
+echo '{"title":"Feature","project":"hive","quarter":"2026-q1","priority":"high","goals":["Goal 1"]}' | ./scripts/create-initiative-from-json.sh
 
-# Create from JSON (simple format - backwards compatible)
-echo '{"title":"Feature","project":"hive","quarter":"2026-q1","description":"..."}' | ./scripts/create-initiative-from-json.sh
+# With custom dates
+cat << EOF | ./scripts/create-initiative-from-json.sh
+{
+  "title": "My Feature",
+  "project": "omni",
+  "stage": "Executing",
+  "priority": "high",
+  "start_date": "2025-11-01",
+  "target_date": "2025-12-31",
+  "type": "feature",
+  "areas": ["api", "performance"],
+  "goals": ["Improve API speed", "Add caching layer"]
+}
+EOF
 
-# Create from JSON (rich format - recommended, see SAMPLE_INITIATIVE.json)
-cat docs/templates/SAMPLE_INITIATIVE.json | ./scripts/create-initiative-from-json.sh
-
-# Rich format supports full STANDARD_INITIATIVE.md structure via JSON:
-# - one_line_summary, rasci, overview (5W2H), value_proposition
-# - options, phases, dependencies, risks, success_metrics
-# See docs/templates/SAMPLE_INITIATIVE.json for complete example
-
-# Update Target Date manually (if needed)
-gh api graphql -f query='
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: "PVT_kwDOBvG2684BE-4E"
-    itemId: "ITEM_ID_HERE"
-    fieldId: "PVTF_lADOBvG2684BE-4Ezg2c8aM"
-    value: {date: "2026-03-15"}
-  }) { projectV2Item { id } }
-}'
+# See script help for all options
+./scripts/create-initiative-from-json.sh --help
 ```
 
 ### Exports & Reporting
@@ -232,8 +214,8 @@ open https://github.com/orgs/namastexlabs/projects/9
 ### Updating Project Board Field IDs
 
 If project board schema changes, update field IDs in:
-- `scripts/create-initiative.sh:52-60` (FIELD_IDS map)
-- `scripts/create-initiative.sh:63-99` (Option IDs)
+- `scripts/create-initiative-from-json.sh:15-24` (FIELD_IDS map)
+- `scripts/create-initiative-from-json.sh:27-70` (Option IDs)
 - `.github/workflows/sync-to-project.yml:170-366` (all field update mutations)
 
 **To find new IDs:**

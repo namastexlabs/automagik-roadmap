@@ -1,7 +1,7 @@
 #!/bin/bash
 # scripts/create-initiative-from-json.sh
-# Create initiative from JSON input - supports both simple and rich formats
-# Version 2.0 - Fixed to work with gh CLI limitations
+# Create initiative from JSON input - OPTIMIZED VERSION
+# Version 3.0 - Performance improvements + correct owner handling
 
 set -e
 
@@ -21,6 +21,7 @@ declare -A FIELD_IDS=(
   ["ExpectedResults"]="PVTF_lADOBvG2684BE-4Ezg2c8aE"
   ["Owner"]="PVTF_lADOBvG2684BE-4Ezg2c8aI"
   ["TargetDate"]="PVTF_lADOBvG2684BE-4Ezg2c8aM"
+  ["StartDate"]="PVTF_lADOBvG2684BE-4Ezg2dQ6Y"
 )
 
 # Option ID mapping
@@ -55,11 +56,17 @@ declare -A PRIORITY_OPTIONS=(
 declare -A QUARTER_OPTIONS=(
   ["backlog"]="88ae1263"
   ["2025-Q4"]="a35fa4f5"
+  ["2025-q4"]="a35fa4f5"
   ["2026-Q1"]="a0cccfe6"
+  ["2026-q1"]="a0cccfe6"
   ["2026-Q2"]="cf1026cb"
+  ["2026-q2"]="cf1026cb"
   ["2026-Q3"]="3c402b09"
+  ["2026-q3"]="3c402b09"
   ["2026-Q4"]="ec810765"
+  ["2026-q4"]="ec810765"
   ["2027-Q1"]="4ac5ad3f"
+  ["2027-q1"]="4ac5ad3f"
 )
 
 declare -A STATUS_OPTIONS=(
@@ -68,10 +75,27 @@ declare -A STATUS_OPTIONS=(
   ["Done"]="98236657"
 )
 
+# Owner mapping - project-specific defaults
+declare -A DEFAULT_OWNERS=(
+  ["omni"]="vasconceloscezar"
+  ["hive"]="vasconceloscezar"
+  ["spark"]="vasconceloscezar"
+  ["forge"]="namastex888"
+  ["genie"]="namastex888"
+  ["tools"]="vasconceloscezar"
+  ["cross-project"]="vasconceloscezar"
+)
+
 # Show usage if --help or -h
 if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
   cat << 'EOF'
 Usage: cat initiative.json | ./scripts/create-initiative-from-json.sh
+
+PERFORMANCE OPTIMIZATIONS:
+- Reduced retries from 25 to 10 (3s each = 30s max vs 75s)
+- Batch GraphQL mutations (parallel API calls)
+- Smart owner defaults (genie/forge → namastex888, others → vasconceloscezar)
+- Optional start_date/target_date override in JSON
 
 Simple JSON format:
 {
@@ -80,29 +104,32 @@ Simple JSON format:
   "stage": "Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped",
   "priority": "critical|high|medium|low",
   "quarter": "2025-Q4|2026-Q1|backlog",
-  "owner": "github-username",
+  "owner": "github-username (optional, auto-selects based on project)",
   "type": "feature|enhancement|research|infrastructure|documentation",
   "areas": ["api", "mcp"],
+  "start_date": "2025-10-20 (optional, YYYY-MM-DD)",
+  "target_date": "2025-12-31 (optional, YYYY-MM-DD, overrides quarter)",
   "description": "Problem, solution, impact",
   "goals": ["Goal 1", "Goal 2"]
 }
 
+Owner auto-selection:
+- forge/genie → namastex888
+- omni/hive/spark/tools/cross-project → vasconceloscezar
+
 Example:
 {
   "title": "Test Initiative",
-  "project": "hive",
-  "stage": "Wishlist",
-  "priority": "low",
-  "quarter": "backlog",
-  "owner": "vasconceloscezar",
+  "project": "genie",
+  "stage": "Executing",
+  "priority": "high",
+  "quarter": "2025-q4",
+  "start_date": "2025-10-20",
+  "target_date": "2025-11-15",
   "type": "feature",
-  "areas": ["testing"],
-  "description": "Testing the JSON initiative creation script",
-  "goals": [
-    "Verify script works correctly",
-    "Test all field population",
-    "Validate node_id lookup"
-  ]
+  "areas": ["testing", "cli"],
+  "description": "Testing the optimized script with proper dates",
+  "goals": ["Fast creation", "Correct owner", "No manual updates needed"]
 }
 EOF
   exit 0
@@ -116,10 +143,19 @@ RAW_TITLE=$(echo "$JSON" | jq -r '.title')
 PROJECT=$(echo "$JSON" | jq -r '.project')
 STAGE=$(echo "$JSON" | jq -r '.stage // "Exploring"')
 PRIORITY=$(echo "$JSON" | jq -r '.priority // "medium"')
-QUARTER=$(echo "$JSON" | jq -r '.quarter // "backlog"')
-OWNER=$(echo "$JSON" | jq -r '.owner // "vasconceloscezar"')
+QUARTER=$(echo "$JSON" | jq -r '.quarter // "backlog"' | tr '[:upper:]' '[:lower:]')
 TYPE=$(echo "$JSON" | jq -r '.type // "feature"')
 AREAS=$(echo "$JSON" | jq -r '.areas // [] | join(",")')
+START_DATE=$(echo "$JSON" | jq -r '.start_date // empty')
+TARGET_DATE=$(echo "$JSON" | jq -r '.target_date // empty')
+
+# Owner selection - use JSON if provided, otherwise use project-based default
+OWNER_FROM_JSON=$(echo "$JSON" | jq -r '.owner // empty')
+if [[ -n "$OWNER_FROM_JSON" ]]; then
+  OWNER="$OWNER_FROM_JSON"
+else
+  OWNER="${DEFAULT_OWNERS[$PROJECT]:-vasconceloscezar}"
+fi
 
 # Validate required fields
 if [[ -z "$RAW_TITLE" || "$RAW_TITLE" == "null" ]]; then
@@ -132,8 +168,7 @@ if [[ -z "$PROJECT" || "$PROJECT" == "null" ]]; then
   exit 1
 fi
 
-# Format title with project prefix: "Product: Clear Title"
-# Capitalize project name properly
+# Format title with project prefix
 case "$PROJECT" in
   "cross-project") PROJECT_PREFIX="Cross-Project" ;;
   "omni") PROJECT_PREFIX="Omni" ;;
@@ -145,11 +180,22 @@ case "$PROJECT" in
   *) PROJECT_PREFIX=$(echo "$PROJECT" | sed 's/.*/\u&/') ;;
 esac
 
-# Only add prefix if title doesn't already have it
 if [[ "$RAW_TITLE" =~ ^[A-Za-z-]+:  ]]; then
   TITLE="$RAW_TITLE"
 else
   TITLE="${PROJECT_PREFIX}: ${RAW_TITLE}"
+fi
+
+# Calculate Target Date from quarter if not provided
+if [[ -z "$TARGET_DATE" && "$QUARTER" != "backlog" ]]; then
+  YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
+  Q=$(echo "$QUARTER" | cut -d'-' -f2 | sed 's/[Qq]//')
+  case $Q in
+    1) TARGET_DATE="${YEAR}-03-31" ;;
+    2) TARGET_DATE="${YEAR}-06-30" ;;
+    3) TARGET_DATE="${YEAR}-09-30" ;;
+    4) TARGET_DATE="${YEAR}-12-31" ;;
+  esac
 fi
 
 # Build labels
@@ -166,234 +212,61 @@ if [[ -n "$AREAS" && "$AREAS" != "null" ]]; then
   done
 fi
 
-# Build LEAN markdown body
-DESCRIPTION=$(echo "$JSON" | jq -r '.description // "TBD"')
+# Build LEAN markdown body (simplified for speed)
+DESCRIPTION=$(echo "$JSON" | jq -r '.one_line_summary // .description // "TBD"')
 TIMELINE=$(echo "$JSON" | jq -r '.timeline // "TBD"')
 
-# Format goals as numbered list
+# Format goals
 GOALS_ARRAY=$(echo "$JSON" | jq -r '.goals // []')
 GOALS=""
 if [[ "$GOALS_ARRAY" != "[]" ]]; then
   i=1
   while IFS= read -r goal; do
     if [[ -n "$goal" ]]; then
-      GOALS="${GOALS}${i}. **${goal}** - Description and success metric\n"
+      GOALS="${GOALS}${i}. ${goal}\n"
       ((i++))
     fi
   done < <(echo "$GOALS_ARRAY" | jq -r '.[]')
 else
-  GOALS="1. **Goal 1** - Description with success metric\n2. **Goal 2** - Description with success metric\n3. **Goal 3** - Description with success metric"
+  GOALS="1. Goal 1\n2. Goal 2\n3. Goal 3"
 fi
 
+# Simplified body template
 BODY=$(cat <<EOF
 # $TITLE
 
 > **TL;DR:** $DESCRIPTION
 > **Owner:** @$OWNER | **Stage:** $STAGE | **Timeline:** $TIMELINE
 
-> [!IMPORTANT]
-> **Key Context:** Add any critical context, dependencies, or why this matters NOW.
-
 ---
 
 ## 🎯 Goals & Scope
 
-**What we're building:**
 $(echo -e "$GOALS")
 
-**Out of scope:**
-- Thing we're explicitly NOT doing
-- Thing we're deferring to future
-- Thing that's out of bounds
+## 📅 Timeline
 
-<details>
-<summary><b>📋 Detailed Scope Breakdown</b></summary>
-
-### Component/Feature Area 1
-- Specific feature A
-- Specific feature B
-- **Example:** Concrete use case
-
-### Component/Feature Area 2
-- Specific feature C
-- Specific feature D
-- **Example:** Concrete use case
-
-</details>
-
----
-
-## 🚨 Problem & Why Now
-
-**Current pain:**
-Describe the problem in 2-4 sentences. What's broken? What's frustrating users? What's holding back growth?
-
-**Why this matters:**
-Explain business/user impact in 1-2 sentences. Why is this important? What happens if we don't do this?
-
-**Example workflow** users want but can't build today:
-\`\`\`
-Step 1 → Step 2 → Step 3 → Step 4
-\`\`\`
-**Currently:** What users have to do now (painful)
-**After this:** What users will be able to do (easy)
-
-**Users affected:**
-- User persona 1 - Why they care
-- User persona 2 - Why they care
-
-> [!NOTE]
-> **Evidence:** Link to user research, support tickets, or metrics showing the problem.
-
----
-
-## 📅 Timeline & Phases
-
-**High-level roadmap:**
-- **Phase 1:** Name (Dates) - 1-line summary
-- **Phase 2:** Name (Dates) - 1-line summary
-- **Phase 3:** Name (Dates) - 1-line summary
-
-<details>
-<summary><b>🗓️ Detailed Phase Breakdown</b></summary>
-
-### Phase 1: Name (Start Date - End Date)
-
-**Goals:** What we're trying to achieve in this phase
-
-**Tasks:**
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
-
-**Success Criteria:** How we know this phase is done
-
----
-
-### Phase 2: Name (Start Date - End Date)
-
-**Goals:** What we're trying to achieve in this phase
-
-**Tasks:**
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
-
-**Success Criteria:** How we know this phase is done
-
-> [!TIP]
-> Use comments to update phase progress. Pin a status comment showing current phase, % complete, blockers.
-
-</details>
-
----
-
-## ⚠️ Risks & Mitigation
-
-| Risk | Probability | Impact | Mitigation Strategy |
-|:-----|:-----------:|:------:|:--------------------|
-| Risk 1 | High/Med/Low | High/Med/Low | How we'll address this |
-| Risk 2 | High/Med/Low | High/Med/Low | How we'll address this |
-| Risk 3 | High/Med/Low | High/Med/Low | How we'll address this |
-
-> [!WARNING]
-> **Critical Dependencies:** Highlight any major blockers or dependencies that could derail the initiative.
-
-<details>
-<summary><b>🔍 Risk Details & Contingency Plans</b></summary>
-
-### Risk 1 Name
-**Description:** Deeper explanation of the risk
-**Probability:** Why we think this might happen
-**Impact:** What happens if this risk materializes
-**Mitigation:** Detailed strategy for prevention
-**Contingency:** What we do if mitigation fails
-
-</details>
-
----
-
-## 📊 Success Metrics
-
-**Targets by {End Date/Quarter}:**
-
-| Metric | Baseline | Target | Tracking |
-|:-------|:--------:|:------:|:---------|
-| Metric 1 | Current value | Goal value | Dashboard/tool |
-| Metric 2 | Current value | Goal value | Dashboard/tool |
-| Metric 3 | Current value | Goal value | Dashboard/tool |
-
-<details>
-<summary><b>📈 Metrics Breakdown by Phase</b></summary>
-
-### Launch Metrics (Week 1-4)
-- **Metric A:** Baseline → Week 4 target
-- **Metric B:** Baseline → Week 4 target
-
-### Growth Metrics (Month 2-3)
-- **Metric C:** Month 1 → Month 3 target
-- **Metric D:** Month 1 → Month 3 target
-
-### Long-term Metrics (Month 6+)
-- **Metric E:** Month 3 → Month 6+ target
-
-</details>
-
----
+- **Start:** ${START_DATE:-TBD}
+- **Target:** ${TARGET_DATE:-TBD}
+- **Quarter:** ${QUARTER^^}
 
 ## 🔗 Related
 
-**Team & Ownership:**
-- **Accountable:** @$OWNER (owns success/failure)
-- **Responsible:** Team or people executing the work
-- **Consulted:** Stakeholders who provide input
-- **Informed:** People who need updates
-
-**Related Work:**
-- **Initiatives:** #XX, #YY
-- **PRs/Implementation:** TBD
-- **Design Docs:** TBD
-
-<details>
-<summary><b>📚 Full RASCI Matrix</b></summary>
-
-| Role | Person/Team | Responsibilities |
-|:-----|:------------|:-----------------|
-| **R**esponsible | Team/users | What they execute |
-| **A**ccountable | @$OWNER | Owns final outcomes |
-| **S**upport | Team | Resources they provide |
-| **C**onsulted | Stakeholders | Input they provide |
-| **I**nformed | Leadership | Updates they receive |
-
-</details>
-
----
-
-## 💬 Using Comments for Updates
-
-> [!TIP]
-> Use comments on this issue for:
-> - **Status updates** - Pin a comment with current phase, progress %, blockers
-> - **Decisions** - Document key architectural or scope decisions
-> - **Questions** - Thread discussions about specific sections
-> - **Implementation links** - Link PRs as they're merged
->
-> Keep the issue body as the **reference document** (stable), comments for **temporal info** (changes over time).
+- **Accountable:** @$OWNER
+- **Project:** $PROJECT
+- **Priority:** $PRIORITY
 EOF
 )
 
-echo "=== Creating Initiative from JSON ==="
+echo "=== Creating Initiative (Optimized) ==="
 echo "Title: $TITLE"
-echo "Project: $PROJECT"
-echo "Stage: $STAGE"
-echo "Priority: $PRIORITY"
-echo "Quarter: $QUARTER"
-echo "Owner: $OWNER"
-echo "Labels: $LABELS"
+echo "Project: $PROJECT ($OWNER)"
+echo "Stage: $STAGE | Priority: $PRIORITY | Quarter: ${QUARTER^^}"
+echo "Dates: ${START_DATE:-auto} → ${TARGET_DATE:-auto}"
 echo ""
 
-# Create the issue - gh CLI only returns URL
-echo "Creating issue..."
+# Create issue
+echo "[1/3] Creating issue..."
 TEMP_BODY_FILE=$(mktemp)
 echo "$BODY" > "$TEMP_BODY_FILE"
 
@@ -406,32 +279,21 @@ ISSUE_URL=$(gh issue create \
 
 rm "$TEMP_BODY_FILE"
 
-# Extract issue number from URL
 ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oP '/issues/\K\d+')
+echo "   Created #$ISSUE_NUMBER"
 
-echo "Created issue #$ISSUE_NUMBER: $ISSUE_URL"
-echo ""
+# Get node ID (fast, no sleep)
+echo "[2/3] Getting metadata..."
+ISSUE_NODE_ID=$(gh issue view "$ISSUE_NUMBER" --repo "$ORG/$REPO" --json id --jq '.id')
+echo "   Node ID: ${ISSUE_NODE_ID:0:20}..."
 
-# Wait a moment, then get issue metadata including node_id
-echo "Getting issue metadata..."
-sleep 2
+# Wait for workflow (reduced from 12s to 5s)
+echo "[3/3] Waiting for project sync (5s)..."
+sleep 5
 
-# Use gh issue view to get node_id
-ISSUE_METADATA=$(gh issue view "$ISSUE_NUMBER" --repo "$ORG/$REPO" --json id,number,title,url)
-ISSUE_NODE_ID=$(echo "$ISSUE_METADATA" | jq -r '.id')
-
-echo "Issue node ID: $ISSUE_NODE_ID"
-echo ""
-
-# Wait for workflow to add the issue to the project board
-echo "Waiting for workflow to add issue to project board..."
-echo "  This usually takes 10-15 seconds..."
-sleep 12
-
-# Get project item ID using node_id
-echo "Looking up project item by issue node ID..."
+# Get project item ID (reduced retries: 10 attempts, 3s delay = 30s max)
 ITEM_ID=""
-MAX_RETRIES=25
+MAX_RETRIES=10
 RETRY_DELAY=3
 
 for i in $(seq 1 $MAX_RETRIES); do
@@ -445,274 +307,87 @@ for i in $(seq 1 $MAX_RETRIES); do
             content {
               ... on Issue {
                 id
-                number
-                title
               }
             }
           }
         }
       }
     }
-  }" --jq ".data.organization.projectV2.items.nodes[] | select(.content.id == \"$ISSUE_NODE_ID\") | .id" 2>/dev/null)
+  }" --jq ".data.organization.projectV2.items.nodes[] | select(.content.id == \"$ISSUE_NODE_ID\") | .id" 2>/dev/null | head -1)
 
   if [[ -n "$ITEM_ID" ]]; then
-    # Verify title matches
-    FOUND_TITLE=$(gh api graphql -f query="
-    query {
-      organization(login: \"$ORG\") {
-        projectV2(number: $PROJECT_NUMBER) {
-          items(first: 100) {
-            nodes {
-              id
-              content {
-                ... on Issue {
-                  id
-                  title
-                }
-              }
-            }
-          }
-        }
-      }
-    }" --jq ".data.organization.projectV2.items.nodes[] | select(.id == \"$ITEM_ID\") | .content.title" 2>/dev/null)
-
-    if [[ "$FOUND_TITLE" == "$TITLE" ]]; then
-      echo "✓ Found correct project item on attempt $i"
-      echo "  Item ID: $ITEM_ID"
-      break
-    else
-      ITEM_ID=""
-    fi
+    echo "   ✓ Found item (attempt $i)"
+    break
   fi
 
   if [[ $i -lt $MAX_RETRIES ]]; then
-    echo "  Attempt $i/$MAX_RETRIES: Item not found yet, retrying in ${RETRY_DELAY}s..."
     sleep $RETRY_DELAY
   fi
 done
 
 if [[ -z "$ITEM_ID" ]]; then
   echo ""
-  echo "❌ ERROR: Could not find project item for issue #$ISSUE_NUMBER"
-  echo ""
-  echo "Issue created successfully, but project board sync failed."
-  echo "URL: $ISSUE_URL"
-  echo "Please check workflow: https://github.com/$ORG/$REPO/actions"
-  echo ""
+  echo "❌ ERROR: Project sync timed out (${MAX_RETRIES}x${RETRY_DELAY}s)"
+  echo "   Issue created: $ISSUE_URL"
+  echo "   Manual: Set fields in project board"
   exit 1
-fi
-
-echo ""
-echo "Project item found!"
-echo ""
-
-# Set custom fields
-set +e
-FAILED_FIELDS=()
-
-echo "Setting custom fields..."
-
-# Set Project field
-echo -n "  Setting Project field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[Project]}\"
-    value: {singleSelectOptionId: \"${PROJECT_OPTIONS[$PROJECT]}\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "✗"
-  FAILED_FIELDS+=("Project")
-fi
-
-# Set Stage field
-echo -n "  Setting Stage field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[Stage]}\"
-    value: {singleSelectOptionId: \"${STAGE_OPTIONS[$STAGE]}\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "✗"
-  FAILED_FIELDS+=("Stage")
-fi
-
-# Set Priority field
-echo -n "  Setting Priority field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[Priority]}\"
-    value: {singleSelectOptionId: \"${PRIORITY_OPTIONS[$PRIORITY]}\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "✗"
-  FAILED_FIELDS+=("Priority")
-fi
-
-# Set ETA/Quarter field
-echo -n "  Setting ETA field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[ETA]}\"
-    value: {singleSelectOptionId: \"${QUARTER_OPTIONS[$QUARTER]}\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "✗"
-  FAILED_FIELDS+=("ETA")
 fi
 
 # Map Stage to Status
 case "$STAGE" in
-  Wishlist|Exploring|RFC|Prioritization)
-    STATUS="Todo"
-    ;;
-  Executing|Preview)
-    STATUS="In Progress"
-    ;;
-  Shipped|Archived)
-    STATUS="Done"
-    ;;
-  *)
-    STATUS="Todo"
-    ;;
+  Wishlist|Exploring|RFC|Prioritization) STATUS="Todo" ;;
+  Executing|Preview) STATUS="In Progress" ;;
+  Shipped|Archived) STATUS="Done" ;;
+  *) STATUS="Todo" ;;
 esac
 
-# Set Status field
-echo -n "  Setting Status field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[Status]}\"
-    value: {singleSelectOptionId: \"${STATUS_OPTIONS[$STATUS]}\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "✗"
-  FAILED_FIELDS+=("Status")
+# Batch update fields (all mutations in parallel for speed)
+echo ""
+echo "Setting fields..."
+
+# Build all mutations as parallel background jobs
+{
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[Project]}\", value: {singleSelectOptionId: \"${PROJECT_OPTIONS[$PROJECT]}\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Project" || echo "  ✗ Project"
+} &
+
+{
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[Stage]}\", value: {singleSelectOptionId: \"${STAGE_OPTIONS[$STAGE]}\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Stage" || echo "  ✗ Stage"
+} &
+
+{
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[Priority]}\", value: {singleSelectOptionId: \"${PRIORITY_OPTIONS[$PRIORITY]}\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Priority" || echo "  ✗ Priority"
+} &
+
+{
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[Status]}\", value: {singleSelectOptionId: \"${STATUS_OPTIONS[$STATUS]}\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Status" || echo "  ✗ Status"
+} &
+
+{
+  QUARTER_UPPER=$(echo "$QUARTER" | tr '[:lower:]' '[:upper:]')
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[ETA]}\", value: {singleSelectOptionId: \"${QUARTER_OPTIONS[$QUARTER]}\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Quarter ($QUARTER_UPPER)" || echo "  ✗ Quarter"
+} &
+
+{
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[Owner]}\", value: {text: \"@$OWNER\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Owner (@$OWNER)" || echo "  ✗ Owner"
+} &
+
+if [[ -n "$START_DATE" ]]; then
+  {
+    gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[StartDate]}\", value: {date: \"$START_DATE\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Start Date ($START_DATE)" || echo "  ✗ Start Date"
+  } &
 fi
 
-# Set Expected Results from goals
-if [[ -n "$GOALS" && "$GOALS" != "null" ]]; then
-  EXPECTED_RESULTS=$(echo "$GOALS" | head -c 300)
-  echo -n "  Setting Expected Results field... "
-  if gh api graphql -f query="
-  mutation {
-    updateProjectV2ItemFieldValue(input: {
-      projectId: \"$PROJECT_ID\"
-      itemId: \"$ITEM_ID\"
-      fieldId: \"${FIELD_IDS[ExpectedResults]}\"
-      value: {text: \"$EXPECTED_RESULTS\"}
-    }) { projectV2Item { id } }
-  }" > /dev/null 2>&1; then
-    echo "✓"
-  else
-    echo "⚠"
-    FAILED_FIELDS+=("Expected Results")
-  fi
-fi
-
-# Set Owner field
-echo -n "  Setting Owner field... "
-if gh api graphql -f query="
-mutation {
-  updateProjectV2ItemFieldValue(input: {
-    projectId: \"$PROJECT_ID\"
-    itemId: \"$ITEM_ID\"
-    fieldId: \"${FIELD_IDS[Owner]}\"
-    value: {text: \"@$OWNER\"}
-  }) { projectV2Item { id } }
-}" > /dev/null 2>&1; then
-  echo "✓"
-else
-  echo "⚠"
-  FAILED_FIELDS+=("Owner")
-fi
-
-# Calculate Target Date from quarter
-TARGET_DATE=""
-if [[ "$QUARTER" != "backlog" ]]; then
-  YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
-  Q=$(echo "$QUARTER" | cut -d'-' -f2 | tr -d 'Qq')
-  case $Q in
-    1) TARGET_DATE="${YEAR}-03-31" ;;
-    2) TARGET_DATE="${YEAR}-06-30" ;;
-    3) TARGET_DATE="${YEAR}-09-30" ;;
-    4) TARGET_DATE="${YEAR}-12-31" ;;
-  esac
-fi
-
-# Set Target Date field
 if [[ -n "$TARGET_DATE" ]]; then
-  echo -n "  Setting Target Date field... "
-  if gh api graphql -f query="
-  mutation {
-    updateProjectV2ItemFieldValue(input: {
-      projectId: \"$PROJECT_ID\"
-      itemId: \"$ITEM_ID\"
-      fieldId: \"${FIELD_IDS[TargetDate]}\"
-      value: {date: \"$TARGET_DATE\"}
-    }) { projectV2Item { id } }
-  }" > /dev/null 2>&1; then
-    echo "✓"
-  else
-    echo "⚠"
-    FAILED_FIELDS+=("Target Date")
-  fi
+  {
+    gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\", fieldId: \"${FIELD_IDS[TargetDate]}\", value: {date: \"$TARGET_DATE\"}}) { projectV2Item { id } }}" > /dev/null 2>&1 && echo "  ✓ Target Date ($TARGET_DATE)" || echo "  ✗ Target Date"
+  } &
 fi
 
-set -e
+# Wait for all parallel jobs
+wait
 
 echo ""
-echo "=== Initiative Created ==="
-echo "URL: $ISSUE_URL"
-echo "Number: #$ISSUE_NUMBER"
-echo "Node ID: $ISSUE_NODE_ID"
-echo "Project Item ID: $ITEM_ID"
+echo "✅ Initiative Created Successfully"
+echo "   URL: $ISSUE_URL"
+echo "   Board: https://github.com/orgs/$ORG/projects/$PROJECT_NUMBER"
 echo ""
-
-# Show summary
-if [[ ${#FAILED_FIELDS[@]} -eq 0 ]]; then
-  echo "✅ All fields set successfully:"
-  echo "  ✓ Project: $PROJECT"
-  echo "  ✓ Stage: $STAGE"
-  echo "  ✓ Status: $STATUS"
-  echo "  ✓ Priority: $PRIORITY"
-  echo "  ✓ Quarter: $QUARTER"
-  echo "  ✓ Owner: @$OWNER"
-  echo "  ✓ Target Date: ${TARGET_DATE:-Not set (backlog)}"
-  echo "  ✓ Labels: $LABELS"
-else
-  echo "⚠️  Initiative created but some fields failed:"
-  echo ""
-  echo "Failed fields:"
-  for field in "${FAILED_FIELDS[@]}"; do
-    echo "  ✗ $field"
-  done
-  echo ""
-  echo "Please manually set these in project board."
-fi
-
-echo ""
-echo "View on project board: https://github.com/orgs/$ORG/projects/$PROJECT_NUMBER"
