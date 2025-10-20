@@ -112,7 +112,7 @@ fi
 JSON=$(cat)
 
 # Parse basic fields
-TITLE=$(echo "$JSON" | jq -r '.title')
+RAW_TITLE=$(echo "$JSON" | jq -r '.title')
 PROJECT=$(echo "$JSON" | jq -r '.project')
 STAGE=$(echo "$JSON" | jq -r '.stage // "Exploring"')
 PRIORITY=$(echo "$JSON" | jq -r '.priority // "medium"')
@@ -122,7 +122,7 @@ TYPE=$(echo "$JSON" | jq -r '.type // "feature"')
 AREAS=$(echo "$JSON" | jq -r '.areas // [] | join(",")')
 
 # Validate required fields
-if [[ -z "$TITLE" || "$TITLE" == "null" ]]; then
+if [[ -z "$RAW_TITLE" || "$RAW_TITLE" == "null" ]]; then
   echo "Error: title is required in JSON"
   exit 1
 fi
@@ -130,6 +130,26 @@ fi
 if [[ -z "$PROJECT" || "$PROJECT" == "null" ]]; then
   echo "Error: project is required in JSON"
   exit 1
+fi
+
+# Format title with project prefix: "Product: Clear Title"
+# Capitalize project name properly
+case "$PROJECT" in
+  "cross-project") PROJECT_PREFIX="Cross-Project" ;;
+  "omni") PROJECT_PREFIX="Omni" ;;
+  "hive") PROJECT_PREFIX="Hive" ;;
+  "spark") PROJECT_PREFIX="Spark" ;;
+  "forge") PROJECT_PREFIX="Forge" ;;
+  "genie") PROJECT_PREFIX="Genie" ;;
+  "tools") PROJECT_PREFIX="Tools" ;;
+  *) PROJECT_PREFIX=$(echo "$PROJECT" | sed 's/.*/\u&/') ;;
+esac
+
+# Only add prefix if title doesn't already have it
+if [[ "$RAW_TITLE" =~ ^[A-Za-z-]+:  ]]; then
+  TITLE="$RAW_TITLE"
+else
+  TITLE="${PROJECT_PREFIX}: ${RAW_TITLE}"
 fi
 
 # Build labels
@@ -146,70 +166,219 @@ if [[ -n "$AREAS" && "$AREAS" != "null" ]]; then
   done
 fi
 
-# Build simple markdown body
+# Build LEAN markdown body
 DESCRIPTION=$(echo "$JSON" | jq -r '.description // "TBD"')
-GOALS=$(echo "$JSON" | jq -r '.goals // [] | map("- " + .) | join("\n")')
+TIMELINE=$(echo "$JSON" | jq -r '.timeline // "TBD"')
+
+# Format goals as numbered list
+GOALS_ARRAY=$(echo "$JSON" | jq -r '.goals // []')
+GOALS=""
+if [[ "$GOALS_ARRAY" != "[]" ]]; then
+  i=1
+  while IFS= read -r goal; do
+    if [[ -n "$goal" ]]; then
+      GOALS="${GOALS}${i}. **${goal}** - Description and success metric\n"
+      ((i++))
+    fi
+  done < <(echo "$GOALS_ARRAY" | jq -r '.[]')
+else
+  GOALS="1. **Goal 1** - Description with success metric\n2. **Goal 2** - Description with success metric\n3. **Goal 3** - Description with success metric"
+fi
 
 BODY=$(cat <<EOF
 # $TITLE
 
-**One-line Summary:** $DESCRIPTION
+> **TL;DR:** $DESCRIPTION
+> **Owner:** @$OWNER | **Stage:** $STAGE | **Timeline:** $TIMELINE
+
+> [!IMPORTANT]
+> **Key Context:** Add any critical context, dependencies, or why this matters NOW.
 
 ---
 
-## Overview
+## 🎯 Goals & Scope
 
-### What
-$DESCRIPTION
+**What we're building:**
+$(echo -e "$GOALS")
 
-### Why (Problem)
-Problem being solved by this initiative.
+**Out of scope:**
+- Thing we're explicitly NOT doing
+- Thing we're deferring to future
+- Thing that's out of bounds
 
----
+<details>
+<summary><b>📋 Detailed Scope Breakdown</b></summary>
 
-## Value Proposition
+### Component/Feature Area 1
+- Specific feature A
+- Specific feature B
+- **Example:** Concrete use case
 
-### Goals (Expected Results)
-$GOALS
+### Component/Feature Area 2
+- Specific feature C
+- Specific feature D
+- **Example:** Concrete use case
 
-### Expected Impact
-- Impact on organization
-- Impact on users
-
----
-
-## Scope
-
-### In Scope
-- TBD
-
-### Out of Scope
-- TBD
+</details>
 
 ---
 
-## Timeline & Phases
+## 🚨 Problem & Why Now
 
-### Phase 1: Foundation
+**Current pain:**
+Describe the problem in 2-4 sentences. What's broken? What's frustrating users? What's holding back growth?
+
+**Why this matters:**
+Explain business/user impact in 1-2 sentences. Why is this important? What happens if we don't do this?
+
+**Example workflow** users want but can't build today:
+\`\`\`
+Step 1 → Step 2 → Step 3 → Step 4
+\`\`\`
+**Currently:** What users have to do now (painful)
+**After this:** What users will be able to do (easy)
+
+**Users affected:**
+- User persona 1 - Why they care
+- User persona 2 - Why they care
+
+> [!NOTE]
+> **Evidence:** Link to user research, support tickets, or metrics showing the problem.
+
+---
+
+## 📅 Timeline & Phases
+
+**High-level roadmap:**
+- **Phase 1:** Name (Dates) - 1-line summary
+- **Phase 2:** Name (Dates) - 1-line summary
+- **Phase 3:** Name (Dates) - 1-line summary
+
+<details>
+<summary><b>🗓️ Detailed Phase Breakdown</b></summary>
+
+### Phase 1: Name (Start Date - End Date)
+
+**Goals:** What we're trying to achieve in this phase
+
+**Tasks:**
 - [ ] Task 1
 - [ ] Task 2
+- [ ] Task 3
 
-**Success Criteria:** TBD
+**Success Criteria:** How we know this phase is done
 
 ---
 
-## Risks & Mitigation
+### Phase 2: Name (Start Date - End Date)
+
+**Goals:** What we're trying to achieve in this phase
+
+**Tasks:**
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+**Success Criteria:** How we know this phase is done
+
+> [!TIP]
+> Use comments to update phase progress. Pin a status comment showing current phase, % complete, blockers.
+
+</details>
+
+---
+
+## ⚠️ Risks & Mitigation
 
 | Risk | Probability | Impact | Mitigation Strategy |
-|------|-------------|--------|---------------------|
-| TBD | Medium | Medium | TBD |
+|:-----|:-----------:|:------:|:--------------------|
+| Risk 1 | High/Med/Low | High/Med/Low | How we'll address this |
+| Risk 2 | High/Med/Low | High/Med/Low | How we'll address this |
+| Risk 3 | High/Med/Low | High/Med/Low | How we'll address this |
+
+> [!WARNING]
+> **Critical Dependencies:** Highlight any major blockers or dependencies that could derail the initiative.
+
+<details>
+<summary><b>🔍 Risk Details & Contingency Plans</b></summary>
+
+### Risk 1 Name
+**Description:** Deeper explanation of the risk
+**Probability:** Why we think this might happen
+**Impact:** What happens if this risk materializes
+**Mitigation:** Detailed strategy for prevention
+**Contingency:** What we do if mitigation fails
+
+</details>
 
 ---
 
-## Success Metrics
+## 📊 Success Metrics
 
-- Metric 1: TBD
-- Metric 2: TBD
+**Targets by {End Date/Quarter}:**
+
+| Metric | Baseline | Target | Tracking |
+|:-------|:--------:|:------:|:---------|
+| Metric 1 | Current value | Goal value | Dashboard/tool |
+| Metric 2 | Current value | Goal value | Dashboard/tool |
+| Metric 3 | Current value | Goal value | Dashboard/tool |
+
+<details>
+<summary><b>📈 Metrics Breakdown by Phase</b></summary>
+
+### Launch Metrics (Week 1-4)
+- **Metric A:** Baseline → Week 4 target
+- **Metric B:** Baseline → Week 4 target
+
+### Growth Metrics (Month 2-3)
+- **Metric C:** Month 1 → Month 3 target
+- **Metric D:** Month 1 → Month 3 target
+
+### Long-term Metrics (Month 6+)
+- **Metric E:** Month 3 → Month 6+ target
+
+</details>
+
+---
+
+## 🔗 Related
+
+**Team & Ownership:**
+- **Accountable:** @$OWNER (owns success/failure)
+- **Responsible:** Team or people executing the work
+- **Consulted:** Stakeholders who provide input
+- **Informed:** People who need updates
+
+**Related Work:**
+- **Initiatives:** #XX, #YY
+- **PRs/Implementation:** TBD
+- **Design Docs:** TBD
+
+<details>
+<summary><b>📚 Full RASCI Matrix</b></summary>
+
+| Role | Person/Team | Responsibilities |
+|:-----|:------------|:-----------------|
+| **R**esponsible | Team/users | What they execute |
+| **A**ccountable | @$OWNER | Owns final outcomes |
+| **S**upport | Team | Resources they provide |
+| **C**onsulted | Stakeholders | Input they provide |
+| **I**nformed | Leadership | Updates they receive |
+
+</details>
+
+---
+
+## 💬 Using Comments for Updates
+
+> [!TIP]
+> Use comments on this issue for:
+> - **Status updates** - Pin a comment with current phase, progress %, blockers
+> - **Decisions** - Document key architectural or scope decisions
+> - **Questions** - Thread discussions about specific sections
+> - **Implementation links** - Link PRs as they're merged
+>
+> Keep the issue body as the **reference document** (stable), comments for **temporal info** (changes over time).
 EOF
 )
 

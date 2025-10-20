@@ -1,164 +1,42 @@
-# Initiative Templates
+# Initiative Template
 
-Choose the right template based on your initiative's complexity, scope, and audience.
+## 📋 Lean Initiative Template (v2.0)
 
----
+**Use for:** All initiatives - small to large
 
-## 📋 Quick Selection Guide
-
-| Template | Best For | Time to Complete | Sections |
-|----------|----------|------------------|----------|
-| **Minimal** | Small features, quick wins, internal tools | 15-30 min | 8 core sections |
-| **Standard** | Most initiatives, cross-team features | 1-2 hours | 12 sections + flexibility |
-| **Comprehensive** | Major product launches, customer-facing features | 4-8 hours | 20+ sections (full PRD) |
-
----
-
-## 1️⃣ Minimal Initiative Template
-
-**Use When:**
-- ✅ Internal tooling or infrastructure improvements
-- ✅ Well-understood problem with clear solution
-- ✅ Small scope (1-2 weeks, single contributor)
-- ✅ Low external dependencies
-- ✅ Technical audience only
-
-**What's Included:**
-- RASCI (ownership)
-- Overview (What/Why/Who)
-- Goals & Impact
-- Problem & Context
-- Scope (In/Out)
-- Timeline (phases)
-- Risks & Mitigation
-- Success Metrics
-
-**Example Use Cases:**
-- "Add retry logic to API gateway"
-- "Implement logging for debugging"
-- "Create CLI tool for developers"
-- "Automate deployment scripts"
-
-📄 **Template:** [`MINIMAL_INITIATIVE.md`](./MINIMAL_INITIATIVE.md)
+We've consolidated our templates into a single **Lean Initiative** format that:
+- ✅ Reduces clutter (80 lines visible vs 300+ in old templates)
+- ✅ Uses advanced GitHub markdown (alerts, collapsible sections, diagrams)
+- ✅ Maintains depth through `<details>` tags
+- ✅ Provides clear visual scanning with emoji headers
+- ✅ Scales from small to large initiatives
 
 ---
 
-## 2️⃣ Standard Initiative Template (Recommended Default)
+## 🎯 What's Included
 
-**Use When:**
-- ✅ Medium scope (2-8 weeks, small team)
-- ✅ Cross-team coordination needed
-- ✅ Some unknowns or trade-offs to consider
-- ✅ Mix of technical + business stakeholders
-- ✅ **Default choice for most initiatives**
+### Core Sections (Always Visible - ~80 lines)
+1. **TL;DR** - Problem → Solution → Impact with owner/stage/timeline
+2. **🎯 Goals & Scope** - What we're building (numbered goals) + out of scope
+3. **🚨 Problem & Why Now** - Current pain, why it matters, user examples
+4. **📅 Timeline & Phases** - High-level roadmap with phase summaries
+5. **⚠️ Risks & Mitigation** - Table format with probability/impact/strategies
+6. **📊 Success Metrics** - Clear targets with baseline → goal
+7. **🔗 Related** - Team, ownership, related work
 
-**What's Added (vs Minimal):**
-- 5W2H framework (full context)
-- Links & related documents
-- Non-Goals (scope boundaries)
-- Options & Proposals comparison
-- Dependencies tracking
-- Detailed metrics (launch/growth/long-term)
-- Open questions
+### Detailed Sections (Collapsible via `<details>`)
+- **Detailed Scope Breakdown** - Per-component/feature specs
+- **Detailed Phase Breakdown** - Full checklists with interactive tasks
+- **Risk Details** - Deep dive on each risk with contingency plans
+- **Metrics Breakdown** - Launch, growth, long-term metrics by phase
+- **Full RASCI Matrix** - Extended ownership when needed
 
-**Example Use Cases:**
-- "Multi-channel messaging system"
-- "GitHub Actions workflow automation"
-- "API rate limiting implementation"
-- "Database migration strategy"
-
-📄 **Template:** [`STANDARD_INITIATIVE.md`](./STANDARD_INITIATIVE.md)
-
----
-
-## 3️⃣ Comprehensive Initiative Template (Full PRD)
-
-**Use When:**
-- ✅ Major product launches or features
-- ✅ Customer/user-facing changes
-- ✅ Large scope (2+ months, multiple teams)
-- ✅ High complexity or many unknowns
-- ✅ Regulatory/compliance requirements
-- ✅ Needs executive/stakeholder buy-in
-
-**What's Added (vs Standard):**
-- Personas & Use Cases (user research)
-- User Stories with BDD acceptance criteria (Given/When/Then)
-- Non-functional requirements (performance, security, etc.)
-- Technical architecture (detailed design)
-- API specifications
-- Testing & QA strategy
-- Security & compliance
-- Rollout plan (Alpha/Beta/GA)
-- Communication plan
-- Operational readiness
-- Change log
-
-**Example Use Cases:**
-- "New customer-facing product feature"
-- "Platform migration (e.g., AWS → GCP)"
-- "Multi-tenant SaaS architecture"
-- "Compliance initiative (GDPR, SOC2)"
-
-📄 **Template:** [`COMPREHENSIVE_INITIATIVE.md`](./COMPREHENSIVE_INITIATIVE.md)
-
----
-
-## 🎯 Decision Tree
-
-```
-Start: New initiative to document
-  ↓
-Q1: Is this customer/user-facing?
-  ├─ Yes → Comprehensive Template
-  └─ No → Continue
-      ↓
-Q2: Multiple teams involved?
-  ├─ Yes → Standard Template
-  └─ No → Continue
-      ↓
-Q3: Duration > 2 weeks?
-  ├─ Yes → Standard Template
-  └─ No → Minimal Template
-```
-
----
-
-## 💡 Tips for Success
-
-### Starting Out
-1. **Start minimal, expand later** - It's easier to add detail than remove it
-2. **Copy-paste sections** - Upgrade from Minimal → Standard → Comprehensive as needed
-3. **Skip empty sections** - Don't force content; leave sections out if not applicable
-
-### Writing Quality Content
-- **Be specific:** "Increase API throughput by 50%" not "Make API faster"
-- **Add context:** Explain *why* decisions were made, not just *what*
-- **Link everything:** PRs, docs, dashboards, related initiatives
-- **Update regularly:** Keep status, metrics, and blockers current
-
-### Common Pitfalls to Avoid
-- ❌ Writing a novel (too much detail upfront)
-- ❌ Skipping RASCI (unclear ownership)
-- ❌ No metrics (can't measure success)
-- ❌ No scope boundaries (feature creep)
-- ❌ Ignoring risks (surprises hurt)
-
----
-
-## 📝 Template Evolution
-
-You can start with **Minimal** and evolve to **Standard** or **Comprehensive** as the initiative grows:
-
-```
-Week 1: Minimal Template
-  ↓ (Scope increases, stakeholders join)
-Week 3: Upgrade to Standard Template
-  ↓ (Customer launch approved, compliance needed)
-Week 6: Expand to Comprehensive Template
-```
-
-Just copy-paste sections from the larger templates as needed!
+### Advanced Features
+- ✅ **Colored Alerts** - `[!IMPORTANT]` `[!WARNING]` `[!NOTE]` `[!TIP]`
+- ✅ **Mermaid Diagrams** - Visualize architecture and workflows
+- ✅ **Interactive Task Lists** - Clickable checkboxes for phase tracking
+- ✅ **Tables** - Structured data for risks and metrics
+- ✅ **Emoji Headers** - Visual scanning (🎯 🚨 📅 ⚠️ 📊 🔗)
 
 ---
 
@@ -167,91 +45,149 @@ Just copy-paste sections from the larger templates as needed!
 ### Option 1: CLI Script (Recommended)
 
 ```bash
-# Use the create-initiative.sh script
-cat your-initiative.md | ./scripts/create-initiative.sh \
+# Use the create-initiative.sh script with LEAN template
+cat docs/templates/LEAN_INITIATIVE.md | ./scripts/create-initiative.sh \
   --title "Your Initiative Title" \
   --project (omni|hive|spark|forge|genie|tools|cross-project) \
-  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped|Archived) \
+  --stage (Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped) \
   --priority (critical|high|medium|low) \
   --quarter (2025-Q4|2026-Q1|2026-Q2|...|backlog) \
   --type (feature|enhancement|research|infrastructure|documentation) \
   --areas "area1,area2,area3"
 ```
 
+**Title Format:** `Product: Clear Action/Outcome`
+- Example: `Omni: Quick Start Guide (5-min Setup)`
+- Example: `Cross-Project: Automagik Suite Deep Integration`
+- Example: `Hive: Workflow Execution Debugging`
+
 ### Option 2: GitHub Issue Form
 
-Use the web UI to create an issue with the `initiative` label, and the workflow will auto-sync to the project board.
+Use the web UI to create an issue with the `initiative` label. The workflow will auto-sync to the project board.
 
 ### Option 3: Manual
 
-1. Copy the appropriate template
+1. Copy [`LEAN_INITIATIVE.md`](./LEAN_INITIATIVE.md)
 2. Fill in all `{placeholders}`
-3. Create GitHub issue with `initiative` label
-4. Issue will auto-sync to project board
+3. Remove sections that don't apply
+4. Add Mermaid diagrams where helpful
+5. Create GitHub issue with `initiative` label
+6. Issue will auto-sync to project board
+
+---
+
+## 💡 Tips for Success
+
+### Writing Quality Content
+- **Be specific:** "Increase API throughput by 50%" not "Make API faster"
+- **Add context:** Explain *why* decisions were made, not just *what*
+- **Link everything:** PRs, docs, dashboards, related initiatives
+- **Use collapsible sections:** Keep body scannable, details accessible
+- **Add diagrams:** Mermaid for architecture/workflows helps clarity
+
+### Making It Scalable
+**For Small Initiatives (1-2 weeks):**
+- Keep collapsed sections minimal
+- 3-5 goals maximum
+- Simple risk table (2-3 rows)
+- Basic metrics (2-3 KPIs)
+
+**For Medium Initiatives (2-8 weeks):**
+- Expand detailed scope breakdown
+- Full phase checklists in collapsed sections
+- 5-7 risks with detailed mitigation
+- Metrics by phase (launch/growth/long-term)
+
+**For Large Initiatives (2+ months):**
+- Add Mermaid diagrams for architecture
+- Detailed contingency plans for each risk
+- User personas and examples in problem section
+- Comprehensive RASCI in collapsed section
+
+### Common Pitfalls to Avoid
+- ❌ Writing too much in visible sections (use `<details>`)
+- ❌ Skipping ownership (always add owner in TL;DR)
+- ❌ No metrics (can't measure success)
+- ❌ No scope boundaries (feature creep)
+- ❌ Ignoring risks (surprises hurt)
+- ❌ Not using alerts (`[!WARNING]` for critical items)
+
+---
+
+## 🔧 Using Comments for Updates
+
+The issue body should be the **reference document** (stable). Use comments for **temporal information**:
+
+1. **Pinned Status Comment** - Current phase, progress %, blockers
+2. **Decision Comments** - Document key architectural/scope decisions
+3. **Implementation Links** - Link PRs as they're merged
+4. **Discussion Threads** - Questions about specific sections
+
+This keeps the body clean while capturing evolution over time.
+
+---
+
+## 📊 Real Example
+
+See **[Initiative #61](https://github.com/namastexlabs/automagik-roadmap/issues/61)** for a live example of the lean format in action.
+
+**What changed from old format:**
+- Title: `Automagik Suite Integration` → `Cross-Project: Automagik Suite Deep Integration`
+- Body: 210 lines → 80 visible (120 in collapsed sections)
+- Added: Colored alerts, Mermaid diagram, interactive task lists, table-formatted risks
+
+---
+
+## 📚 Old Templates (Archived)
+
+Previous templates have been moved to [`archive/`](./archive/) for reference:
+- `MINIMAL_INITIATIVE.md` (deprecated)
+- `STANDARD_INITIATIVE.md` (deprecated)
+- `COMPREHENSIVE_INITIATIVE.md` (deprecated)
+
+**Why we consolidated:**
+- Too much redundancy between templates
+- Hard to choose which template to use
+- Old formats were too verbose
+- Missed opportunity to use GitHub markdown features
+
+The new LEAN template replaces all three by scaling through collapsed sections.
 
 ---
 
 ## 🔗 Related Documentation
 
-- [LLM Guide for Creating Initiatives](../../LLM-GUIDE.md)
+- [LEAN Initiative Template](./LEAN_INITIATIVE.md) - The template
+- [Initiative #61](https://github.com/namastexlabs/automagik-roadmap/issues/61) - Live example
 - [Create Initiative Script](../../scripts/create-initiative.sh)
 - [Project Board](https://github.com/orgs/namastexlabs/projects/9)
-- [Labels Reference](../../docs/labels.md)
-
----
-
-## 📊 Template Comparison Matrix
-
-| Section | Minimal | Standard | Comprehensive |
-|---------|:-------:|:--------:|:-------------:|
-| **Core Sections** |
-| One-line Summary | ✅ | ✅ | ✅ |
-| RASCI | ✅ | ✅ | ✅ |
-| Overview (What/Why/Who) | ✅ | ✅ | ✅ |
-| Goals & Impact | ✅ | ✅ | ✅ |
-| Problem & Context | ✅ | ✅ | ✅ |
-| Scope (In/Out) | ✅ | ✅ | ✅ |
-| Timeline & Phases | ✅ | ✅ | ✅ |
-| Risks & Mitigation | ✅ | ✅ | ✅ |
-| Success Metrics | ✅ | ✅ | ✅ |
-| **Expanded Sections** |
-| Links & Related Docs | ❌ | ✅ | ✅ |
-| 5W2H (When/Where/How) | ❌ | ✅ | ✅ |
-| Non-Goals | ❌ | ✅ | ✅ |
-| Options & Proposals | ❌ | ✅ | ✅ |
-| Dependencies | ❌ | ✅ | ✅ |
-| Detailed Metrics | ❌ | ✅ | ✅ |
-| **Comprehensive Only** |
-| How Much (Cost) | ❌ | ❌ | ✅ |
-| Personas & Use Cases | ❌ | ❌ | ✅ |
-| User Stories (BDD) | ❌ | ❌ | ✅ |
-| Non-Functional Reqs | ❌ | ❌ | ✅ |
-| Technical Architecture | ❌ | ❌ | ✅ |
-| API Specifications | ❌ | ❌ | ✅ |
-| Testing & QA | ❌ | ❌ | ✅ |
-| Security & Compliance | ❌ | ❌ | ✅ |
-| Rollout & Communication | ❌ | ❌ | ✅ |
-| Operational Readiness | ❌ | ❌ | ✅ |
+- [Label Guide](../../docs/label-guide.md)
 
 ---
 
 ## ❓ FAQ
 
-**Q: Can I mix sections from different templates?**
-A: Absolutely! Templates are guidelines, not rules. Copy sections that add value.
+**Q: Do I need to fill out every section?**
+A: No! Skip sections that don't apply. The template is a guide, not a requirement.
+
+**Q: When should I use `<details>` tags?**
+A: For any content that's important but not needed for quick scanning. Phase checklists, detailed scope, risk contingencies, etc.
+
+**Q: Should I add Mermaid diagrams?**
+A: If it helps! Architecture flows, cross-product integrations, and workflow visualizations benefit from diagrams.
 
 **Q: What if I don't know all the details yet?**
-A: Use placeholders like `{TBD}` or `{To be determined after spike}`. Update as you learn.
+A: Use placeholders like `{TBD}` or add to collapsed sections later. Start with the essentials.
 
-**Q: Should I fill out every section?**
-A: No! Skip sections that don't apply. Better to have 80% of relevant sections than 100% with fluff.
+**Q: Can I customize the format?**
+A: Yes! The template is a starting point. Add sections, change structure, use what works for your initiative.
 
-**Q: Can I change templates mid-initiative?**
-A: Yes! Just copy-paste new sections into your existing issue. GitHub preserves history.
-
-**Q: Do I need approval before creating an initiative?**
-A: Depends on your team's process. Draft status lets you share early for feedback.
+**Q: What about emojis - are they required?**
+A: No, but they help with visual scanning. If your team prefers plain text, use: `## Goals & Scope` instead of `## 🎯 Goals & Scope`
 
 ---
 
-**Need help?** Check the [LLM Guide](../../LLM-GUIDE.md) or ask in `#automagik-roadmap` Slack channel.
+**Template Version:** 2.0 (Lean + Advanced Markdown)
+**Last Updated:** 2025-10-20
+
+**Need help?** Check the template file or see the live example in issue #61.

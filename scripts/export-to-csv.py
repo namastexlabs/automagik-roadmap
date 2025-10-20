@@ -25,22 +25,36 @@ from github import Github
 
 
 def extract_field_from_body(body: str, field_name: str) -> str:
-    """Extract a field value from issue body markdown."""
+    """Extract a field value from issue body markdown.
+
+    Supports both old format (### Field Name) and new LEAN format (## 🎯 Field Name).
+    """
     if not body:
         return ''
 
-    # Look for patterns like "### Field Name" followed by content
-    pattern = rf'###?\s+{re.escape(field_name)}\s*\n+(.+?)(?=\n###?|\Z)'
-    match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
+    # Try multiple patterns for compatibility with old and new formats
+    patterns = [
+        # New LEAN format with emoji (e.g., "## 🎯 Goals & Scope")
+        rf'##\s+[🎯🚨📅⚠️📊🔗]\s+{re.escape(field_name)}\s*\n+(.+?)(?=\n##|\Z)',
+        # Old format with ### (e.g., "### Expected Results")
+        rf'###?\s+{re.escape(field_name)}\s*\n+(.+?)(?=\n###?|\Z)',
+        # Partial match for flexibility (e.g., "Goals" matches "Goals & Scope")
+        rf'##\s+[🎯🚨📅⚠️📊🔗]\s+{field_name}[^\n]*\n+(.+?)(?=\n##|\Z)',
+    ]
 
-    if match:
-        content = match.group(1).strip()
-        # Clean up markdown formatting
-        content = re.sub(r'\*\*(.+?)\*\*', r'\1', content)  # Remove bold
-        content = re.sub(r'\n+', ' ', content)  # Single line
-        content = re.sub(r'- \[ \]', '', content)  # Remove checkboxes
-        content = re.sub(r'- ', '', content)  # Remove bullet points
-        return content[:300]  # Limit length
+    for pattern in patterns:
+        match = re.search(pattern, body, re.DOTALL | re.IGNORECASE)
+        if match:
+            content = match.group(1).strip()
+            # Clean up markdown formatting
+            content = re.sub(r'\*\*(.+?)\*\*', r'\1', content)  # Remove bold
+            content = re.sub(r'\n+', ' ', content)  # Single line
+            content = re.sub(r'- \[ \]', '', content)  # Remove checkboxes
+            content = re.sub(r'- ', '', content)  # Remove bullet points
+            # Remove alert boxes
+            content = re.sub(r'>\s+\[!(?:IMPORTANT|NOTE|WARNING|TIP)\]', '', content)
+            content = re.sub(r'>\s+\*\*[^*]+\*\*:', '', content)
+            return content[:300]  # Limit length
 
     return ''
 
@@ -113,9 +127,22 @@ def export_roadmap():
         stage = next((l.name for l in issue.labels if l.name in ['Wishlist', 'Exploring', 'RFC', 'Prioritization', 'Executing', 'Preview', 'Shipped', 'Archived']), '')
         quarter = next((l.name.split(':')[1] for l in issue.labels if l.name.startswith('quarter:')), '')
 
-        # Extract fields from issue body
-        expected_result = extract_field_from_body(issue.body, 'Expected Results')
-        description = extract_field_from_body(issue.body, 'Description') or extract_field_from_body(issue.body, 'Overview')
+        # Extract fields from issue body (supports both old and new LEAN format)
+        # Try new format first, fall back to old format
+        expected_result = (
+            extract_field_from_body(issue.body, 'Success Metrics') or  # LEAN format
+            extract_field_from_body(issue.body, 'Expected Results') or  # Old format
+            extract_field_from_body(issue.body, 'Goals')  # LEAN format Goals section
+        )
+
+        # Description: Try TL;DR first (LEAN format), then old sections
+        description = (
+            extract_field_from_body(issue.body, 'TL;DR') or  # LEAN format
+            extract_field_from_body(issue.body, 'Problem') or  # LEAN format (🚨 Problem & Why Now)
+            extract_field_from_body(issue.body, 'Description') or  # Old format
+            extract_field_from_body(issue.body, 'Overview')  # Old format
+        )
+
         wish_folder = extract_wish_folder(issue.body)
 
         # Get assignee/owner

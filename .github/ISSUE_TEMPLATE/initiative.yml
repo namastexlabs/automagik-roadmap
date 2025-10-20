@@ -9,12 +9,13 @@ body:
         ## 🗺️ Strategic Initiative
         Use this template to propose a new roadmap item with RASCI ownership and expected results.
 
-        **📋 Need more structure?** Check our [template guide](https://github.com/namastexlabs/automagik-roadmap/tree/main/docs/templates):
-        - **Minimal** (8 sections, 15-30min) - Small features, quick wins
-        - **Standard** (12 sections, 1-2hr) - Most initiatives (recommended)
-        - **Comprehensive** (20+ sections, 4-8hr) - Major launches, full PRD
+        **📋 Need more structure?** Check our [LEAN Initiative template](https://github.com/namastexlabs/automagik-roadmap/tree/main/docs/templates) with:
+        - Emoji section headers for visual scanning
+        - Collapsible details for technical depth
+        - Advanced GitHub markdown (alerts, mermaid, tables)
+        - Scales from small to large initiatives
 
-        Or use our [CLI script](https://github.com/namastexlabs/automagik-roadmap/blob/main/scripts/create-initiative.sh) with templates for full control.
+        Or use our [CLI script](https://github.com/namastexlabs/automagik-roadmap/blob/main/scripts/create-initiative-from-json.sh) to generate LEAN format automatically.
 
   - type: dropdown
     id: template_level
@@ -23,9 +24,8 @@ body:
       description: "Which template are you following? (helps workflows understand structure)"
       options:
         - "GitHub Form (this form)"
-        - "Minimal Template"
-        - "Standard Template"
-        - "Comprehensive Template"
+        - "LEAN Template (new format)"
+        - "CLI Script (automated)"
       default: 0
 
   - type: dropdown
