@@ -28,10 +28,72 @@ export GITHUB_TOKEN=ghp_xxx
 python3 scripts/export-to-csv.py
 ```
 
-## Repository Analysis
+## Repository Analysis & Live Activity
+
+### quick-activity-status.sh ⚡ **RECOMMENDED**
+Fast snapshot of latest commits across ALL Automagik repos.
+
+**Usage:**
+```bash
+./scripts/quick-activity-status.sh [days]
+```
+
+**What it shows:**
+- Latest commit per repo with author and date
+- Open PRs and issues count
+- Active feature branches (non-main/dev)
+- Commit messages from last N days
+- Fast execution (~10-15 seconds)
+
+**Output:**
+```
+Repo     | Last Commit | Author    | Branch  | Open PRs | Open Issues
+---------|-------------|-----------|---------|----------|-------------
+omni     | 2025-10-22  | Genie     | default | 1        | 30
+genie    | 2025-10-22  | Actions   | default | 0        | 18
+...
+```
+
+**Use cases:**
+- Quick daily standup status
+- Find which repos had recent activity
+- Identify stale projects
+- See who's working on what
+
+---
+
+### live-activity-dashboard.sh
+Comprehensive live dashboard with detailed stats (slower but thorough).
+
+**Usage:**
+```bash
+./scripts/live-activity-dashboard.sh [days] [--detailed]
+```
+
+**What it shows:**
+- Ecosystem-wide commit statistics
+- Latest commits across all repos (sorted by date)
+- Active branches with recent activity
+- Open pull requests per repo
+- Contributor activity summary
+- Detailed repo stats (with --detailed flag)
+
+**Output:**
+- Total commits across ecosystem
+- Per-contributor statistics
+- Cross-repo activity tracking
+- Full branch activity analysis
+
+**Use cases:**
+- Weekly team sync meetings
+- Monthly activity reports
+- Identifying bottlenecks
+- Contributor recognition
+
+---
 
 ### check-repo-activity.sh
-Analyzes repository activity across **all branches** (not just main/dev).
+Analyzes single repository activity across **all branches**.
 
 **Usage:**
 ```bash
@@ -40,12 +102,9 @@ Analyzes repository activity across **all branches** (not just main/dev).
 
 **Examples:**
 ```bash
-# Check public repos
+# Check specific repos
 ./scripts/check-repo-activity.sh namastexlabs/automagik-genie 7
 ./scripts/check-repo-activity.sh namastexlabs/automagik-forge 14
-
-# Check private repos (requires gh auth with access)
-./scripts/check-repo-activity.sh namastexlabs/private-repo 7
 ```
 
 **Output:**
@@ -53,14 +112,12 @@ Analyzes repository activity across **all branches** (not just main/dev).
 - List of all branches
 - Most active branches with latest commit dates
 
-**Why use this?**
-- Standard `gh` commands only check default branch (main/dev)
-- Feature branches often contain active work not visible in main
-- This script checks ALL branches to find actual activity
+**Use cases:**
+- Deep-dive into single repo activity
+- Finding hidden feature branch work
+- Debugging "quiet" repos
 
-**Requirements:**
-- GitHub CLI (`gh`) installed and authenticated
-- Access to the repository (public or private with appropriate permissions)
+---
 
 ## Roadmap Health & Validation
 
@@ -234,9 +291,21 @@ Validates initiative quality and field completeness.
 
 ## Common Workflows
 
+### Daily Standup
+```bash
+# Quick activity snapshot (10-15 seconds)
+./scripts/quick-activity-status.sh 1
+
+# See what happened yesterday
+./scripts/quick-activity-status.sh 2
+```
+
 ### Weekly Health Check
 ```bash
-# Run all health checks
+# 1. Check recent activity
+./scripts/quick-activity-status.sh 7
+
+# 2. Run all health checks
 ./scripts/check-board-health.sh
 ./scripts/validate-labels.sh
 ./scripts/validate-quarters.sh
@@ -245,16 +314,19 @@ Validates initiative quality and field completeness.
 
 ### Quarterly Planning
 ```bash
-# 1. Check quarter velocity
+# 1. Review ecosystem activity
+./scripts/live-activity-dashboard.sh 90 --detailed
+
+# 2. Check quarter velocity
 ./scripts/validate-quarters.sh
 
-# 2. Validate current initiatives
+# 3. Validate current initiatives
 ./scripts/check-initiative-completeness.sh --detailed
 
-# 3. Cross-repo sync
+# 4. Cross-repo sync
 ./scripts/check-cross-repo-sync.sh
 
-# 4. Export for stakeholders
+# 5. Export for stakeholders
 python3 scripts/export-to-csv.py
 ```
 
