@@ -20,8 +20,6 @@ echo "📊 CHECK 1/5: BOARD HEALTH"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 "$SCRIPT_DIR/check-board-health.sh"
 echo ""
-echo "Press Enter to continue to next check..."
-read -r
 
 # 2. Label Validation
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -29,8 +27,6 @@ echo "🏷️  CHECK 2/5: LABEL CONSISTENCY"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 "$SCRIPT_DIR/validate-labels.sh"
 echo ""
-echo "Press Enter to continue to next check..."
-read -r
 
 # 3. Quarter Validation
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -38,8 +34,6 @@ echo "📅 CHECK 3/5: QUARTER/ETA VALIDATION"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 "$SCRIPT_DIR/validate-quarters.sh"
 echo ""
-echo "Press Enter to continue to next check..."
-read -r
 
 # 4. Initiative Completeness
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -47,8 +41,6 @@ echo "📋 CHECK 4/5: INITIATIVE COMPLETENESS"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 "$SCRIPT_DIR/check-initiative-completeness.sh" $DETAILED
 echo ""
-echo "Press Enter to continue to final check..."
-read -r
 
 # 5. Cross-Repo Sync
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -68,6 +60,6 @@ echo "  - Update missing labels/fields"
 echo "  - Archive stale initiatives"
 echo "  - Export to CSV: python3 scripts/export-to-csv.py"
 echo ""
-echo "💡 For automated runs (skip pauses), pipe to grep or redirect output:"
+echo "💡 Save output to file:"
 echo "   ./scripts/check-all.sh 2>&1 | tee health-report.txt"
 echo ""
