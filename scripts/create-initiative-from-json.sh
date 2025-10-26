@@ -38,7 +38,7 @@ declare -A PROJECT_OPTIONS=(
 declare -A STAGE_OPTIONS=(
   ["Wishlist"]="d4964f90"
   ["Exploring"]="f5c85cef"
-  ["RFC"]="cd5acf90"
+  ["RFC"]="cd5acf90"  # Request for Change (Proposal/Go-No-Go)
   ["Prioritization"]="a3c2913b"
   ["Executing"]="073f61b0"
   ["Preview"]="b572947d"
@@ -101,35 +101,66 @@ Simple JSON format:
 {
   "title": "Initiative Title",
   "project": "omni|hive|spark|forge|genie|tools|cross-project",
-  "stage": "Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped",
+  "stage": "Wishlist|Exploring|RFC [Proposal]|Prioritization|Executing|Preview|Shipped",
   "priority": "critical|high|medium|low",
-  "quarter": "2025-Q4|2026-Q1|backlog",
+  "quarter": "2025-Q4|2026-Q1|2025-10|backlog (see date formats below)",
   "owner": "github-username (optional, auto-selects based on project)",
   "type": "feature|enhancement|research|infrastructure|documentation",
   "areas": ["api", "mcp"],
-  "start_date": "2025-10-20 (optional, YYYY-MM-DD)",
-  "target_date": "2025-12-31 (optional, YYYY-MM-DD, overrides quarter)",
+  "start_date": "2025-10-20 (optional, YYYY-MM-DD, overrides auto-calculation)",
+  "target_date": "2025-12-31 (optional, YYYY-MM-DD, overrides auto-calculation)",
   "description": "Problem, solution, impact",
   "goals": ["Goal 1", "Goal 2"]
 }
+
+Date Format Options (quarter field):
+1. Quarter format (2026-q1): Auto-sets start_date to 2026-01-01, target_date to 2026-03-31
+2. Month format (2025-10): Auto-sets start_date to 2025-10-01, target_date to 2025-10-31
+3. Manual override: Provide start_date and target_date directly to skip auto-calculation
 
 Owner auto-selection:
 - forge/genie → namastex888
 - omni/hive/spark/tools/cross-project → vasconceloscezar
 
-Example:
+Example with Quarter (auto-calculates start/end dates):
 {
-  "title": "Test Initiative",
+  "title": "Q1 Feature",
   "project": "genie",
+  "stage": "Executing",
+  "priority": "high",
+  "quarter": "2026-q1",
+  "type": "feature",
+  "areas": ["testing", "cli"],
+  "description": "Feature spanning entire quarter",
+  "goals": ["Auto start: 2026-01-01", "Auto end: 2026-03-31"]
+}
+
+Example with Month (auto-calculates start/end dates):
+{
+  "title": "October Sprint",
+  "project": "omni",
+  "stage": "Executing",
+  "priority": "high",
+  "quarter": "2025-10",
+  "type": "enhancement",
+  "areas": ["api"],
+  "description": "One-month focused initiative",
+  "goals": ["Auto start: 2025-10-01", "Auto end: 2025-10-31"]
+}
+
+Example with Manual Dates (overrides auto-calculation):
+{
+  "title": "Custom Timeline",
+  "project": "hive",
   "stage": "Executing",
   "priority": "high",
   "quarter": "2025-q4",
   "start_date": "2025-10-20",
   "target_date": "2025-11-15",
   "type": "feature",
-  "areas": ["testing", "cli"],
-  "description": "Testing the optimized script with proper dates",
-  "goals": ["Fast creation", "Correct owner", "No manual updates needed"]
+  "areas": ["testing"],
+  "description": "Custom dates override quarter calculation",
+  "goals": ["Uses provided dates", "Not quarter defaults"]
 }
 EOF
   exit 0
@@ -186,16 +217,60 @@ else
   TITLE="${PROJECT_PREFIX}: ${RAW_TITLE}"
 fi
 
-# Calculate Target Date from quarter if not provided
-if [[ -z "$TARGET_DATE" && "$QUARTER" != "backlog" ]]; then
-  YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
-  Q=$(echo "$QUARTER" | cut -d'-' -f2 | sed 's/[Qq]//')
-  case $Q in
-    1) TARGET_DATE="${YEAR}-03-31" ;;
-    2) TARGET_DATE="${YEAR}-06-30" ;;
-    3) TARGET_DATE="${YEAR}-09-30" ;;
-    4) TARGET_DATE="${YEAR}-12-31" ;;
-  esac
+# Calculate dates from quarter/month if not provided
+if [[ "$QUARTER" != "backlog" ]]; then
+  # Detect format: YYYY-MM (month) or YYYY-qN (quarter)
+  if [[ "$QUARTER" =~ ^[0-9]{4}-[0-9]{2}$ ]]; then
+    # Month format: 2025-10
+    YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
+    MONTH=$(echo "$QUARTER" | cut -d'-' -f2)
+
+    # Calculate start of month if not provided
+    if [[ -z "$START_DATE" ]]; then
+      START_DATE="${YEAR}-${MONTH}-01"
+    fi
+
+    # Calculate end of month if not provided
+    if [[ -z "$TARGET_DATE" ]]; then
+      # Get last day of month
+      case $MONTH in
+        01|03|05|07|08|10|12) TARGET_DATE="${YEAR}-${MONTH}-31" ;;
+        04|06|09|11) TARGET_DATE="${YEAR}-${MONTH}-30" ;;
+        02)
+          # Leap year check
+          if (( YEAR % 4 == 0 && (YEAR % 100 != 0 || YEAR % 400 == 0) )); then
+            TARGET_DATE="${YEAR}-${MONTH}-29"
+          else
+            TARGET_DATE="${YEAR}-${MONTH}-28"
+          fi
+          ;;
+      esac
+    fi
+  elif [[ "$QUARTER" =~ ^[0-9]{4}-[qQ][1-4]$ ]]; then
+    # Quarter format: 2026-q1
+    YEAR=$(echo "$QUARTER" | cut -d'-' -f1)
+    Q=$(echo "$QUARTER" | cut -d'-' -f2 | sed 's/[Qq]//')
+
+    # Calculate start of quarter if not provided
+    if [[ -z "$START_DATE" ]]; then
+      case $Q in
+        1) START_DATE="${YEAR}-01-01" ;;
+        2) START_DATE="${YEAR}-04-01" ;;
+        3) START_DATE="${YEAR}-07-01" ;;
+        4) START_DATE="${YEAR}-10-01" ;;
+      esac
+    fi
+
+    # Calculate end of quarter if not provided
+    if [[ -z "$TARGET_DATE" ]]; then
+      case $Q in
+        1) TARGET_DATE="${YEAR}-03-31" ;;
+        2) TARGET_DATE="${YEAR}-06-30" ;;
+        3) TARGET_DATE="${YEAR}-09-30" ;;
+        4) TARGET_DATE="${YEAR}-12-31" ;;
+      esac
+    fi
+  fi
 fi
 
 # Build labels
@@ -335,7 +410,7 @@ fi
 
 # Map Stage to Status
 case "$STAGE" in
-  Wishlist|Exploring|RFC|Prioritization) STATUS="Todo" ;;
+  Wishlist|Exploring|RFC|Prioritization) STATUS="Todo" ;;  # RFC = awaiting approval
   Executing|Preview) STATUS="In Progress" ;;
   Shipped|Archived) STATUS="Done" ;;
   *) STATUS="Todo" ;;

@@ -6,7 +6,7 @@ CSV Columns:
 - PROJECT: Project name (omni, hive, spark, etc.)
 - INITIATIVE: Initiative title
 - DESCRIPTION: Brief description
-- STAGE: Current stage (Wishlist, Exploring, RFC, etc.)
+- STAGE: Current stage (Wishlist, Exploring, RFC [Request for Change/Proposal], etc.)
 - ETA: Target quarter (Q4 2025, etc.)
 - EXPECTED_RESULT: Measurable outcomes
 - STATUS_DETAIL: Current status
@@ -79,7 +79,7 @@ def map_stage_to_portuguese(stage: str) -> str:
     stage_mapping = {
         'Wishlist': 'Lista de Desejos',
         'Exploring': 'Investigação',
-        'RFC': 'Proposta',
+        'RFC': 'Proposta',  # "Proposta" correctly translates "Request for Change"
         'Prioritization': 'Priorização',
         'Executing': 'Execução',
         'Preview': 'Preview',

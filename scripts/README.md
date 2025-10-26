@@ -73,7 +73,7 @@ echo '{
 **JSON Fields:**
 - `title` (required): Initiative name
 - `project` (required): omni|hive|spark|forge|genie|tools|cross-project
-- `stage` (required): Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped
+- `stage` (required): Wishlist|Exploring|RFC [Proposal]|Prioritization|Executing|Preview|Shipped
 - `priority` (required): critical|high|medium|low
 - `quarter` (required): 2026-q1, 2025-10, backlog (auto-calculates dates)
 - `type` (optional): feature|enhancement|research|infrastructure|documentation
