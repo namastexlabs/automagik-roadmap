@@ -89,7 +89,7 @@ jobs:
             const stageToStatus = {
               'Wishlist': 'Todo',
               'Exploring': 'Todo',
-              'RFC': 'Todo',
+              'RFC': 'Todo',  // RFC = Proposal phase, awaiting Go/No-Go decision
               'Prioritization': 'Todo',
               'Executing': 'In Progress',
               'Preview': 'In Progress',
@@ -204,7 +204,7 @@ jobs:
             const stageOptions = {
               'Wishlist': 'd4964f90',
               'Exploring': 'f5c85cef',
-              'RFC': 'cd5acf90',
+              'RFC': 'cd5acf90',  // Request for Change (Proposal stage)
               'Prioritization': 'a3c2913b',
               'Executing': '073f61b0',
               'Preview': 'b572947d',

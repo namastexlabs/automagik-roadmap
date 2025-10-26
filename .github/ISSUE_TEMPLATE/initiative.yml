@@ -131,7 +131,9 @@ body:
     id: stage
     attributes:
       label: Stage
-      description: Current lifecycle stage
+      description: |
+        Current lifecycle stage.
+        Note: RFC = Request for Change (formal proposal and Go/No-Go decision gate)
       options:
         - Wishlist
         - Exploring
