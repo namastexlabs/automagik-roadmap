@@ -137,7 +137,7 @@ Open-source projects often struggle with:
 - Adjacent project maintainers reviewing integration
 
 **In Open Source:**
-- Community members during RFC stage
+- Stakeholders during RFC stage for proposal review
 - Stakeholders with dependencies
 - Domain experts
 
@@ -187,7 +187,7 @@ Informed: @discord-community, @users-channel
 - **Alice** does the coding and drives execution
 - **Cezar** reviews and approves before merge
 - **Bob** helps with deployment, **Charlie** advises on MCP
-- **Community** gives feedback during RFC stage
+- **Community** reviews proposal during RFC stage for stakeholder approval
 - **Discord** users are notified when it ships
 
 ---
@@ -239,7 +239,7 @@ Informed: @community
 Responsible: @alice
 Accountable: @alice
 Support: -
-Consulted: @community
+Consulted: @stakeholders
 Informed: @users
 ```
 Small initiative where one person does everything.
@@ -259,7 +259,7 @@ Multiple people responsible for different parts.
 Responsible: @community-champion
 Accountable: @maintainer
 Support: @core-team
-Consulted: @users via RFC
+Consulted: @users via RFC for proposal review
 Informed: @everyone
 ```
 Community member drives, maintainer approves.
@@ -369,7 +369,7 @@ Informed: @users
 Responsible: @lead-dev
 Accountable: @project-owner
 Support: @architect, @designer
-Consulted: @security, @adjacent-project
+Consulted: @security, @adjacent-project for proposal review
 Informed: @community, @stakeholders
 ```
 
@@ -378,7 +378,7 @@ Informed: @community, @stakeholders
 Responsible: @initiative-lead
 Accountable: @exec-sponsor
 Support: @frontend-team, @backend-team, @devops-team
-Consulted: @all-maintainers, @community (via RFC)
+Consulted: @all-maintainers, @stakeholders (via RFC for proposal approval)
 Informed: @all-contributors, @users, @partners
 ```
 
@@ -409,7 +409,7 @@ RASCI may change as initiatives move through stages:
 | Stage | Typical RASCI Changes |
 |-------|---------------------|
 | **Exploring** | R may be "TBD", A is product/project lead |
-| **RFC** | C expands to community, I grows |
+| **RFC** | C expands to stakeholders for proposal approval, I grows |
 | **Prioritization** | R assigned (architect/designer), S identified |
 | **Executing** | R is developer, S is technical helpers |
 | **Preview** | S may include testers, I expands to beta users |
@@ -430,7 +430,7 @@ RASCI may change as initiatives move through stages:
 **Adaptation for Open Source:**
 - Responsible can be a volunteer
 - Support is often "best effort"
-- Consulted includes open community feedback
+- Consulted includes stakeholders for proposal review
 - Informed uses public channels (Discord, GitHub)
 
 ---

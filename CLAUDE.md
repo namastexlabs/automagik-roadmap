@@ -97,7 +97,7 @@ Each project has a folder: `projects/<name>/` with strategic context (`5w2h.md`)
 ### Initiative Lifecycle (8 Stages)
 
 ```
-Wishlist (1-2w) → Exploring (1-4w) → RFC (2-6w) → Prioritization (2-8w)
+Wishlist (1-2w) → Exploring (1-4w) → RFC [Proposal/Go-No-Go] (2-6w) → Prioritization (2-8w)
     → Executing (4-16w) → Preview (2-8w) → Shipped → Archived
 ```
 
@@ -106,7 +106,7 @@ Each stage has clear exit criteria in `docs/stage-definitions.md`.
 ### Multi-Dimensional Label System (6 Dimensions, 59 Labels)
 
 1. **Project** (7): `project:omni`, `project:hive`, etc.
-2. **Stage** (8): `Wishlist`, `Exploring`, `RFC`, `Prioritization`, `Executing`, `Preview`, `Shipped`, `Archived`
+2. **Stage** (8): `Wishlist`, `Exploring`, `RFC` (Request for Change/Proposal), `Prioritization`, `Executing`, `Preview`, `Shipped`, `Archived`
 3. **Priority** (4): `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
 4. **Type** (6): `type:feature`, `type:enhancement`, `type:research`, `type:infrastructure`, `type:documentation`, `type:bug-initiative`
 5. **Quarter** (10): `quarter:2025-q4` through `quarter:2027-q4`, `quarter:backlog`
@@ -183,7 +183,7 @@ Field IDs stored in `scripts/create-initiative-from-json.sh:15-24`. See `docs/PR
 {
   "title": "Feature Name",
   "project": "genie|forge|omni|hive|spark|tools|cross-project",
-  "stage": "Wishlist|Exploring|RFC|Prioritization|Executing|Preview|Shipped",
+  "stage": "Wishlist|Exploring|RFC [Proposal]|Prioritization|Executing|Preview|Shipped",
   "priority": "critical|high|medium|low",
   "quarter": "2026-q1",
   "type": "feature|enhancement|research|infrastructure|documentation",
@@ -531,6 +531,140 @@ This roadmap system embodies:
 8. **Data-Driven** - Scripts provide quantitative health metrics
 9. **Cross-Project Coordination** - Single board enables dependency tracking
 10. **Results-Focused** - Expected results and success criteria baked in
+
+---
+
+## GitHub CLI (`gh`) Command Reference
+
+### Common Pitfalls and Correct Usage
+
+**IMPORTANT:** The GitHub CLI has specific syntax requirements. Here are common mistakes and their corrections:
+
+#### Issue and PR Management
+
+**❌ WRONG - Using `-L` for labels:**
+```bash
+# This will FAIL - -L is for limit, not labels
+gh issue list -R org/repo -L hacktoberfest
+```
+
+**✅ CORRECT - Use lowercase `-l` for labels:**
+```bash
+# Filter by label (use -l not -L)
+gh issue list -R org/repo -l hacktoberfest -s all
+
+# Multiple filters
+gh issue list -R org/repo -l "good-first-issue" -l "hacktoberfest" -s open
+
+# Get counts
+gh issue list -R org/repo -l hacktoberfest -s all --json number | jq 'length'
+```
+
+#### Issue/PR Field Queries
+
+**❌ WRONG - Requesting unsupported fields:**
+```bash
+# This will FAIL - timelineItems not available via gh issue view
+gh issue view 123 -R org/repo --json timelineItems
+```
+
+**✅ CORRECT - Use supported fields only:**
+```bash
+# Available fields for issues/PRs:
+gh issue view 123 -R org/repo --json assignees,author,body,closed,closedAt,comments,createdAt,id,labels,milestone,number,projectCards,projectItems,reactionGroups,state,title,updatedAt,url
+
+# Find linked PRs by searching PR bodies
+gh pr list -R org/repo --json number,title,body,state,author | jq -r '.[] | select(.body | contains("#123"))'
+```
+
+#### PR Assignee Management
+
+**⚠️ WARNING - Classic Projects deprecation errors are normal:**
+```bash
+# This command WORKS despite deprecation warnings
+gh pr edit 15 -R org/repo --add-assignee username1 --add-assignee username2
+
+# Error message you might see (can be ignored if assignees were added):
+# GraphQL: Projects (classic) is being deprecated...
+```
+
+**✅ CORRECT - Verify assignees were added:**
+```bash
+# Always verify after editing
+gh pr view 15 -R org/repo --json assignees | jq '.assignees[].login'
+```
+
+**✅ CORRECT - Use GitHub API directly (more reliable):**
+```bash
+# Add assignees via REST API (no deprecation warnings)
+gh api repos/org/repo/issues/15/assignees -X POST -f assignees[]='username1' -f assignees[]='username2'
+
+# Verify
+gh api repos/org/repo/issues/15 --jq '.assignees[].login'
+```
+
+#### Repository Information
+
+**✅ CORRECT - Get repo metadata:**
+```bash
+# Get topics (tags) on a repository
+gh repo view org/repo --json repositoryTopics,isPrivate,name,url
+
+# Check if repo has specific topic
+gh repo view org/repo --json repositoryTopics --jq '.repositoryTopics[].name' | grep -q "hacktoberfest" && echo "Has hacktoberfest topic"
+
+# Add topic to repo
+gh repo edit org/repo --add-topic hacktoberfest
+```
+
+#### Searching Across Repositories
+
+**✅ CORRECT - Batch operations across repos:**
+```bash
+# Loop through multiple repos (proper bash syntax)
+for repo in repo1 repo2 repo3; do
+  echo "=== $repo ==="
+  gh issue list -R org/$repo -l hacktoberfest --json number | jq 'length'
+done
+
+# Single line version (for scripts)
+for repo in repo1 repo2 repo3; do echo "=== $repo ==="; gh issue list -R org/$repo -l hacktoberfest --json number | jq 'length'; done
+```
+
+#### JSON Output and JQ Processing
+
+**✅ CORRECT - Processing JSON responses:**
+```bash
+# Count items
+gh issue list -R org/repo -l label-name --json number | jq 'length'
+
+# Extract specific fields
+gh issue list -R org/repo -s open --json number,title,assignees | jq '.[] | {num: .number, title: .title, assigned: ([.assignees[].login] | length > 0)}'
+
+# Filter and format
+gh pr list -R org/repo --json number,title,body,author | jq -r '.[] | select(.body | contains("#123")) | "PR #\(.number) by \(.author.login) - \(.title)"'
+```
+
+### Quick Reference Card
+
+| Task | Command |
+|------|---------|
+| List open issues with label | `gh issue list -R org/repo -l label-name -s open` |
+| Count issues by label | `gh issue list -R org/repo -l label-name --json number \| jq 'length'` |
+| Add PR assignees | `gh api repos/org/repo/issues/PR_NUM/assignees -X POST -f assignees[]='user'` |
+| Check repo topics | `gh repo view org/repo --json repositoryTopics` |
+| Add repo topic | `gh repo edit org/repo --add-topic topic-name` |
+| Search PR bodies | `gh pr list -R org/repo --json body \| jq '.[] \| select(.body \| contains("#123"))'` |
+| View PR/issue fields | `gh issue view 123 -R org/repo --json assignees,labels,state,title` |
+
+### Common Flags
+
+- `-R, --repo <org/repo>` - Specify repository
+- `-l, --label <name>` - Filter by label (can use multiple times)
+- `-s, --state <open|closed|all>` - Filter by state (default: open)
+- `-L, --limit <n>` - Maximum items to fetch (default: 30)
+- `--json <fields>` - Output JSON with specified fields
+- `-q, --jq <expr>` - Filter JSON with jq expression
 
 ---
 

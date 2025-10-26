@@ -32,7 +32,7 @@ This repository is the **single source of truth** for strategic initiatives acro
 - 📊 **The Command Center**: Where all projects align on priorities and timelines
 - 🎯 **The Context Repository**: Strategic analysis (5w2h) and detailed wishes for each project
 - 🤝 **The Community Hub**: Where stakeholders provide feedback and track progress
-- 📈 **The Progress Tracker**: From Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
+- 📈 **The Progress Tracker**: From Wishlist → Exploring → RFC (Proposal) → Prioritization → Executing → Preview → Shipped
 
 ### 💡 Why a Public Roadmap?
 
@@ -165,7 +165,7 @@ Our initiatives follow a structured lifecycle inspired by [GitHub's public roadm
 
 - 💡 **Wishlist** - Initial ideation and brainstorming
 - 🔍 **Exploring** - Early investigation, validating the idea
-- 💬 **RFC** - Request for comments, gathering community feedback
+- 💬 **RFC** - Request for Change, formal proposal and Go/No-Go decision
 - 📋 **Prioritization** - Prioritization and planning phase
 - 🔨 **Executing** - Active execution and implementation
 - 🧪 **Preview** - Beta/preview release for testing

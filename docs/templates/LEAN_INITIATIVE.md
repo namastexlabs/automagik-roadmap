@@ -223,7 +223,7 @@ Focus on retention and business impact:
 - **Initiatives:** #{issue-number}, #{issue-number}
 - **PRs/Implementation:** {org/repo}#{pr-number}
 - **Design Docs:** {link to technical design}
-- **Research:** {link to user research, RFCs, etc}
+- **Research:** {link to user research, proposals, etc}
 
 <details>
 <summary><b>📚 Full RASCI Matrix</b></summary>

@@ -45,7 +45,7 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 |-------|-------|-------------|------------------|
 | `Wishlist` | `#E1BEE7` | Initial ideation and brainstorming | 1-2 weeks |
 | `Exploring` | `#FBCA04` | Early investigation and validation | 1-4 weeks |
-| `RFC` | `#FFA500` | Request for comments, gathering feedback | 2-6 weeks |
+| `RFC` | `#FFA500` | Request for Change, formal proposal and Go/No-Go | 2-6 weeks |
 | `Prioritization` | `#D876E3` | Prioritization and planning | 2-8 weeks |
 | `Executing` | `#1D76DB` | Active execution and implementation | 4-16 weeks |
 | `Preview` | `#9C27B0` | Beta or preview release for testing | 2-8 weeks |
@@ -59,9 +59,9 @@ Indicates the current development phase. See [Stage Definitions](stage-definitio
 
 **Flow:**
 ```
-Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
-                                                                         ↓
-                                                                     Archived
+Wishlist → Exploring → RFC (Proposal/Go-No-Go) → Prioritization → Executing → Preview → Shipped
+                                                                                             ↓
+                                                                                         Archived
 ```
 
 ---
@@ -74,7 +74,7 @@ Categorizes the kind of work being done.
 |-------|-------|-------------|----------|
 | `type:feature` | `#7057FF` | New capability | WhatsApp integration, Multi-agent swarms |
 | `type:enhancement` | `#A2EEEF` | Improvement to existing | Performance optimization, UX polish |
-| `type:research` | `#FFEB3B` | Investigation/RFC | Architecture exploration, User research |
+| `type:research` | `#FFEB3B` | Investigation/analysis | Architecture exploration, User research |
 | `type:infrastructure` | `#795548` | DevOps, tooling, build | CI/CD pipeline, Docker setup |
 | `type:documentation` | `#0075CA` | Docs-only initiative | API docs, tutorials |
 | `type:bug-initiative` | `#D73A4A` | Major bug fix initiative | Critical security fix, data integrity |
