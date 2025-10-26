@@ -48,7 +48,7 @@
 
 - name: RFC
   color: 'FFA500'
-  description: 'Request for comments, gathering feedback'
+  description: 'Request for Change - Formal proposal and Go/No-Go decision gate'
 
 - name: Prioritization
   color: 'D876E3'
@@ -84,7 +84,7 @@
 
 - name: type:research
   color: 'FFEB3B'
-  description: 'Research - Investigation, RFC, or exploration'
+  description: 'Research - Investigation, analysis, or exploration'
 
 - name: type:infrastructure
   color: '795548'

@@ -10,9 +10,9 @@ Every initiative progresses through a series of stages from initial exploration 
 
 **Stage Flow:**
 ```
-Wishlist → Exploring → RFC → Prioritization → Executing → Preview → Shipped
-                                                                         ↓
-                                                                     Archived
+Wishlist → Exploring → RFC (Decision Gate) → Prioritization → Executing → Preview → Shipped
+                         ↓                                                              ↓
+                    Go/No-Go                                                        Archived
 ```
 
 ---
@@ -61,28 +61,56 @@ Wishlist → Exploring → RFC → Prioritization → Executing → Preview → 
 
 ---
 
-## 💬 RFC (Request for Comments)
+## 💬 RFC (Request for Change / Proposal Stage)
 
-**Definition:** Gathering community and stakeholder feedback on the proposal.
+**Definition:** Formal proposal and decision gate. This stage aligns with the GPM "Propose Agent" framework, where structured options are evaluated and a Go/No-Go decision is made before proceeding to implementation planning.
 
 **Activities:**
-- Publishing detailed proposal
-- Community discussion and feedback
-- Addressing concerns and questions
-- Iterating on the approach
-- Building consensus
+- Structure findings from Investigation (Exploring) into formal options
+- Create formal decision documents:
+  - **Product Review**: User impact, market fit, value proposition
+  - **Design Review**: Technical architecture, system design, implementation approach
+  - **Business Case**: Cost/benefit analysis, resource requirements, ROI
+- Facilitate Go/No-Go decision with stakeholders
+- Prepare inputs for backlog prioritization (if approved)
+- Document decision rationale (whether Go or No-Go)
 
 **Exit Criteria:**
-- Proposal has been publicly shared
-- Major concerns addressed
-- Community feedback incorporated
-- Go/no-go decision made
+- Proposal formally documented (Product Review, Design Review, Business Case)
+- Go/No-Go decision made and recorded
+- Stakeholders aligned on decision
+- If Go: Backlog inputs prepared for Prioritization stage
+- If No-Go: Decision rationale documented, initiative moved to Archived
 
 **Typical Duration:** 2-6 weeks
 
 **Labels:** `RFC`
 
-**Note:** RFC can happen in parallel with "Exploring" or "Prioritization" for community-driven projects.
+### Decision Gate
+
+RFC serves as the critical approval gate between Investigation and Prioritization. Unlike the previous "Exploring" stage (which focuses on validating feasibility), RFC focuses on structured decision-making:
+
+- **Exploring** answers: "Can we build this? Should we explore it?"
+- **RFC** answers: "Will we build this? Which approach should we take?"
+- **Prioritization** answers: "When and how will we build this?"
+
+This gate prevents unvetted initiatives from consuming planning and execution resources.
+
+### Relationship to Other Stages
+
+- **From Exploring**: RFC receives validated findings, technical feasibility, and problem definition
+- **To Prioritization**: RFC provides approved proposal, selected approach, and business justification
+- **To Archived**: No-Go decisions move directly to Archived with documented rationale
+
+### GPM Propose Agent Alignment
+
+This stage implements the "Propose Agent" pattern from Generative Product Management:
+- Converts investigation into actionable proposals
+- Structures decision-making with formal review documents
+- Enables evidence-based Go/No-Go decisions
+- Separates validation (Exploring) from approval (RFC) from planning (Prioritization)
+
+**Note:** For simple initiatives, RFC documentation may be lightweight (combined single document). For complex/high-risk initiatives, all three review documents (Product, Design, Business) should be comprehensive.
 
 ---
 
@@ -260,7 +288,7 @@ Both dimensions are tracked independently.
 ## FAQ
 
 **Q: Can initiatives skip stages?**
-A: Yes. Small bug fixes or simple features may skip RFC, Preview, etc. Use judgment based on complexity and risk.
+A: Yes. Small bug fixes or simple features may skip RFC (decision gate), Preview, etc. Use judgment based on complexity and risk. However, skipping RFC means the Accountable owner implicitly approves the initiative without formal review documents.
 
 **Q: How long should initiatives stay in one stage?**
 A: No hard rules. The durations above are guidelines. If an initiative is stuck, discuss in issue comments.
@@ -282,14 +310,15 @@ Exploring (1 week) → Prioritization (1 week) → Executing (2 weeks) → Shipp
 
 ### Example 2: Major Initiative
 ```
-Exploring (4 weeks) → RFC (6 weeks) → Prioritization (8 weeks) →
+Exploring (4 weeks) → RFC / Decision Gate (6 weeks) → Prioritization (8 weeks) →
 Executing (12 weeks) → Preview (4 weeks) → Shipped
+(RFC produces: Product Review, Design Review, Business Case → Go decision)
 ```
 
 ### Example 3: Research Project
 ```
-Exploring (8 weeks) → RFC (4 weeks) → Archived
-(Decision: not pursuing at this time)
+Exploring (8 weeks) → RFC / Decision Gate (4 weeks) → Archived
+(RFC produces: Product Review, Business Case → No-Go decision with rationale)
 ```
 
 ---
